@@ -734,23 +734,23 @@ function validateAvailability(availability) {
 }
 
 function formatAvailability(availability) {
-  if (!Array.isArray(availability) || !availability.length) {
-    return "No availability selected";
+  const slotsByDay = availabilityToSlots(availability);
+
+  if (slotsByDay.size === 0) {
+    return "No recognized availability";
   }
 
-  return availability.map(item => {
-    if (!item || !item.day || !Array.isArray(item.slots)) {
-      return "Unrecognized availability";
-    }
+  return DAYS
+    .filter(day => slotsByDay.has(day) && slotsByDay.get(day).size > 0)
+    .map(day => {
+      const labels = TIMES
+        .filter(time => slotsByDay.get(day).has(time.value))
+        .map(time => time.label);
 
-    if (!item.slots.length) {
-      return "";
-    }
-
-    const labels = item.slots.map(formatTime);
-
-    return `${item.day}: ${labels.join(", ")}`;
-  }).filter(Boolean).join("; ");
+      return labels.length ? `${day}: ${labels.join(", ")}` : "";
+    })
+    .filter(Boolean)
+    .join("; ") || "No recognized availability";
 }
 
 renderAvailability("tutorAvailability", "tutorAvail");
@@ -957,54 +957,66 @@ byId("requestForm").addEventListener("submit", async event => {
 });
 
 /* FIND EXACT SHARED TIME SLOTS */
-function commonTimes(tutor, request) {
-  const shared = [];
-  const tutorAvailability = Array.isArray(tutor.availability)
-    ? tutor.availability
-    : [];
-  const requestAvailability = Array.isArray(request.availability)
-    ? request.availability
-    : [];
 
-  for (const tutorDay of tutorAvailability) {
-    if (!tutorDay || !tutorDay.day || !Array.isArray(tutorDay.slots)) {
-      continue;
+function availabilityToSlots(availability) {
+  const result = new Map();
+
+  if (!Array.isArray(availability)) return result;
+
+  for (const item of availability) {
+    if (!item || !DAYS.includes(item.day)) continue;
+
+    let slots = [];
+
+    // New format: { day: "Monday", slots: ["15:00", "15:30"] }
+    if (Array.isArray(item.slots)) {
+      slots = item.slots.filter(slot =>
+        TIMES.some(time => time.value === slot)
+      );
     }
 
-    const requestDay = requestAvailability.find(item =>
-      item &&
-      item.day === tutorDay.day &&
-      Array.isArray(item.slots)
-    );
+    // Old format: { day: "Monday", start: "15:00", end: "17:00" }
+    else if (typeof item.start === "string" &&
+             typeof item.end === "string") {
+      const start = TIMES.findIndex(t => t.value === item.start);
+      const end = TIMES.findIndex(t => t.value === item.end);
 
-    if (!requestDay) continue;
+      if (start >= 0 && end > start) {
+        slots = TIMES.slice(start, end).map(t => t.value);
+      }
+    }
 
-    const requestSlots = new Set(requestDay.slots);
-
-    const sharedSlots = [...new Set(tutorDay.slots)]
-      .filter(slot => requestSlots.has(slot))
-      .filter(slot => TIMES.some(time => time.value === slot))
-      .sort();
-
-    sharedSlots.forEach(slot => {
-      shared.push({
-        day: tutorDay.day,
-        time: slot
-      });
-    });
+    result.set(item.day, new Set([
+      ...(result.get(item.day) || []),
+      ...slots
+    ]));
   }
 
-  const dayOrder = new Map(
-    DAYS.map((day, index) => [day, index])
-  );
+  return result;
+}
 
-  shared.sort((a, b) =>
-    dayOrder.get(a.day) - dayOrder.get(b.day) ||
-    a.time.localeCompare(b.time)
-  );
+function commonTimes(tutor, request) {
+  const tutorSlots = availabilityToSlots(tutor.availability);
+  const requestSlots = availabilityToSlots(request.availability);
+  const shared = [];
+
+  for (const day of DAYS) {
+    const tutorDay = tutorSlots.get(day) || new Set();
+    const requestDay = requestSlots.get(day) || new Set();
+
+    for (const time of TIMES) {
+      if (tutorDay.has(time.value) && requestDay.has(time.value)) {
+        shared.push({
+          day,
+          time: time.value
+        });
+      }
+    }
+  }
 
   return shared;
 }
+
 
 function formatCommonTimes(times) {
   if (!times.length) {
@@ -1026,27 +1038,60 @@ function formatCommonTimes(times) {
     .join("; ");
 }
 
+function checkMatch(tutor, request) {
+  const tutorSubjects = new Set(
+    (Array.isArray(tutor.subjects) ? tutor.subjects : [])
+      .map(normalizeSubject)
+  );
+
+  const requestSubjects = Array.isArray(request.subjects)
+    ? request.subjects
+    : [];
+
+  const sharedSubjects = requestSubjects.filter(subject =>
+    tutorSubjects.has(normalizeSubject(subject))
+  );
+
+  if (sharedSubjects.length === 0) {
+    return {
+      matched: false,
+      reason: "No exact course and level match"
+    };
+  }
+
+  const preference = request.genderPreference || "Does not matter";
+  const tutorGender = tutor.gender || "Prefer not to answer";
+
+  if (
+    preference !== "Does not matter" &&
+    tutorGender !== preference
+  ) {
+    return {
+      matched: false,
+      reason: `Gender preference does not match (${tutorGender})`
+    };
+  }
+
+  const sharedTimes = commonTimes(tutor, request);
+
+  if (sharedTimes.length === 0) {
+    return {
+      matched: false,
+      reason: "No identical selected time slots"
+    };
+  }
+
+  return {
+    matched: true,
+    sharedSubjects,
+    sharedTimes
+  };
+}
+
 function findMatches(request) {
-  return tutors.filter(tutor => {
-    const tutorSubjects = new Set(
-      (tutor.subjects || []).map(normalizeSubject)
-    );
-
-    const subjectMatches = (request.subjects || []).some(subject =>
-      tutorSubjects.has(normalizeSubject(subject))
-    );
-
-    if (!subjectMatches) return false;
-
-    if (
-      request.genderPreference !== "Does not matter" &&
-      tutor.gender !== request.genderPreference
-    ) {
-      return false;
-    }
-
-    return commonTimes(tutor, request).length > 0;
-  });
+  return tutors.filter(tutor =>
+    checkMatch(tutor, request).matched
+  );
 }
 
 /* ADMIN DASHBOARD HELPERS */

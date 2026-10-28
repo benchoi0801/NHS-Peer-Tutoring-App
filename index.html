@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +31,7 @@
 
     header {
       background: linear-gradient(135deg, #16345c, #2864a8);
-      color: white;
+      color: #fff;
       padding: 38px 20px;
     }
 
@@ -47,7 +46,7 @@
       letter-spacing: 2px;
       font-size: 12px;
       font-weight: bold;
-      opacity: .85;
+      opacity: 0.85;
     }
 
     h1 {
@@ -55,13 +54,13 @@
       font-size: clamp(28px, 5vw, 42px);
     }
 
-    h2 {
-      margin-top: 0;
+    h2,
+    h3 {
       color: var(--navy);
     }
 
-    h3 {
-      color: var(--navy);
+    h2 {
+      margin-top: 0;
     }
 
     p {
@@ -70,7 +69,7 @@
 
     .subtitle {
       max-width: 620px;
-      opacity: .9;
+      opacity: 0.9;
     }
 
     main {
@@ -101,7 +100,7 @@
       font-size: 14px;
       font-weight: bold;
       cursor: pointer;
-      transition: .15s ease;
+      transition: 0.15s ease;
     }
 
     .tab {
@@ -118,11 +117,11 @@
 
     button:hover,
     .tab:hover {
-      filter: brightness(.95);
+      filter: brightness(0.95);
     }
 
     button:disabled {
-      opacity: .55;
+      opacity: 0.55;
       cursor: not-allowed;
     }
 
@@ -133,7 +132,7 @@
       border-radius: 15px;
       padding: 24px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 18px rgba(22, 52, 92, .04);
+      box-shadow: 0 5px 18px rgba(22, 52, 92, 0.04);
     }
 
     .hidden {
@@ -154,8 +153,7 @@
       grid-column: 1 / -1;
     }
 
-    label,
-    .group-label {
+    label {
       display: block;
       font-weight: bold;
       font-size: 14px;
@@ -163,8 +161,7 @@
     }
 
     input,
-    select,
-    textarea {
+    select {
       width: 100%;
       padding: 11px 12px;
       border: 1px solid #cbd6e3;
@@ -175,15 +172,9 @@
     }
 
     input:focus,
-    select:focus,
-    textarea:focus {
+    select:focus {
       outline: 2px solid #9bc4f4;
       border-color: var(--blue);
-    }
-
-    textarea {
-      min-height: 80px;
-      resize: vertical;
     }
 
     .help {
@@ -192,29 +183,9 @@
       margin-top: 5px;
     }
 
-    .choices {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-      gap: 8px;
-    }
-
-    .choice {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
+    .muted {
       font-size: 13px;
-      font-weight: normal;
-      margin: 0;
-      cursor: pointer;
-    }
-
-    .choice input {
-      width: auto;
-      margin-top: 3px;
-      flex-shrink: 0;
+      color: var(--muted);
     }
 
     .section-label {
@@ -281,11 +252,6 @@
       font-size: 14px;
     }
 
-    .muted {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
     .match {
       border-left: 4px solid var(--green);
       padding-left: 12px;
@@ -312,8 +278,6 @@
       background: #fffafa;
     }
 
-    /* Weekly availability dropdowns */
-
     .day-availability {
       display: grid;
       gap: 12px;
@@ -323,8 +287,10 @@
     .day-row {
       display: grid;
       grid-template-columns:
-        100px minmax(125px, 1fr)
-        minmax(110px, 1fr) minmax(110px, 1fr);
+        100px
+        minmax(125px, 1fr)
+        minmax(110px, 1fr)
+        minmax(110px, 1fr);
       gap: 10px;
       align-items: center;
       padding: 14px;
@@ -438,9 +404,9 @@
     </nav>
 
     <!-- TUTOR REGISTRATION -->
-
     <section id="tutorPanel" class="panel">
       <h2>Become a Peer Tutor</h2>
+
       <p class="muted">
         Tell us which subjects you can help with and when you are available.
       </p>
@@ -490,19 +456,21 @@
             <div class="help">
               Separate courses with commas. Each course must end in
               CP, H, or AP. Include the course number when applicable.
-              Examples: Physics I H, English 10 H, Algebra II CP,
-              Chemistry AP.
             </div>
           </div>
 
           <div class="field full">
             <div class="section-label">Weekly Availability *</div>
+
             <p class="help">
-              Choose Available for each day you can meet. Select your
-              start and end times, or choose Not Available. Times are
-              available in 15-minute increments from 7:00 AM to 10:00 PM.
+              Choose Available for each day you can meet. Times use
+              15-minute increments from 7:00 AM to 10:00 PM.
             </p>
-            <div id="tutorAvailability" class="day-availability"></div>
+
+            <div
+              id="tutorAvailability"
+              class="day-availability"
+            ></div>
           </div>
         </div>
 
@@ -516,10 +484,10 @@
       </form>
     </section>
 
-    <!-- TUTORING REQUEST -->
-
+    <!-- STUDENT REQUEST -->
     <section id="requestPanel" class="panel hidden">
       <h2>Request a Tutor</h2>
+
       <p class="muted">
         We'll identify tutors with an exact course match and compatible schedules.
       </p>
@@ -560,8 +528,6 @@
             <div class="help">
               Separate courses with commas. Each course must end in
               CP, H, or AP. Include the course number when applicable.
-              Examples: Physics I H, English 10 H, Algebra II CP,
-              Chemistry AP.
             </div>
           </div>
 
@@ -578,11 +544,16 @@
 
           <div class="field full">
             <div class="section-label">Weekly Availability *</div>
+
             <p class="help">
               Select the times you can meet with a tutor on each day.
               Choose Not Available for days when you cannot meet.
             </p>
-            <div id="requestAvailability" class="day-availability"></div>
+
+            <div
+              id="requestAvailability"
+              class="day-availability"
+            ></div>
           </div>
         </div>
 
@@ -596,10 +567,10 @@
       </form>
     </section>
 
-    <!-- ADMIN LOGIN AND DASHBOARD -->
-
+    <!-- ADMINISTRATOR DASHBOARD -->
     <section id="adminPanel" class="panel hidden">
       <h2>Administrator Dashboard</h2>
+
       <p class="muted">
         Sign in with an administrator account approved in Firebase.
       </p>
@@ -636,20 +607,32 @@
 
       <div id="dashboard" class="hidden">
         <div class="admin-actions">
-          <button class="secondary" id="refreshButton" type="button">
+          <button
+            class="secondary"
+            id="refreshButton"
+            type="button"
+          >
             Refresh Records
           </button>
-          <button class="secondary" id="logoutButton" type="button">
+
+          <button
+            class="secondary"
+            id="logoutButton"
+            type="button"
+          >
             Sign Out
           </button>
         </div>
 
         <h3>Matching Results</h3>
+
         <p class="muted">
           A match requires the same course and level, a compatible
-          gender preference, and at least one overlapping available
-          time. Confirm arrangements with students before scheduling.
+          gender preference, and at least one overlapping available time.
+          Multiple tutors can match with the same student. Confirm
+          arrangements before scheduling.
         </p>
+
         <div id="matchesList"></div>
 
         <h3>Registered Tutors</h3>
@@ -660,14 +643,16 @@
 
         <div class="card danger-zone">
           <h3>Delete All Records</h3>
+
           <p class="muted">
-            This permanently deletes all tutor registrations and
-            tutoring requests. Individual deletions are available above.
+            This permanently deletes all tutor registrations and tutoring
+            requests. Individual deletions are available above.
           </p>
 
           <label for="deleteAllConfirm">
             Type YES to enable deletion
           </label>
+
           <input
             id="deleteAllConfirm"
             placeholder="Type YES"
@@ -718,7 +703,9 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
+    // --------------------------------------------------
     // FIREBASE CONFIGURATION
+    // --------------------------------------------------
 
     const firebaseConfig = {
       apiKey: "AIzaSyDd7N0_p9BuSuYzni5Dvyygg7BLHTp3Bcc",
@@ -734,7 +721,9 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // WEEKLY AVAILABILITY CONFIGURATION
+    // --------------------------------------------------
+    // GLOBAL STATE AND CONSTANTS
+    // --------------------------------------------------
 
     const DAYS = [
       "Monday",
@@ -746,26 +735,22 @@
       "Sunday"
     ];
 
-    // 7:00 AM through 10:00 PM in 15-minute increments.
     const TIMES = [];
 
-    for (
-      let minutes = 7 * 60;
-      minutes <= 22 * 60;
-      minutes += 15
-    ) {
-      const hour24 = Math.floor(minutes / 60);
+    for (let minutes = 420; minutes <= 1320; minutes += 15) {
+      const hour = Math.floor(minutes / 60);
       const minute = minutes % 60;
-      const hour12 = hour24 % 12 || 12;
-      const suffix = hour24 >= 12 ? "PM" : "AM";
 
       TIMES.push({
         value:
-          String(hour24).padStart(2, "0") +
+          String(hour).padStart(2, "0") +
           ":" +
           String(minute).padStart(2, "0"),
+
         label:
-          `${hour12}:${String(minute).padStart(2, "0")} ${suffix}`
+          `${hour % 12 || 12}:` +
+          `${String(minute).padStart(2, "0")} ` +
+          `${hour >= 12 ? "PM" : "AM"}`
       });
     }
 
@@ -774,12 +759,15 @@
     let tutors = [];
     let requests = [];
 
-    function byId(id) {
-      return document.getElementById(id);
-    }
+    const byId = id => document.getElementById(id);
+
+    // --------------------------------------------------
+    // STATUS MESSAGES
+    // --------------------------------------------------
 
     function showStatus(id, message, type = "info") {
       const element = byId(id);
+
       element.className = "status " + type;
       element.textContent = message;
     }
@@ -789,10 +777,13 @@
       byId(id).className = "";
     }
 
-    // CREATE THE DAILY START AND END TIME DROPDOWNS
+    // --------------------------------------------------
+    // AVAILABILITY FORM
+    // --------------------------------------------------
 
     function renderAvailability(containerId, prefix) {
       const container = byId(containerId);
+
       container.replaceChildren();
 
       DAYS.forEach(day => {
@@ -800,11 +791,12 @@
         row.className = "day-row";
         row.dataset.day = day;
 
-        const dayName = document.createElement("div");
-        dayName.className = "day-name";
-        dayName.textContent = day;
+        const label = document.createElement("div");
+        label.className = "day-name";
+        label.textContent = day;
 
         const status = document.createElement("select");
+
         status.name = `${prefix}-${day}-status`;
         status.setAttribute(
           "aria-label",
@@ -812,53 +804,40 @@
         );
 
         [
-          {
-            value: "not-available",
-            label: "Not Available"
-          },
-          {
-            value: "available",
-            label: "Available"
-          }
-        ].forEach(item => {
+          ["not-available", "Not Available"],
+          ["available", "Available"]
+        ].forEach(([value, text]) => {
           const option = document.createElement("option");
-          option.value = item.value;
-          option.textContent = item.label;
+
+          option.value = value;
+          option.textContent = text;
+
           status.appendChild(option);
         });
 
         const start = document.createElement("select");
-        start.name = `${prefix}-${day}-start`;
-        start.setAttribute(
-          "aria-label",
-          `${day} start time`
-        );
-
         const end = document.createElement("select");
+
+        start.name = `${prefix}-${day}-start`;
         end.name = `${prefix}-${day}-end`;
-        end.setAttribute(
-          "aria-label",
-          `${day} end time`
-        );
+
+        start.setAttribute("aria-label", `${day} start time`);
+        end.setAttribute("aria-label", `${day} end time`);
 
         TIMES.forEach(time => {
-          const startOption = document.createElement("option");
-          startOption.value = time.value;
-          startOption.textContent = time.label;
+          [start, end].forEach(select => {
+            const option = document.createElement("option");
 
-          const endOption = document.createElement("option");
-          endOption.value = time.value;
-          endOption.textContent = time.label;
+            option.value = time.value;
+            option.textContent = time.label;
 
-          start.appendChild(startOption);
-          end.appendChild(endOption);
+            select.appendChild(option);
+          });
         });
 
-        // Default times are 3:00 PM to 5:00 PM.
         start.value = "15:00";
         end.value = "17:00";
 
-        // Keep these as the reset defaults.
         [...start.options].forEach(option => {
           option.defaultSelected = option.value === "15:00";
         });
@@ -867,63 +846,53 @@
           option.defaultSelected = option.value === "17:00";
         });
 
-        function updateRow() {
+        function updateAvailabilityControls() {
           const unavailable = status.value !== "available";
 
           start.disabled = unavailable;
           end.disabled = unavailable;
+
           row.style.opacity = unavailable ? "0.7" : "1";
         }
 
-        status.addEventListener("change", updateRow);
-
-        row.append(
-          dayName,
-          status,
-          start,
-          end
+        status.addEventListener(
+          "change",
+          updateAvailabilityControls
         );
 
+        row.append(label, status, start, end);
         container.appendChild(row);
-        updateRow();
+
+        updateAvailabilityControls();
       });
     }
 
     function selectedAvailability(containerId, prefix) {
-      const rows = [
+      return [
         ...byId(containerId).querySelectorAll(".day-row")
-      ];
-
-      return rows
+      ]
         .filter(row => {
-          const day = row.dataset.day;
           const status = row.querySelector(
-            `[name="${prefix}-${day}-status"]`
+            `[name="${prefix}-${row.dataset.day}-status"]`
           );
 
           return status.value === "available";
         })
-        .map(row => {
-          const day = row.dataset.day;
+        .map(row => ({
+          day: row.dataset.day,
 
-          const start = row.querySelector(
-            `[name="${prefix}-${day}-start"]`
-          ).value;
+          start: row.querySelector(
+            `[name="${prefix}-${row.dataset.day}-start"]`
+          ).value,
 
-          const end = row.querySelector(
-            `[name="${prefix}-${day}-end"]`
-          ).value;
-
-          return {
-            day,
-            start,
-            end
-          };
-        });
+          end: row.querySelector(
+            `[name="${prefix}-${row.dataset.day}-end"]`
+          ).value
+        }));
     }
 
     function validateAvailability(availability) {
-      if (availability.length === 0) {
+      if (!availability.length) {
         return "Please select Available for at least one day.";
       }
 
@@ -940,40 +909,43 @@
     }
 
     function formatTime(value) {
-      const time = TIMES.find(item => item.value === value);
-      return time ? time.label : value;
+      return TIMES.find(time => time.value === value)?.label || value;
     }
 
     function formatAvailability(availability) {
-      if (!availability || availability.length === 0) {
+      if (!availability || !availability.length) {
         return "Not available";
       }
 
-      return availability.map(range => {
-        // Display legacy string records without crashing.
-        if (typeof range === "string") {
-          return range;
-        }
+      return availability
+        .map(range => {
+          if (typeof range === "string") {
+            return range;
+          }
 
-        if (!range || !range.day || !range.start || !range.end) {
-          return "Unrecognized availability format";
-        }
+          if (
+            !range ||
+            !range.day ||
+            !range.start ||
+            !range.end
+          ) {
+            return "Unrecognized availability format";
+          }
 
-        return (
-          `${range.day}: ${formatTime(range.start)}–` +
-          formatTime(range.end)
-        );
-      }).join("; ");
-    }
-
-    function resetAvailability(containerId, prefix) {
-      renderAvailability(containerId, prefix);
+          return (
+            `${range.day}: ` +
+            `${formatTime(range.start)}–${formatTime(range.end)}`
+          );
+        })
+        .join("; ");
     }
 
     renderAvailability("tutorAvailability", "tutorAvail");
     renderAvailability("requestAvailability", "requestAvail");
 
-    // COURSE NAME AND LEVEL VALIDATION
+    // --------------------------------------------------
+    // COURSE VALIDATION AND NORMALIZATION
+    // --------------------------------------------------
 
     function normalizeSubject(subject) {
       return subject
@@ -990,19 +962,14 @@
         .map(subject => {
           const match = subject.match(/^(.+?)\s+(CP|H|AP)$/i);
 
-          // Validation should run before this function.
           if (!match) {
             return normalizeSubject(subject);
           }
 
-          const courseName = match[1]
-            .trim()
-            .replace(/\s+/g, " ")
-            .toLowerCase();
-
-          const level = match[2].toUpperCase();
-
-          return `${courseName} ${level}`;
+          return (
+            `${match[1].trim().replace(/\s+/g, " ").toLowerCase()} ` +
+            match[2].toUpperCase()
+          );
         });
     }
 
@@ -1012,7 +979,7 @@
         .map(subject => subject.trim())
         .filter(Boolean);
 
-      if (subjects.length === 0) {
+      if (!subjects.length) {
         return "Please enter at least one course.";
       }
 
@@ -1020,7 +987,7 @@
         subject => !/^.+\s+(CP|H|AP)$/i.test(subject)
       );
 
-      if (invalidSubjects.length > 0) {
+      if (invalidSubjects.length) {
         return (
           "Add a level (CP, H, or AP) to each course: " +
           invalidSubjects.join(", ") +
@@ -1032,16 +999,16 @@
     }
 
     function validName(name) {
-      return (
-        typeof name === "string" &&
-        name.trim().length >= 2
-      );
+      return typeof name === "string" && name.trim().length >= 2;
     }
 
-    // TUTOR REGISTRATION FORM
+    // --------------------------------------------------
+    // TUTOR REGISTRATION
+    // --------------------------------------------------
 
     byId("tutorForm").addEventListener("submit", async event => {
       event.preventDefault();
+
       clearStatus("tutorStatus");
 
       const name = byId("tutorName").value.trim();
@@ -1063,8 +1030,6 @@
           "error"
         );
       }
-
-      const subjects = parseSubjects(subjectInput);
 
       if (!validName(name) || !grade) {
         return showStatus(
@@ -1090,14 +1055,15 @@
           name,
           grade,
           gender,
-          subjects,
+          subjects: parseSubjects(subjectInput),
           availability,
+          conflicts: [],
           createdAt: serverTimestamp()
         });
 
         byId("tutorForm").reset();
 
-        resetAvailability(
+        renderAvailability(
           "tutorAvailability",
           "tutorAvail"
         );
@@ -1108,20 +1074,24 @@
           "success"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Tutor registration error:", error);
 
         showStatus(
           "tutorStatus",
-          "We couldn't submit your registration. Check your Firestore setup and security rules, then try again.",
+          `Registration failed: ${error.code || "unknown"} - ` +
+          `${error.message || "Check Firebase setup and Firestore rules."}`,
           "error"
         );
       }
     });
 
-    // STUDENT TUTORING REQUEST FORM
+    // --------------------------------------------------
+    // STUDENT TUTORING REQUEST
+    // --------------------------------------------------
 
     byId("requestForm").addEventListener("submit", async event => {
       event.preventDefault();
+
       clearStatus("requestStatus");
 
       const name = byId("requestName").value.trim();
@@ -1143,8 +1113,6 @@
           "error"
         );
       }
-
-      const subjects = parseSubjects(subjectInput);
 
       if (!validName(name) || !grade || !genderPreference) {
         return showStatus(
@@ -1169,15 +1137,16 @@
         await addDoc(collection(db, "tutoringRequests"), {
           name,
           grade,
-          subjects,
+          subjects: parseSubjects(subjectInput),
           genderPreference,
           availability,
+          conflicts: [],
           createdAt: serverTimestamp()
         });
 
         byId("requestForm").reset();
 
-        resetAvailability(
+        renderAvailability(
           "requestAvailability",
           "requestAvail"
         );
@@ -1188,130 +1157,172 @@
           "success"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Tutoring request error:", error);
 
         showStatus(
           "requestStatus",
-          "We couldn't submit your request. Check your Firestore setup and security rules, then try again.",
+          `Request failed: ${error.code || "unknown"} - ` +
+          `${error.message || "Check Firebase setup and Firestore rules."}`,
           "error"
         );
       }
     });
 
-    // FIND SHARED TIME RANGES
+    // --------------------------------------------------
+    // MATCHING LOGIC
+    // --------------------------------------------------
 
     function commonTimes(tutor, request) {
       const matches = [];
 
-      const tutorRanges = Array.isArray(tutor.availability)
+      const tutorAvailability = Array.isArray(tutor.availability)
         ? tutor.availability
         : [];
 
-      const requestRanges = Array.isArray(request.availability)
+      const requestAvailability = Array.isArray(request.availability)
         ? request.availability
         : [];
 
-      tutorRanges.forEach(tutorRange => {
-        // Old fixed-slot records are not compatible with this format.
+      function toMinutes(value) {
+        if (
+          typeof value !== "string" ||
+          !/^([01]\d|2[0-3]):[0-5]\d$/.test(value)
+        ) {
+          return null;
+        }
+
+        const [hours, minutes] = value.split(":").map(Number);
+
+        return hours * 60 + minutes;
+      }
+
+      function fromMinutes(minutes) {
+        const hours = Math.floor(minutes / 60);
+        const remainder = minutes % 60;
+
+        return (
+          String(hours).padStart(2, "0") +
+          ":" +
+          String(remainder).padStart(2, "0")
+        );
+      }
+
+      for (const tutorRange of tutorAvailability) {
         if (
           !tutorRange ||
           typeof tutorRange !== "object" ||
-          !tutorRange.day ||
-          !tutorRange.start ||
-          !tutorRange.end
+          !tutorRange.day
         ) {
-          return;
+          continue;
         }
 
-        requestRanges.forEach(requestRange => {
+        const tutorStart = toMinutes(tutorRange.start);
+        const tutorEnd = toMinutes(tutorRange.end);
+
+        if (
+          tutorStart === null ||
+          tutorEnd === null ||
+          tutorStart >= tutorEnd
+        ) {
+          continue;
+        }
+
+        for (const requestRange of requestAvailability) {
           if (
             !requestRange ||
             typeof requestRange !== "object" ||
-            !requestRange.day ||
-            !requestRange.start ||
-            !requestRange.end
+            requestRange.day !== tutorRange.day
           ) {
-            return;
+            continue;
           }
 
-          if (tutorRange.day !== requestRange.day) {
-            return;
+          const requestStart = toMinutes(requestRange.start);
+          const requestEnd = toMinutes(requestRange.end);
+
+          if (
+            requestStart === null ||
+            requestEnd === null ||
+            requestStart >= requestEnd
+          ) {
+            continue;
           }
 
-          const start =
-            tutorRange.start > requestRange.start
-              ? tutorRange.start
-              : requestRange.start;
-
-          const end =
-            tutorRange.end < requestRange.end
-              ? tutorRange.end
-              : requestRange.end;
+          // Calculate the actual shared time.
+          // This handles ranges contained within larger ranges.
+          const start = Math.max(tutorStart, requestStart);
+          const end = Math.min(tutorEnd, requestEnd);
 
           if (start < end) {
             matches.push({
               day: tutorRange.day,
-              start,
-              end
+              start: fromMinutes(start),
+              end: fromMinutes(end)
             });
           }
-        });
-      });
+        }
+      }
 
-      // Merge overlapping intervals for the same day.
       const dayOrder = new Map(
         DAYS.map((day, index) => [day, index])
       );
 
-      matches.sort((a, b) =>
-        dayOrder.get(a.day) - dayOrder.get(b.day) ||
-        a.start.localeCompare(b.start)
-      );
+      matches.sort((a, b) => {
+        return (
+          dayOrder.get(a.day) - dayOrder.get(b.day) ||
+          a.start.localeCompare(b.start)
+        );
+      });
 
+      // Merge overlapping ranges on the same day.
       const merged = [];
 
-      matches.forEach(range => {
-        const last = merged[merged.length - 1];
+      for (const range of matches) {
+        const previous = merged[merged.length - 1];
 
         if (
-          last &&
-          last.day === range.day &&
-          range.start <= last.end
+          previous &&
+          previous.day === range.day &&
+          range.start <= previous.end
         ) {
-          if (range.end > last.end) {
-            last.end = range.end;
+          if (range.end > previous.end) {
+            previous.end = range.end;
           }
         } else {
           merged.push({ ...range });
         }
-      });
+      }
 
       return merged;
     }
 
-    function formatCommonTimes(ranges) {
-      if (!ranges.length) {
+    function formatCommonTimes(availability) {
+      if (!availability.length) {
         return "No shared times";
       }
 
-      return ranges.map(range =>
-        `${range.day}: ${formatTime(range.start)}–${formatTime(range.end)}`
-      ).join("; ");
+      return availability
+        .map(range => {
+          return (
+            `${range.day}: ` +
+            `${formatTime(range.start)}–${formatTime(range.end)}`
+          );
+        })
+        .join("; ");
     }
 
-    // FIND MATCHING TUTORS
-
+    // Returns every tutor that matches a student.
+    // One student can have multiple matching tutors.
     function findMatches(request) {
       return tutors.filter(tutor => {
         const tutorSubjects = new Set(
           (tutor.subjects || []).map(normalizeSubject)
         );
 
-        const exactSubjectMatch = (request.subjects || []).some(
+        const hasMatchingCourse = (request.subjects || []).some(
           subject => tutorSubjects.has(normalizeSubject(subject))
         );
 
-        if (!exactSubjectMatch) {
+        if (!hasMatchingCourse) {
           return false;
         }
 
@@ -1326,60 +1337,67 @@
       });
     }
 
+    // --------------------------------------------------
+    // ADMINISTRATOR DISPLAY HELPERS
+    // --------------------------------------------------
+
     function dateText(timestamp) {
-      if (!timestamp || typeof timestamp.toDate !== "function") {
-        return "Recently submitted";
-      }
-
-      return timestamp.toDate().toLocaleString();
+      return (
+        timestamp &&
+        typeof timestamp.toDate === "function"
+      )
+        ? timestamp.toDate().toLocaleString()
+        : "Recently submitted";
     }
-
-    // CREATE ADMIN DASHBOARD RECORD CARDS
 
     function makeRecord({
       title,
       lines,
       buttonText,
-      onDelete,
-      extraClass = ""
+      onDelete
     }) {
       const card = document.createElement("div");
-      card.className = "record " + extraClass;
+      card.className = "record";
 
       const top = document.createElement("div");
       top.className = "record-top";
 
       const content = document.createElement("div");
-
       const heading = document.createElement("strong");
+
       heading.textContent = title;
       content.appendChild(heading);
 
       lines.forEach(line => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        content.appendChild(p);
+        const paragraph = document.createElement("p");
+
+        paragraph.textContent = line;
+        content.appendChild(paragraph);
       });
 
       top.appendChild(content);
 
       if (buttonText) {
         const button = document.createElement("button");
+
         button.className = "danger small-button";
         button.type = "button";
         button.textContent = buttonText;
         button.addEventListener("click", onDelete);
+
         top.appendChild(button);
       }
 
       card.appendChild(top);
+
       return card;
     }
 
     async function deleteOne(collectionName, id, label) {
-      if (!isAdmin) return;
-
-      if (!confirm("Permanently delete this " + label + "?")) {
+      if (
+        !isAdmin ||
+        !confirm(`Permanently delete this ${label}?`)
+      ) {
         return;
       }
 
@@ -1391,16 +1409,20 @@
 
         showStatus(
           "adminStatus",
-          "Deletion failed. Check your Firestore rules.",
+          `Deletion failed: ${error.code || ""} ` +
+          `${error.message || "Check Firestore rules."}`,
           "error"
         );
       }
     }
 
-    // DISPLAY TUTORS
+    // --------------------------------------------------
+    // RENDER TUTORS AND STUDENT REQUESTS
+    // --------------------------------------------------
 
     function renderTutors() {
       const container = byId("tutorsList");
+
       container.replaceChildren();
 
       if (!tutors.length) {
@@ -1409,25 +1431,34 @@
       }
 
       tutors.forEach(tutor => {
-        container.appendChild(makeRecord({
-          title: tutor.name + " · " + tutor.grade,
+        const record = makeRecord({
+          title: `${tutor.name} · ${tutor.grade}`,
+
           lines: [
             "Courses: " + (tutor.subjects || []).join(", "),
             "Gender: " + (tutor.gender || "Not provided"),
             "Available: " + formatAvailability(tutor.availability),
             "Submitted: " + dateText(tutor.createdAt)
           ],
+
           buttonText: "Delete Tutor",
-          onDelete: () =>
-            deleteOne("peerTutors", tutor.id, "tutor registration")
-        }));
+
+          onDelete: () => {
+            deleteOne(
+              "peerTutors",
+              tutor.id,
+              "tutor registration"
+            );
+          }
+        });
+
+        container.appendChild(record);
       });
     }
 
-    // DISPLAY TUTORING REQUESTS
-
     function renderRequests() {
       const container = byId("requestsList");
+
       container.replaceChildren();
 
       if (!requests.length) {
@@ -1436,27 +1467,40 @@
       }
 
       requests.forEach(request => {
-        container.appendChild(makeRecord({
-          title: request.name + " · " + request.grade,
+        const record = makeRecord({
+          title: `${request.name} · ${request.grade}`,
+
           lines: [
             "Courses requested: " +
               (request.subjects || []).join(", "),
+
             "Gender preference: " +
               (request.genderPreference || "Not provided"),
-            "Available: " + formatAvailability(request.availability),
+
+            "Available: " +
+              formatAvailability(request.availability),
+
             "Submitted: " + dateText(request.createdAt)
           ],
+
           buttonText: "Delete Request",
-          onDelete: () =>
-            deleteOne("tutoringRequests", request.id, "tutoring request")
-        }));
+
+          onDelete: () => {
+            deleteOne(
+              "tutoringRequests",
+              request.id,
+              "tutoring request"
+            );
+          }
+        });
+
+        container.appendChild(record);
       });
     }
 
-    // DISPLAY MATCHING RESULTS
-
     function renderMatches() {
       const container = byId("matchesList");
+
       container.replaceChildren();
 
       if (!requests.length) {
@@ -1465,47 +1509,62 @@
       }
 
       requests.forEach(request => {
-        const matches = findMatches(request);
+        const matchingTutors = findMatches(request);
 
         const card = document.createElement("div");
-        card.className = "record " +
-          (matches.length ? "match" : "match-none");
+
+        card.className =
+          "record " +
+          (matchingTutors.length ? "match" : "match-none");
 
         const heading = document.createElement("strong");
+
         heading.textContent =
-          request.name + " · " +
+          `${request.name} · ` +
           (request.subjects || []).join(", ");
 
         card.appendChild(heading);
 
-        if (!matches.length) {
-          const p = document.createElement("p");
+        if (!matchingTutors.length) {
+          const paragraph = document.createElement("p");
 
-          p.textContent =
+          paragraph.textContent =
             "No tutor found with the same course and level, " +
             "compatible gender preference, and overlapping availability.";
 
-          card.appendChild(p);
+          card.appendChild(paragraph);
         } else {
-          matches.forEach(tutor => {
-            const p = document.createElement("p");
+          const summary = document.createElement("p");
 
-            const sharedSubjects = (tutor.subjects || []).filter(
-              subject =>
-                (request.subjects || []).some(
-                  wanted =>
-                    normalizeSubject(subject) ===
-                    normalizeSubject(wanted)
-                )
+          summary.textContent =
+            `${matchingTutors.length} matching tutor` +
+            `${matchingTutors.length === 1 ? "" : "s"} found:`;
+
+          card.appendChild(summary);
+
+          matchingTutors.forEach(tutor => {
+            const paragraph = document.createElement("p");
+
+            const sharedCourses = (tutor.subjects || []).filter(
+              tutorSubject => {
+                return (request.subjects || []).some(
+                  requestSubject => {
+                    return (
+                      normalizeSubject(tutorSubject) ===
+                      normalizeSubject(requestSubject)
+                    );
+                  }
+                );
+              }
             );
 
-            p.textContent =
-              tutor.name + " (" + tutor.grade + ")" +
-              " · Courses: " + sharedSubjects.join(", ") +
-              " · Shared times: " +
+            paragraph.textContent =
+              `${tutor.name} (${tutor.grade}) · ` +
+              `Courses: ${sharedCourses.join(", ")} · ` +
+              `Shared times: ` +
               formatCommonTimes(commonTimes(tutor, request));
 
-            card.appendChild(p);
+            card.appendChild(paragraph);
           });
         }
 
@@ -1513,12 +1572,20 @@
       });
     }
 
+    // --------------------------------------------------
     // LOAD FIRESTORE RECORDS
+    // --------------------------------------------------
 
     async function loadRecords() {
-      if (!isAdmin) return;
+      if (!isAdmin) {
+        return;
+      }
 
-      showStatus("adminStatus", "Loading records…", "info");
+      showStatus(
+        "adminStatus",
+        "Loading records…",
+        "info"
+      );
 
       try {
         const [tutorSnapshot, requestSnapshot] =
@@ -1527,14 +1594,14 @@
             getDocs(collection(db, "tutoringRequests"))
           ]);
 
-        tutors = tutorSnapshot.docs.map(item => ({
-          id: item.id,
-          ...item.data()
+        tutors = tutorSnapshot.docs.map(document => ({
+          id: document.id,
+          ...document.data()
         }));
 
-        requests = requestSnapshot.docs.map(item => ({
-          id: item.id,
-          ...item.data()
+        requests = requestSnapshot.docs.map(document => ({
+          id: document.id,
+          ...document.data()
         }));
 
         renderMatches();
@@ -1543,17 +1610,20 @@
 
         clearStatus("adminStatus");
       } catch (error) {
-        console.error(error);
+        console.error("Loading records error:", error);
 
         showStatus(
           "adminStatus",
-          "Could not load records. Verify administrator access and your Firestore rules.",
+          `Could not load records: ${error.code || ""} ` +
+          `${error.message || "Verify administrator access and Firestore rules."}`,
           "error"
         );
       }
     }
 
-    // VERIFY ADMINISTRATOR ACCESS
+    // --------------------------------------------------
+    // ADMINISTRATOR VERIFICATION
+    // --------------------------------------------------
 
     async function checkAdmin(user) {
       if (!user || !user.email) {
@@ -1561,103 +1631,103 @@
       }
 
       try {
-        const adminDoc = await getDoc(
+        const snapshot = await getDoc(
           doc(db, "admins", user.uid)
         );
 
-        if (!adminDoc.exists()) {
+        if (!snapshot.exists()) {
           console.error(
             "Admin document not found for UID:",
             user.uid
           );
+
           return false;
         }
 
-        const adminData = adminDoc.data();
+        const data = snapshot.data();
 
-        const approvedEmail =
-          typeof adminData.email === "string"
-            ? adminData.email.trim().toLowerCase()
+        const email =
+          typeof data.email === "string"
+            ? data.email.trim().toLowerCase()
             : "";
 
-        const signedInEmail = user.email.trim().toLowerCase();
-
-        const approved =
-          adminData.enabled === true &&
-          approvedEmail === signedInEmail;
-
-        console.log("Admin check:", {
-          documentExists: true,
-          enabled: adminData.enabled,
-          emailMatches: approvedEmail === signedInEmail,
-          approved
-        });
-
-        return approved;
+        return (
+          data.enabled === true &&
+          email === user.email.trim().toLowerCase()
+        );
       } catch (error) {
         console.error("Admin verification failed:", error);
         return false;
       }
     }
 
-    // ADMIN SIGN-IN
+    // --------------------------------------------------
+    // ADMINISTRATOR LOGIN
+    // --------------------------------------------------
 
-    byId("loginForm").addEventListener("submit", async event => {
-      event.preventDefault();
+    byId("loginForm").addEventListener(
+      "submit",
+      async event => {
+        event.preventDefault();
 
-      showStatus("adminStatus", "Signing in…", "info");
-
-      try {
-        const credential = await signInWithEmailAndPassword(
-          auth,
-          byId("adminEmail").value.trim(),
-          byId("adminPassword").value
+        showStatus(
+          "adminStatus",
+          "Signing in…",
+          "info"
         );
 
-        const approved = await checkAdmin(credential.user);
+        try {
+          const credential =
+            await signInWithEmailAndPassword(
+              auth,
+              byId("adminEmail").value.trim(),
+              byId("adminPassword").value
+            );
 
-        if (!approved) {
-          await signOut(auth);
+          if (!await checkAdmin(credential.user)) {
+            await signOut(auth);
 
-          isAdmin = false;
-          currentAdmin = null;
+            isAdmin = false;
+            currentAdmin = null;
 
-          byId("dashboard").classList.add("hidden");
-          byId("loginForm").classList.remove("hidden");
+            byId("dashboard").classList.add("hidden");
+            byId("loginForm").classList.remove("hidden");
 
-          return showStatus(
+            return showStatus(
+              "adminStatus",
+              "This account is not an approved administrator. " +
+              "Ask the project owner to approve it in Firebase.",
+              "error"
+            );
+          }
+
+          currentAdmin = credential.user;
+          isAdmin = true;
+
+          byId("dashboard").classList.remove("hidden");
+          byId("loginForm").classList.add("hidden");
+
+          showStatus(
             "adminStatus",
-            "This account is not an approved administrator. Ask the project owner to approve it in Firebase.",
+            "Administrator access verified.",
+            "success"
+          );
+
+          await loadRecords();
+        } catch (error) {
+          console.error("Sign-in error:", error);
+
+          showStatus(
+            "adminStatus",
+            `Sign-in failed: ${error.code || ""} ` +
+            `${error.message || "Check email/password and Email/Password sign-in settings."}`,
             "error"
           );
         }
-
-        currentAdmin = credential.user;
-        isAdmin = true;
-
-        byId("dashboard").classList.remove("hidden");
-        byId("loginForm").classList.add("hidden");
-
-        showStatus(
-          "adminStatus",
-          "Administrator access verified.",
-          "success"
-        );
-
-        await loadRecords();
-      } catch (error) {
-        console.error(error);
-
-        showStatus(
-          "adminStatus",
-          "Sign-in failed. Check the email and password, and confirm that Email/Password sign-in is enabled.",
-          "error"
-        );
       }
-    });
+    );
 
-    // KEEP ADMIN SESSION IN SYNC
-
+    // Keep the dashboard synchronized with the Firebase login state.
     onAuthStateChanged(auth, async user => {
       if (!user) {
         currentAdmin = null;
@@ -1665,17 +1735,17 @@
 
         byId("dashboard").classList.add("hidden");
         byId("loginForm").classList.remove("hidden");
+
         return;
       }
 
-      const approved = await checkAdmin(user);
-
-      if (!approved) {
+      if (!await checkAdmin(user)) {
         currentAdmin = null;
         isAdmin = false;
 
         byId("dashboard").classList.add("hidden");
         byId("loginForm").classList.remove("hidden");
+
         return;
       }
 
@@ -1688,113 +1758,130 @@
       await loadRecords();
     });
 
-    // REFRESH RECORDS
+    // --------------------------------------------------
+    // ADMINISTRATOR BUTTONS
+    // --------------------------------------------------
 
-    byId("refreshButton").addEventListener("click", () => {
-      loadRecords();
-    });
+    byId("refreshButton").addEventListener(
+      "click",
+      () => loadRecords()
+    );
 
-    // SIGN OUT
+    byId("logoutButton").addEventListener(
+      "click",
+      async () => {
+        try {
+          await signOut(auth);
 
-    byId("logoutButton").addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-
-        showStatus(
-          "adminStatus",
-          "You have signed out.",
-          "info"
-        );
-      } catch (error) {
-        console.error(error);
-
-        showStatus(
-          "adminStatus",
-          "Could not sign out. Please try again.",
-          "error"
-        );
-      }
-    });
-
-    // DELETE ALL RECORDS
-
-    byId("deleteAllConfirm").addEventListener("input", event => {
-      byId("deleteAllButton").disabled =
-        event.target.value !== "YES" || !isAdmin;
-    });
-
-    byId("deleteAllButton").addEventListener("click", async () => {
-      if (
-        !isAdmin ||
-        byId("deleteAllConfirm").value !== "YES"
-      ) {
-        return showStatus(
-          "deleteStatus",
-          "Type YES exactly to confirm.",
-          "error"
-        );
-      }
-
-      const confirmed = confirm(
-        "This permanently deletes ALL tutor registrations " +
-        "and tutoring requests. Continue?"
-      );
-
-      if (!confirmed) return;
-
-      byId("deleteAllButton").disabled = true;
-
-      showStatus(
-        "deleteStatus",
-        "Deleting records…",
-        "info"
-      );
-
-      try {
-        for (const collectionName of [
-          "peerTutors",
-          "tutoringRequests"
-        ]) {
-          const snapshot = await getDocs(
-            collection(db, collectionName)
+          showStatus(
+            "adminStatus",
+            "You have signed out.",
+            "info"
           );
+        } catch (error) {
+          console.error(error);
 
-          const items = snapshot.docs;
+          showStatus(
+            "adminStatus",
+            "Could not sign out. Please try again.",
+            "error"
+          );
+        }
+      }
+    );
 
-          for (let i = 0; i < items.length; i += 400) {
-            await Promise.all(
-              items.slice(i, i + 400).map(item =>
-                deleteDoc(item.ref)
-              )
-            );
-          }
+    // --------------------------------------------------
+    // DELETE ALL RECORDS
+    // --------------------------------------------------
+
+    byId("deleteAllConfirm").addEventListener(
+      "input",
+      event => {
+        byId("deleteAllButton").disabled =
+          event.target.value !== "YES" || !isAdmin;
+      }
+    );
+
+    byId("deleteAllButton").addEventListener(
+      "click",
+      async () => {
+        if (
+          !isAdmin ||
+          byId("deleteAllConfirm").value !== "YES"
+        ) {
+          return showStatus(
+            "deleteStatus",
+            "Type YES exactly to confirm.",
+            "error"
+          );
         }
 
-        byId("deleteAllConfirm").value = "";
+        if (
+          !confirm(
+            "This permanently deletes ALL tutor registrations " +
+            "and tutoring requests. Continue?"
+          )
+        ) {
+          return;
+        }
 
-        await loadRecords();
+        byId("deleteAllButton").disabled = true;
 
         showStatus(
           "deleteStatus",
-          "All tutor registrations and requests were deleted.",
-          "success"
+          "Deleting records…",
+          "info"
         );
-      } catch (error) {
-        console.error(error);
 
-        showStatus(
-          "deleteStatus",
-          "Some records may remain if deletion was interrupted. Refresh the records and check again.",
-          "error"
-        );
-      } finally {
-        byId("deleteAllButton").disabled =
-          byId("deleteAllConfirm").value !== "YES" ||
-          !isAdmin;
+        try {
+          for (const collectionName of [
+            "peerTutors",
+            "tutoringRequests"
+          ]) {
+            const snapshot = await getDocs(
+              collection(db, collectionName)
+            );
+
+            const documents = snapshot.docs;
+
+            for (let i = 0; i < documents.length; i += 400) {
+              const batch = documents.slice(i, i + 400);
+
+              await Promise.all(
+                batch.map(document => deleteDoc(document.ref))
+              );
+            }
+          }
+
+          byId("deleteAllConfirm").value = "";
+
+          await loadRecords();
+
+          showStatus(
+            "deleteStatus",
+            "All tutor registrations and requests were deleted.",
+            "success"
+          );
+        } catch (error) {
+          console.error(error);
+
+          showStatus(
+            "deleteStatus",
+            `Deletion may be incomplete: ${error.code || ""} ` +
+            `${error.message || "Refresh records and check again."}`,
+            "error"
+          );
+        } finally {
+          byId("deleteAllButton").disabled =
+            byId("deleteAllConfirm").value !== "YES" ||
+            !isAdmin;
+        }
       }
-    });
+    );
 
-    // NAVIGATION BETWEEN PANELS
+    // --------------------------------------------------
+    // NAVIGATION TABS
+    // --------------------------------------------------
 
     document.querySelectorAll(".tab").forEach(button => {
       button.addEventListener("click", () => {

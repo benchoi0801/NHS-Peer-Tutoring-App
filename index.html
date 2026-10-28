@@ -290,16 +290,7 @@
             </select>
           </div>
 
-          <div class="field">
-            <label for="tutorGender">Gender (optional)</label>
-            <select id="tutorGender">
-              <option value="Prefer not to answer">Prefer not to answer</option>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-          </div>
-
-          <div class="field">
+          <div class="field full">
             <label for="tutorSubjects">Subjects you can teach *</label>
             <input
               id="tutorSubjects"
@@ -308,7 +299,7 @@
               placeholder="e.g. Algebra 1 H, Calculus BC AP"
             >
             <div class="help">
-              Format: 1. Class (eg. Algebra 1 or Calculus BC)
+              Format: 1. Class (e.g. Algebra 1 or Calculus BC)
               2. Level (CP, H, or AP). Enter the class first, followed
               by its level. Do not use Roman numerals. Separate multiple
               subjects with commas.
@@ -318,17 +309,6 @@
           <div class="field full">
             <div class="section-label">When are you available? *</div>
             <div id="tutorAvailability" class="choices"></div>
-          </div>
-
-          <div class="field full">
-            <div class="section-label">
-              Sports, clubs, or other scheduling conflicts
-            </div>
-            <div class="help">
-              Select any time slots when your commitments may prevent
-              you from tutoring.
-            </div>
-            <div id="tutorConflicts" class="choices"></div>
           </div>
         </div>
 
@@ -377,36 +357,16 @@
               placeholder="e.g. Algebra 1 H, Calculus BC AP"
             >
             <div class="help">
-              Format: 1. Class (eg. Algebra 1 or Calculus BC)
+              Format: 1. Class (e.g. Algebra 1 or Calculus BC)
               2. Level (CP, H, or AP). Enter the class first, followed
               by its level. Do not use Roman numerals. Separate multiple
               subjects with commas.
             </div>
           </div>
 
-          <div class="field">
-            <label for="genderPreference">Tutor gender preference *</label>
-            <select id="genderPreference" required>
-              <option value="Does not matter">Does not matter</option>
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-          </div>
-
           <div class="field full">
             <div class="section-label">When are you available? *</div>
             <div id="requestAvailability" class="choices"></div>
-          </div>
-
-          <div class="field full">
-            <div class="section-label">
-              Sports, clubs, or other scheduling conflicts
-            </div>
-            <div class="help">
-              Select any time slots when your commitments may prevent you
-              from meeting.
-            </div>
-            <div id="requestConflicts" class="choices"></div>
           </div>
         </div>
 
@@ -537,8 +497,7 @@
 
         <h3>Matching Results</h3>
         <p class="muted">
-          A match requires an exact subject, a compatible gender preference,
-          a shared available time, and no selected conflict at that time.
+          A match requires an exact subject and a shared available time.
           Confirm arrangements with students before scheduling.
         </p>
         <div id="matchesList"></div>
@@ -629,12 +588,42 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // All available tutoring time slots.
     const timeSlots = [
-      "Monday 3–4 PM", "Monday 4–5 PM",
-      "Tuesday 3–4 PM", "Tuesday 4–5 PM",
-      "Wednesday 3–4 PM", "Wednesday 4–5 PM",
-      "Thursday 3–4 PM", "Thursday 4–5 PM",
-      "Friday 3–4 PM", "Friday 4–5 PM"
+      "Monday 3–4 PM",
+      "Monday 4–5 PM",
+      "Monday 5–6 PM",
+      "Monday 6–7 PM",
+      "Monday 7–8 PM",
+      "Monday 8–9 PM",
+
+      "Tuesday 3–4 PM",
+      "Tuesday 4–5 PM",
+      "Tuesday 5–6 PM",
+      "Tuesday 6–7 PM",
+      "Tuesday 7–8 PM",
+      "Tuesday 8–9 PM",
+
+      "Wednesday 3–4 PM",
+      "Wednesday 4–5 PM",
+      "Wednesday 5–6 PM",
+      "Wednesday 6–7 PM",
+      "Wednesday 7–8 PM",
+      "Wednesday 8–9 PM",
+
+      "Thursday 3–4 PM",
+      "Thursday 4–5 PM",
+      "Thursday 5–6 PM",
+      "Thursday 6–7 PM",
+      "Thursday 7–8 PM",
+      "Thursday 8–9 PM",
+
+      "Friday 3–4 PM",
+      "Friday 4–5 PM",
+      "Friday 5–6 PM",
+      "Friday 6–7 PM",
+      "Friday 7–8 PM",
+      "Friday 8–9 PM"
     ];
 
     let currentAdmin = null;
@@ -682,9 +671,7 @@
     }
 
     renderTimeChoices("tutorAvailability", "tutorAvail");
-    renderTimeChoices("tutorConflicts", "tutorConflict");
     renderTimeChoices("requestAvailability", "requestAvail");
-    renderTimeChoices("requestConflicts", "requestConflict");
 
     function selectedSlots(prefix) {
       return [
@@ -719,12 +706,6 @@
       ];
     }
 
-    // Accepted examples:
-    // Algebra 1 H
-    // Biology AP
-    // Calculus BC AP
-    // History CP
-    //
     // The final token must be CP, H, or AP.
     // Standalone Roman numerals are prohibited.
     function validateSubjects(subjects) {
@@ -751,13 +732,9 @@
       return "";
     }
 
-    function validateSlots(availability, conflicts) {
+    function validateSlots(availability) {
       if (!availability.length) {
         return "Select at least one available time slot.";
-      }
-
-      if (availability.every(slot => conflicts.includes(slot))) {
-        return "Your selected conflicts cover every available time. Please review your choices.";
       }
 
       return "";
@@ -774,10 +751,8 @@
 
       const name = byId("tutorName").value.trim();
       const grade = byId("tutorGrade").value;
-      const gender = byId("tutorGender").value;
       const subjects = parseSubjects(byId("tutorSubjects").value);
       const availability = selectedSlots("tutorAvail");
-      const conflicts = selectedSlots("tutorConflict");
 
       if (!validName(name) || !grade || !subjects.length) {
         return showStatus(
@@ -793,7 +768,7 @@
         return showStatus("tutorStatus", subjectError, "error");
       }
 
-      const slotError = validateSlots(availability, conflicts);
+      const slotError = validateSlots(availability);
 
       if (slotError) {
         return showStatus("tutorStatus", slotError, "error");
@@ -803,16 +778,13 @@
         await addDoc(collection(db, "peerTutors"), {
           name,
           grade,
-          gender,
           subjects,
           availability,
-          conflicts,
           createdAt: serverTimestamp()
         });
 
         byId("tutorForm").reset();
         resetSlots("tutorAvail");
-        resetSlots("tutorConflict");
 
         showStatus(
           "tutorStatus",
@@ -838,16 +810,9 @@
       const name = byId("requestName").value.trim();
       const grade = byId("requestGrade").value;
       const subjects = parseSubjects(byId("requestSubjects").value);
-      const genderPreference = byId("genderPreference").value;
       const availability = selectedSlots("requestAvail");
-      const conflicts = selectedSlots("requestConflict");
 
-      if (
-        !validName(name) ||
-        !grade ||
-        !subjects.length ||
-        !genderPreference
-      ) {
+      if (!validName(name) || !grade || !subjects.length) {
         return showStatus(
           "requestStatus",
           "Please complete all required fields.",
@@ -861,7 +826,7 @@
         return showStatus("requestStatus", subjectError, "error");
       }
 
-      const slotError = validateSlots(availability, conflicts);
+      const slotError = validateSlots(availability);
 
       if (slotError) {
         return showStatus("requestStatus", slotError, "error");
@@ -872,15 +837,12 @@
           name,
           grade,
           subjects,
-          genderPreference,
           availability,
-          conflicts,
           createdAt: serverTimestamp()
         });
 
         byId("requestForm").reset();
         resetSlots("requestAvail");
-        resetSlots("requestConflict");
 
         showStatus(
           "requestStatus",
@@ -977,7 +939,7 @@
       }
     });
 
-    // Find compatible tutors.
+    // Find compatible tutors using exact subjects and shared time slots.
     function findMatches(request) {
       return tutors.filter(tutor => {
         const tutorSubjects = new Set(
@@ -990,38 +952,23 @@
 
         if (!exactSubjectMatch) return false;
 
-        if (
-          request.genderPreference !== "Does not matter" &&
-          tutor.gender !== request.genderPreference
-        ) {
-          return false;
-        }
-
         const tutorAvailable = new Set(tutor.availability || []);
-        const tutorConflicts = new Set(tutor.conflicts || []);
         const requestAvailable = new Set(request.availability || []);
-        const requestConflicts = new Set(request.conflicts || []);
 
         return timeSlots.some(slot =>
           tutorAvailable.has(slot) &&
-          requestAvailable.has(slot) &&
-          !tutorConflicts.has(slot) &&
-          !requestConflicts.has(slot)
+          requestAvailable.has(slot)
         );
       });
     }
 
     function commonTimes(tutor, request) {
       const tutorAvailable = new Set(tutor.availability || []);
-      const tutorConflicts = new Set(tutor.conflicts || []);
       const requestAvailable = new Set(request.availability || []);
-      const requestConflicts = new Set(request.conflicts || []);
 
       return timeSlots.filter(slot =>
         tutorAvailable.has(slot) &&
-        requestAvailable.has(slot) &&
-        !tutorConflicts.has(slot) &&
-        !requestConflicts.has(slot)
+        requestAvailable.has(slot)
       );
     }
 
@@ -1109,10 +1056,7 @@
           title: tutor.name + " · " + tutor.grade,
           lines: [
             "Subjects: " + (tutor.subjects || []).join(", "),
-            "Gender: " + (tutor.gender || "Not provided"),
             "Available: " + (tutor.availability || []).join(", "),
-            "Conflicts: " +
-              ((tutor.conflicts || []).join(", ") || "None selected"),
             "Submitted: " + dateText(tutor.createdAt)
           ],
           buttonText: "Delete Tutor",
@@ -1137,11 +1081,7 @@
           title: request.name + " · " + request.grade,
           lines: [
             "Subjects requested: " + (request.subjects || []).join(", "),
-            "Gender preference: " +
-              (request.genderPreference || "Not provided"),
             "Available: " + (request.availability || []).join(", "),
-            "Conflicts: " +
-              ((request.conflicts || []).join(", ") || "None selected"),
             "Submitted: " + dateText(request.createdAt)
           ],
           buttonText: "Delete Request",
@@ -1209,7 +1149,7 @@
           const p = document.createElement("p");
 
           p.textContent =
-            "No exact-subject, gender-compatible, schedule-compatible tutor found.";
+            "No tutor with an exact subject match and shared available time was found.";
 
           card.append(p);
         } else {

@@ -18,6 +18,7 @@
   --red: #b42318;
 }
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   background: var(--light);
@@ -25,15 +26,18 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
 }
+
 header {
   background: linear-gradient(135deg, #16345c, #2864a8);
   color: white;
   padding: 38px 20px;
 }
+
 .hero, main {
   width: min(100% - 32px, 1000px);
   margin: auto;
 }
+
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -41,12 +45,19 @@ header {
   font-weight: bold;
   opacity: .85;
 }
-h1 { margin: 8px 0; font-size: clamp(28px, 5vw, 42px); }
+
+h1 {
+  margin: 8px 0;
+  font-size: clamp(28px, 5vw, 42px);
+}
+
 h2, h3 { color: var(--navy); }
 h2 { margin-top: 0; }
 p { margin-top: 6px; }
 .subtitle { max-width: 620px; opacity: .9; }
+
 main { padding: 24px 0 60px; }
+
 .notice {
   background: #fff8e7;
   border: 1px solid #f0d58c;
@@ -55,12 +66,15 @@ main { padding: 24px 0 60px; }
   margin-bottom: 18px;
   font-size: 14px;
 }
+
 .tabs, .choice-group, .admin-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .tabs { margin-bottom: 20px; }
+
 button {
   border: 0;
   border-radius: 9px;
@@ -70,14 +84,21 @@ button {
   cursor: pointer;
   transition: .15s ease;
 }
+
 button:hover { filter: brightness(.95); }
 button:disabled { opacity: .45; cursor: not-allowed; }
+
 .tab {
   background: white;
   color: var(--navy);
   border: 1px solid var(--border);
 }
-.tab.active, .primary { background: var(--blue); color: white; }
+
+.tab.active, .primary {
+  background: var(--blue);
+  color: white;
+}
+
 .panel, .card {
   background: white;
   border: 1px solid var(--border);
@@ -86,20 +107,25 @@ button:disabled { opacity: .45; cursor: not-allowed; }
   margin-bottom: 20px;
   box-shadow: 0 5px 18px rgba(22,52,92,.04);
 }
+
 .hidden { display: none !important; }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 17px;
 }
+
 .field { min-width: 0; }
 .full { grid-column: 1 / -1; }
+
 label {
   display: block;
   font-weight: bold;
   font-size: 14px;
   margin-bottom: 7px;
 }
+
 input {
   width: 100%;
   padding: 11px 12px;
@@ -109,23 +135,29 @@ input {
   background: white;
   color: var(--text);
 }
+
 input:focus {
   outline: 2px solid #9bc4f4;
   border-color: var(--blue);
 }
+
 .help, .muted {
   font-size: 13px;
   color: var(--muted);
 }
+
 .help { font-size: 12px; margin-top: 5px; }
+
 .section-label {
   font-size: 15px;
   font-weight: bold;
   margin: 18px 0 9px;
 }
+
 .primary, .danger { padding: 12px 17px; }
 .danger { background: var(--red); color: white; }
 .secondary { background: #eaf0f7; color: var(--navy); }
+
 .status {
   margin-top: 14px;
   padding: 11px 13px;
@@ -133,6 +165,7 @@ input:focus {
   font-size: 14px;
   white-space: pre-wrap;
 }
+
 .success { background: #eaf8f0; color: #17643d; }
 .error { background: #fff0ef; color: #9f2018; }
 .info { background: #edf4ff; color: #204e86; }
@@ -143,11 +176,13 @@ input:focus {
   color: var(--navy);
   padding: 10px 13px;
 }
+
 .choice-button.selected {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
 }
+
 .choice-button:focus-visible, .time-button:focus-visible {
   outline: 3px solid #9bc4f4;
   outline-offset: 2px;
@@ -158,12 +193,14 @@ input:focus {
   gap: 18px;
   margin-top: 12px;
 }
+
 .day-card {
   background: white;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 16px;
 }
+
 .day-header {
   display: flex;
   align-items: center;
@@ -172,37 +209,38 @@ input:focus {
   flex-wrap: wrap;
   margin-bottom: 12px;
 }
+
 .day-name {
   color: var(--navy);
   font-size: 16px;
   font-weight: bold;
 }
-.day-card.unavailable .time-range { opacity: .45; }
-.time-range {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
+
 .time-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
 }
+
 .time-button {
   background: #f4f7fb;
   color: var(--navy);
   border: 1px solid var(--border);
   padding: 8px 10px;
-  min-width: 88px;
+  min-width: 95px;
   font-size: 12px;
 }
+
 .time-button.selected {
   background: var(--blue);
   border-color: var(--blue);
   color: white;
 }
-.time-button:disabled { opacity: .3; cursor: not-allowed; }
+
+.time-button:disabled {
+  opacity: .3;
+  cursor: not-allowed;
+}
 
 .record {
   border: 1px solid var(--border);
@@ -211,31 +249,50 @@ input:focus {
   margin-top: 12px;
   overflow-wrap: anywhere;
 }
+
 .record-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
 }
+
 .record p { margin: 5px 0; font-size: 14px; }
-.match { border-left: 4px solid var(--green); padding-left: 12px; }
-.match-none { border-left: 4px solid #d9a323; padding-left: 12px; }
-.small-button { padding: 8px 10px; font-size: 12px; }
-.danger-zone { border: 1px solid #f0c3c0; background: #fffafa; }
+
+.match {
+  border-left: 4px solid var(--green);
+  padding-left: 12px;
+}
+
+.match-none {
+  border-left: 4px solid #d9a323;
+  padding-left: 12px;
+}
+
+.small-button {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.danger-zone {
+  border: 1px solid #f0c3c0;
+  background: #fffafa;
+}
+
 footer {
   text-align: center;
   padding: 20px;
   color: var(--muted);
   font-size: 12px;
 }
+
 @media (max-width: 650px) {
   .grid { grid-template-columns: 1fr; }
   .full { grid-column: auto; }
   .panel, .card { padding: 17px; }
   header { padding: 30px 0; }
   .record-top { flex-direction: column; }
-  .time-range { grid-template-columns: 1fr; }
-  .time-button { min-width: 78px; }
+  .time-button { min-width: 85px; }
 }
 </style>
 </head>
@@ -259,15 +316,23 @@ footer {
   </div>
 
   <nav class="tabs" aria-label="Main navigation">
-    <button type="button" class="tab active" data-panel="tutorPanel">Become a Tutor</button>
-    <button type="button" class="tab" data-panel="requestPanel">Request a Tutor</button>
-    <button type="button" class="tab" data-panel="adminPanel">Admin Login</button>
+    <button type="button" class="tab active" data-panel="tutorPanel">
+      Become a Tutor
+    </button>
+    <button type="button" class="tab" data-panel="requestPanel">
+      Request a Tutor
+    </button>
+    <button type="button" class="tab" data-panel="adminPanel">
+      Admin Login
+    </button>
   </nav>
 
   <!-- TUTOR REGISTRATION -->
   <section id="tutorPanel" class="panel">
     <h2>Become a Peer Tutor</h2>
-    <p class="muted">Tell us which subjects you can help with and when you are available.</p>
+    <p class="muted">
+      Tell us which subjects you can help with and when you are available.
+    </p>
 
     <form id="tutorForm">
       <div class="grid">
@@ -291,7 +356,8 @@ footer {
           <label>Gender (optional)</label>
           <input type="hidden" id="tutorGender" value="Prefer not to answer">
           <div class="choice-group" data-choice-for="tutorGender">
-            <button type="button" class="choice-button selected" data-value="Prefer not to answer">Prefer not to answer</button>
+            <button type="button" class="choice-button selected"
+              data-value="Prefer not to answer">Prefer not to answer</button>
             <button type="button" class="choice-button" data-value="Male">Male</button>
             <button type="button" class="choice-button" data-value="Female">Female</button>
           </div>
@@ -310,15 +376,18 @@ footer {
         <div class="field full">
           <div class="section-label">Weekly Availability *</div>
           <p class="help">
-            Choose Available for each weekday you can meet. Select a start
-            time and an end time. Choices use 30-minute increments from
-            8:00 AM to 9:00 PM.
+            Select every 30-minute time slot when you can meet.
+            You can select multiple slots on each weekday.
+            Click a selected slot again to deselect it.
+            Available times run from 8:00 AM through 9:00 PM.
           </p>
           <div id="tutorAvailability" class="availability-days"></div>
         </div>
       </div>
 
-      <p><button class="primary" type="submit">Submit Tutor Registration</button></p>
+      <p>
+        <button class="primary" type="submit">Submit Tutor Registration</button>
+      </p>
       <div id="tutorStatus" aria-live="polite"></div>
     </form>
   </section>
@@ -327,7 +396,8 @@ footer {
   <section id="requestPanel" class="panel hidden">
     <h2>Request a Tutor</h2>
     <p class="muted">
-      We'll identify tutors with an exact course match and compatible schedules.
+      We'll identify tutors with an exact course match and at least one
+      identical available time slot.
     </p>
 
     <form id="requestForm">
@@ -362,7 +432,8 @@ footer {
           <label>Tutor gender preference *</label>
           <input type="hidden" id="genderPreference" value="Does not matter">
           <div class="choice-group" data-choice-for="genderPreference">
-            <button type="button" class="choice-button selected" data-value="Does not matter">Does not matter</button>
+            <button type="button" class="choice-button selected"
+              data-value="Does not matter">Does not matter</button>
             <button type="button" class="choice-button" data-value="Male">Male</button>
             <button type="button" class="choice-button" data-value="Female">Female</button>
           </div>
@@ -371,14 +442,17 @@ footer {
         <div class="field full">
           <div class="section-label">Weekly Availability *</div>
           <p class="help">
-            Select Available for each weekday you can meet. Choose a start
-            time and end time using 30-minute increments.
+            Select every 30-minute time slot when you can meet.
+            You can select multiple slots on each weekday.
+            Click a selected slot again to deselect it.
           </p>
           <div id="requestAvailability" class="availability-days"></div>
         </div>
       </div>
 
-      <p><button class="primary" type="submit">Submit Tutoring Request</button></p>
+      <p>
+        <button class="primary" type="submit">Submit Tutoring Request</button>
+      </p>
       <div id="requestStatus" aria-live="polite"></div>
     </form>
   </section>
@@ -386,7 +460,9 @@ footer {
   <!-- ADMIN LOGIN AND DASHBOARD -->
   <section id="adminPanel" class="panel hidden">
     <h2>Administrator Dashboard</h2>
-    <p class="muted">Sign in with an administrator account approved in Firebase.</p>
+    <p class="muted">
+      Sign in with an administrator account approved in Firebase.
+    </p>
 
     <form id="loginForm">
       <div class="grid">
@@ -396,7 +472,8 @@ footer {
         </div>
         <div class="field">
           <label for="adminPassword">Password</label>
-          <input id="adminPassword" type="password" required autocomplete="current-password">
+          <input id="adminPassword" type="password" required
+            autocomplete="current-password">
         </div>
       </div>
       <p><button class="primary" type="submit">Sign In</button></p>
@@ -406,15 +483,19 @@ footer {
 
     <div id="dashboard" class="hidden">
       <div class="admin-actions">
-        <button class="secondary" id="refreshButton" type="button">Refresh Records</button>
-        <button class="secondary" id="logoutButton" type="button">Sign Out</button>
+        <button class="secondary" id="refreshButton" type="button">
+          Refresh Records
+        </button>
+        <button class="secondary" id="logoutButton" type="button">
+          Sign Out
+        </button>
       </div>
 
       <h3>Matching Results</h3>
       <p class="muted">
         A match requires the same course and level, a compatible gender
-        preference, and at least one overlapping available time. A student
-        can have multiple potential tutor matches.
+        preference, and at least one identical selected time slot on the
+        same weekday. A student can have multiple potential tutor matches.
       </p>
       <div id="matchesList"></div>
 
@@ -442,7 +523,9 @@ footer {
   </section>
 </main>
 
-<footer>NHS Peer Tutoring App · Please confirm all tutoring arrangements directly.</footer>
+<footer>
+  NHS Peer Tutoring App · Please confirm all tutoring arrangements directly.
+</footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
@@ -478,7 +561,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday"
+];
+
 const TIMES = [];
 
 for (let minutes = 8 * 60; minutes <= 21 * 60; minutes += 30) {
@@ -486,9 +576,12 @@ for (let minutes = 8 * 60; minutes <= 21 * 60; minutes += 30) {
   const minute = minutes % 60;
 
   TIMES.push({
-    value: String(hour).padStart(2, "0") + ":" +
+    value:
+      String(hour).padStart(2, "0") + ":" +
       String(minute).padStart(2, "0"),
-    label: `${hour % 12 || 12}:${String(minute).padStart(2, "0")} ${hour >= 12 ? "PM" : "AM"}`
+    label:
+      `${hour % 12 || 12}:${String(minute).padStart(2, "0")} ` +
+      `${hour >= 12 ? "PM" : "AM"}`
   });
 }
 
@@ -498,6 +591,7 @@ let requests = [];
 
 const byId = id => document.getElementById(id);
 
+/* STATUS MESSAGES */
 function showStatus(id, message, type = "info") {
   const element = byId(id);
   element.className = "status " + type;
@@ -525,23 +619,18 @@ document.querySelectorAll("[data-choice-for]").forEach(group => {
 });
 
 /* TIME UTILITIES */
-function timeToMinutes(value) {
-  const [hour, minute] = value.split(":").map(Number);
-  return hour * 60 + minute;
-}
-
 function formatTime(value) {
   return TIMES.find(time => time.value === value)?.label || value;
 }
 
-/* CLICKABLE WEEKDAY AVAILABILITY */
+/* CLICKABLE INDIVIDUAL AVAILABILITY SLOTS */
 function renderAvailability(containerId, prefix) {
   const container = byId(containerId);
   container.replaceChildren();
 
   DAYS.forEach(day => {
     const card = document.createElement("div");
-    card.className = "day-card unavailable";
+    card.className = "day-card";
     card.dataset.day = day;
 
     const header = document.createElement("div");
@@ -551,152 +640,117 @@ function renderAvailability(containerId, prefix) {
     dayName.className = "day-name";
     dayName.textContent = day;
 
-    const statusInput = document.createElement("input");
-    statusInput.type = "hidden";
-    statusInput.name = `${prefix}-${day}-status`;
-    statusInput.value = "not-available";
+    const selectActions = document.createElement("div");
+    selectActions.className = "choice-group";
 
-    const statusButtons = document.createElement("div");
-    statusButtons.className = "choice-group";
+    const selectAllButton = document.createElement("button");
+    selectAllButton.type = "button";
+    selectAllButton.className = "choice-button";
+    selectAllButton.textContent = "Select All";
 
-    const unavailableButton = document.createElement("button");
-    unavailableButton.type = "button";
-    unavailableButton.className = "choice-button selected";
-    unavailableButton.textContent = "Not Available";
+    const clearButton = document.createElement("button");
+    clearButton.type = "button";
+    clearButton.className = "choice-button";
+    clearButton.textContent = "Clear";
 
-    const availableButton = document.createElement("button");
-    availableButton.type = "button";
-    availableButton.className = "choice-button";
-    availableButton.textContent = "Available";
+    selectActions.append(selectAllButton, clearButton);
+    header.append(dayName, selectActions);
 
-    statusButtons.append(unavailableButton, availableButton);
-    header.append(dayName, statusButtons);
+    const slots = document.createElement("div");
+    slots.className = "time-buttons";
+    slots.dataset.day = day;
 
-    const range = document.createElement("div");
-    range.className = "time-range";
+    TIMES.forEach(time => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "time-button";
+      button.textContent = time.label;
+      button.dataset.value = time.value;
+      button.setAttribute("aria-pressed", "false");
 
-    const startField = document.createElement("div");
-    const endField = document.createElement("div");
-
-    const startLabel = document.createElement("label");
-    startLabel.textContent = "Start time";
-
-    const endLabel = document.createElement("label");
-    endLabel.textContent = "End time";
-
-    const startInput = document.createElement("input");
-    startInput.type = "hidden";
-    startInput.name = `${prefix}-${day}-start`;
-    startInput.value = "15:00";
-
-    const endInput = document.createElement("input");
-    endInput.type = "hidden";
-    endInput.name = `${prefix}-${day}-end`;
-    endInput.value = "17:00";
-
-    const startButtons = document.createElement("div");
-    startButtons.className = "time-buttons";
-
-    const endButtons = document.createElement("div");
-    endButtons.className = "time-buttons";
-
-    function createTimeButtons(target, input) {
-      TIMES.forEach(time => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "time-button";
-        button.textContent = time.label;
-        button.dataset.value = time.value;
-
-        if (time.value === input.value) {
-          button.classList.add("selected");
-        }
-
-        button.addEventListener("click", () => {
-          if (statusInput.value !== "available") return;
-          input.value = time.value;
-
-          target.querySelectorAll(".time-button").forEach(option => {
-            option.classList.toggle("selected", option === button);
-          });
-
-          updateTimeButtons();
-        });
-
-        target.appendChild(button);
-      });
-    }
-
-    function updateTimeButtons() {
-      const startMinutes = timeToMinutes(startInput.value);
-      const endMinutes = timeToMinutes(endInput.value);
-      const available = statusInput.value === "available";
-
-      startButtons.querySelectorAll(".time-button").forEach(button => {
-        const value = timeToMinutes(button.dataset.value);
-        button.disabled = !available || value >= endMinutes;
+      button.addEventListener("click", () => {
+        const selected = button.classList.toggle("selected");
+        button.setAttribute("aria-pressed", String(selected));
       });
 
-      endButtons.querySelectorAll(".time-button").forEach(button => {
-        const value = timeToMinutes(button.dataset.value);
-        button.disabled = !available || value <= startMinutes;
+      slots.appendChild(button);
+    });
+
+    selectAllButton.addEventListener("click", () => {
+      slots.querySelectorAll(".time-button").forEach(button => {
+        button.classList.add("selected");
+        button.setAttribute("aria-pressed", "true");
       });
-    }
+    });
 
-    createTimeButtons(startButtons, startInput);
-    createTimeButtons(endButtons, endInput);
+    clearButton.addEventListener("click", () => {
+      slots.querySelectorAll(".time-button").forEach(button => {
+        button.classList.remove("selected");
+        button.setAttribute("aria-pressed", "false");
+      });
+    });
 
-    startField.append(startLabel, startButtons, startInput);
-    endField.append(endLabel, endButtons, endInput);
-    range.append(startField, endField);
-
-    function setAvailability(available) {
-      statusInput.value = available ? "available" : "not-available";
-      availableButton.classList.toggle("selected", available);
-      unavailableButton.classList.toggle("selected", !available);
-      card.classList.toggle("unavailable", !available);
-      updateTimeButtons();
-    }
-
-    availableButton.addEventListener("click", () => setAvailability(true));
-    unavailableButton.addEventListener("click", () => setAvailability(false));
-
-    card.append(header, range, statusInput);
+    card.append(header, slots);
     container.appendChild(card);
-    updateTimeButtons();
   });
 }
 
-function selectedAvailability(containerId, prefix) {
+/*
+  Availability is saved as a list with one entry per selected weekday.
+
+  Example:
+  [
+    {
+      day: "Monday",
+      slots: ["15:00", "15:30", "16:00"]
+    },
+    {
+      day: "Wednesday",
+      slots: ["14:00", "14:30"]
+    }
+  ]
+*/
+function selectedAvailability(containerId) {
   return [...byId(containerId).querySelectorAll(".day-card")]
-    .filter(card => {
-      return card.querySelector(
-        `[name="${prefix}-${card.dataset.day}-status"]`
-      ).value === "available";
+    .map(card => {
+      const slots = [
+        ...card.querySelectorAll(".time-button.selected")
+      ].map(button => button.dataset.value);
+
+      return {
+        day: card.dataset.day,
+        slots
+      };
     })
-    .map(card => ({
-      day: card.dataset.day,
-      start: card.querySelector(
-        `[name="${prefix}-${card.dataset.day}-start"]`
-      ).value,
-      end: card.querySelector(
-        `[name="${prefix}-${card.dataset.day}-end"]`
-      ).value
-    }));
+    .filter(item => item.slots.length > 0);
 }
 
 function validateAvailability(availability) {
   if (!availability.length) {
-    return "Please select Available for at least one weekday.";
-  }
-
-  for (const item of availability) {
-    if (timeToMinutes(item.start) >= timeToMinutes(item.end)) {
-      return `${item.day}: the end time must be later than the start time.`;
-    }
+    return "Please select at least one available time slot.";
   }
 
   return null;
+}
+
+function formatAvailability(availability) {
+  if (!Array.isArray(availability) || !availability.length) {
+    return "No availability selected";
+  }
+
+  return availability.map(item => {
+    if (!item || !item.day || !Array.isArray(item.slots)) {
+      return "Unrecognized availability";
+    }
+
+    if (!item.slots.length) {
+      return "";
+    }
+
+    const labels = item.slots.map(formatTime);
+
+    return `${item.day}: ${labels.join(", ")}`;
+  }).filter(Boolean).join("; ");
 }
 
 renderAvailability("tutorAvailability", "tutorAvail");
@@ -713,6 +767,7 @@ function parseSubjects(value) {
     .filter(Boolean)
     .map(subject => {
       const match = subject.match(/^(.+?)\s+(CP|H|AP)$/i);
+
       return match
         ? `${match[1].trim().replace(/\s+/g, " ").toLowerCase()} ${match[2].toUpperCase()}`
         : normalizeSubject(subject);
@@ -722,9 +777,13 @@ function parseSubjects(value) {
 function validateSubjectInput(value) {
   const subjects = value.split(",").map(s => s.trim()).filter(Boolean);
 
-  if (!subjects.length) return "Please enter at least one course.";
+  if (!subjects.length) {
+    return "Please enter at least one course.";
+  }
 
-  const invalid = subjects.filter(s => !/^.+\s+(CP|H|AP)$/i.test(s));
+  const invalid = subjects.filter(
+    subject => !/^.+\s+(CP|H|AP)$/i.test(subject)
+  );
 
   if (invalid.length) {
     return "Add a level (CP, H, or AP) to each course: " +
@@ -739,18 +798,6 @@ function validName(name) {
   return typeof name === "string" && name.trim().length >= 2;
 }
 
-function formatAvailability(availability) {
-  if (!availability || !availability.length) return "Not available";
-
-  return availability.map(item => {
-    if (!item || !item.day || !item.start || !item.end) {
-      return "Unrecognized availability";
-    }
-
-    return `${item.day}: ${formatTime(item.start)}–${formatTime(item.end)}`;
-  }).join("; ");
-}
-
 /* TUTOR REGISTRATION */
 byId("tutorForm").addEventListener("submit", async event => {
   event.preventDefault();
@@ -760,16 +807,24 @@ byId("tutorForm").addEventListener("submit", async event => {
   const grade = byId("tutorGrade").value;
   const gender = byId("tutorGender").value;
   const subjectInput = byId("tutorSubjects").value;
-  const availability = selectedAvailability("tutorAvailability", "tutorAvail");
+  const availability = selectedAvailability("tutorAvailability");
 
   if (!validName(name) || !grade) {
-    return showStatus("tutorStatus", "Please enter your name and select your grade.", "error");
+    return showStatus(
+      "tutorStatus",
+      "Please enter your name and select your grade.",
+      "error"
+    );
   }
 
   const subjectError = validateSubjectInput(subjectInput);
-  if (subjectError) return showStatus("tutorStatus", subjectError, "error");
+
+  if (subjectError) {
+    return showStatus("tutorStatus", subjectError, "error");
+  }
 
   const availabilityError = validateAvailability(availability);
+
   if (availabilityError) {
     return showStatus("tutorStatus", availabilityError, "error");
   }
@@ -788,22 +843,35 @@ byId("tutorForm").addEventListener("submit", async event => {
     byId("tutorForm").reset();
     byId("tutorGender").value = "Prefer not to answer";
 
-    document.querySelectorAll('[data-choice-for="tutorGrade"] .choice-button')
-      .forEach(button => button.classList.remove("selected"));
+    document.querySelectorAll(
+      '[data-choice-for="tutorGrade"] .choice-button'
+    ).forEach(button => {
+      button.classList.remove("selected");
+    });
 
-    document.querySelectorAll('[data-choice-for="tutorGender"] .choice-button')
-      .forEach(button => {
-        button.classList.toggle("selected", button.dataset.value === "Prefer not to answer");
-      });
+    document.querySelectorAll(
+      '[data-choice-for="tutorGender"] .choice-button'
+    ).forEach(button => {
+      button.classList.toggle(
+        "selected",
+        button.dataset.value === "Prefer not to answer"
+      );
+    });
 
     renderAvailability("tutorAvailability", "tutorAvail");
 
-    showStatus("tutorStatus", "Your tutor registration was submitted successfully.", "success");
-  } catch (error) {
-    console.error("Tutor registration error:", error);
     showStatus(
       "tutorStatus",
-      `Registration failed: ${error.code || "unknown"} - ${error.message || "Check Firebase setup and Firestore rules."}`,
+      "Your tutor registration was submitted successfully.",
+      "success"
+    );
+  } catch (error) {
+    console.error("Tutor registration error:", error);
+
+    showStatus(
+      "tutorStatus",
+      `Registration failed: ${error.code || "unknown"} - ` +
+      `${error.message || "Check Firebase setup and Firestore rules."}`,
       "error"
     );
   }
@@ -818,16 +886,24 @@ byId("requestForm").addEventListener("submit", async event => {
   const grade = byId("requestGrade").value;
   const subjectInput = byId("requestSubjects").value;
   const genderPreference = byId("genderPreference").value;
-  const availability = selectedAvailability("requestAvailability", "requestAvail");
+  const availability = selectedAvailability("requestAvailability");
 
   if (!validName(name) || !grade || !genderPreference) {
-    return showStatus("requestStatus", "Please enter your name and select your grade.", "error");
+    return showStatus(
+      "requestStatus",
+      "Please enter your name and select your grade.",
+      "error"
+    );
   }
 
   const subjectError = validateSubjectInput(subjectInput);
-  if (subjectError) return showStatus("requestStatus", subjectError, "error");
+
+  if (subjectError) {
+    return showStatus("requestStatus", subjectError, "error");
+  }
 
   const availabilityError = validateAvailability(availability);
+
   if (availabilityError) {
     return showStatus("requestStatus", availabilityError, "error");
   }
@@ -846,13 +922,20 @@ byId("requestForm").addEventListener("submit", async event => {
     byId("requestForm").reset();
     byId("genderPreference").value = "Does not matter";
 
-    document.querySelectorAll('[data-choice-for="requestGrade"] .choice-button')
-      .forEach(button => button.classList.remove("selected"));
+    document.querySelectorAll(
+      '[data-choice-for="requestGrade"] .choice-button'
+    ).forEach(button => {
+      button.classList.remove("selected");
+    });
 
-    document.querySelectorAll('[data-choice-for="genderPreference"] .choice-button')
-      .forEach(button => {
-        button.classList.toggle("selected", button.dataset.value === "Does not matter");
-      });
+    document.querySelectorAll(
+      '[data-choice-for="genderPreference"] .choice-button'
+    ).forEach(button => {
+      button.classList.toggle(
+        "selected",
+        button.dataset.value === "Does not matter"
+      );
+    });
 
     renderAvailability("requestAvailability", "requestAvail");
 
@@ -863,81 +946,91 @@ byId("requestForm").addEventListener("submit", async event => {
     );
   } catch (error) {
     console.error("Tutoring request error:", error);
+
     showStatus(
       "requestStatus",
-      `Request failed: ${error.code || "unknown"} - ${error.message || "Check Firebase setup and Firestore rules."}`,
+      `Request failed: ${error.code || "unknown"} - ` +
+      `${error.message || "Check Firebase setup and Firestore rules."}`,
       "error"
     );
   }
 });
 
-/* FIND OVERLAPPING TIMES */
+/* FIND EXACT SHARED TIME SLOTS */
 function commonTimes(tutor, request) {
-  const overlaps = [];
-  const tutorAvailability = Array.isArray(tutor.availability) ? tutor.availability : [];
-  const requestAvailability = Array.isArray(request.availability) ? request.availability : [];
+  const shared = [];
+  const tutorAvailability = Array.isArray(tutor.availability)
+    ? tutor.availability
+    : [];
+  const requestAvailability = Array.isArray(request.availability)
+    ? request.availability
+    : [];
 
-  for (const tutorTime of tutorAvailability) {
-    if (!tutorTime || !tutorTime.day) continue;
-
-    const tutorStart = timeToMinutes(tutorTime.start);
-    const tutorEnd = timeToMinutes(tutorTime.end);
-
-    if (tutorStart >= tutorEnd) continue;
-
-    for (const requestTime of requestAvailability) {
-      if (!requestTime || requestTime.day !== tutorTime.day) continue;
-
-      const requestStart = timeToMinutes(requestTime.start);
-      const requestEnd = timeToMinutes(requestTime.end);
-
-      if (requestStart >= requestEnd) continue;
-
-      const start = Math.max(tutorStart, requestStart);
-      const end = Math.min(tutorEnd, requestEnd);
-
-      if (start < end) {
-        overlaps.push({
-          day: tutorTime.day,
-          start: `${String(Math.floor(start / 60)).padStart(2, "0")}:${String(start % 60).padStart(2, "0")}`,
-          end: `${String(Math.floor(end / 60)).padStart(2, "0")}:${String(end % 60).padStart(2, "0")}`
-        });
-      }
+  for (const tutorDay of tutorAvailability) {
+    if (!tutorDay || !tutorDay.day || !Array.isArray(tutorDay.slots)) {
+      continue;
     }
+
+    const requestDay = requestAvailability.find(item =>
+      item &&
+      item.day === tutorDay.day &&
+      Array.isArray(item.slots)
+    );
+
+    if (!requestDay) continue;
+
+    const requestSlots = new Set(requestDay.slots);
+
+    const sharedSlots = [...new Set(tutorDay.slots)]
+      .filter(slot => requestSlots.has(slot))
+      .filter(slot => TIMES.some(time => time.value === slot))
+      .sort();
+
+    sharedSlots.forEach(slot => {
+      shared.push({
+        day: tutorDay.day,
+        time: slot
+      });
+    });
   }
 
-  const dayOrder = new Map(DAYS.map((day, index) => [day, index]));
-  overlaps.sort((a, b) =>
-    dayOrder.get(a.day) - dayOrder.get(b.day) ||
-    a.start.localeCompare(b.start)
+  const dayOrder = new Map(
+    DAYS.map((day, index) => [day, index])
   );
 
-  const merged = [];
+  shared.sort((a, b) =>
+    dayOrder.get(a.day) - dayOrder.get(b.day) ||
+    a.time.localeCompare(b.time)
+  );
 
-  for (const item of overlaps) {
-    const last = merged[merged.length - 1];
-
-    if (last && last.day === item.day && item.start <= last.end) {
-      if (item.end > last.end) last.end = item.end;
-    } else {
-      merged.push({ ...item });
-    }
-  }
-
-  return merged;
+  return shared;
 }
 
 function formatCommonTimes(times) {
-  if (!times.length) return "No shared times";
+  if (!times.length) {
+    return "No shared time slots";
+  }
 
-  return times.map(item =>
-    `${item.day}: ${formatTime(item.start)}–${formatTime(item.end)}`
-  ).join("; ");
+  const grouped = new Map();
+
+  times.forEach(item => {
+    if (!grouped.has(item.day)) {
+      grouped.set(item.day, []);
+    }
+
+    grouped.get(item.day).push(formatTime(item.time));
+  });
+
+  return [...grouped.entries()]
+    .map(([day, slots]) => `${day}: ${slots.join(", ")}`)
+    .join("; ");
 }
 
 function findMatches(request) {
   return tutors.filter(tutor => {
-    const tutorSubjects = new Set((tutor.subjects || []).map(normalizeSubject));
+    const tutorSubjects = new Set(
+      (tutor.subjects || []).map(normalizeSubject)
+    );
 
     const subjectMatches = (request.subjects || []).some(subject =>
       tutorSubjects.has(normalizeSubject(subject))
@@ -972,6 +1065,7 @@ function makeRecord({ title, lines, buttonText, onDelete }) {
 
   const content = document.createElement("div");
   const heading = document.createElement("strong");
+
   heading.textContent = title;
   content.appendChild(heading);
 
@@ -997,16 +1091,20 @@ function makeRecord({ title, lines, buttonText, onDelete }) {
 }
 
 async function deleteOne(collectionName, id, label) {
-  if (!isAdmin || !confirm(`Permanently delete this ${label}?`)) return;
+  if (!isAdmin || !confirm(`Permanently delete this ${label}?`)) {
+    return;
+  }
 
   try {
     await deleteDoc(doc(db, collectionName, id));
     await loadRecords();
   } catch (error) {
     console.error(error);
+
     showStatus(
       "adminStatus",
-      `Deletion failed: ${error.code || ""} ${error.message || "Check Firestore rules."}`,
+      `Deletion failed: ${error.code || ""} ` +
+      `${error.message || "Check Firestore rules."}`,
       "error"
     );
   }
@@ -1031,7 +1129,11 @@ function renderTutors() {
         "Submitted: " + dateText(tutor.createdAt)
       ],
       buttonText: "Delete Tutor",
-      onDelete: () => deleteOne("peerTutors", tutor.id, "tutor registration")
+      onDelete: () => deleteOne(
+        "peerTutors",
+        tutor.id,
+        "tutor registration"
+      )
     }));
   });
 }
@@ -1050,12 +1152,17 @@ function renderRequests() {
       title: `${request.name} · ${request.grade}`,
       lines: [
         "Courses requested: " + (request.subjects || []).join(", "),
-        "Gender preference: " + (request.genderPreference || "Not provided"),
+        "Gender preference: " +
+          (request.genderPreference || "Not provided"),
         "Available: " + formatAvailability(request.availability),
         "Submitted: " + dateText(request.createdAt)
       ],
       buttonText: "Delete Request",
-      onDelete: () => deleteOne("tutoringRequests", request.id, "tutoring request")
+      onDelete: () => deleteOne(
+        "tutoringRequests",
+        request.id,
+        "tutoring request"
+      )
     }));
   });
 }
@@ -1071,21 +1178,30 @@ function renderMatches() {
 
   requests.forEach(request => {
     const matches = findMatches(request);
+
     const card = document.createElement("div");
-    card.className = "record " + (matches.length ? "match" : "match-none");
+    card.className =
+      "record " + (matches.length ? "match" : "match-none");
 
     const heading = document.createElement("strong");
-    heading.textContent = `${request.name} · ${(request.subjects || []).join(", ")}`;
+    heading.textContent =
+      `${request.name} · ${(request.subjects || []).join(", ")}`;
+
     card.appendChild(heading);
 
     if (!matches.length) {
       const paragraph = document.createElement("p");
+
       paragraph.textContent =
-        "No tutor found with the same course and level, compatible gender preference, and overlapping availability.";
+        "No tutor found with the same course and level, compatible gender preference, and at least one identical selected time slot.";
+
       card.appendChild(paragraph);
     } else {
       const summary = document.createElement("p");
-      summary.textContent = `${matches.length} matching tutor${matches.length === 1 ? "" : "s"} found:`;
+
+      summary.textContent =
+        `${matches.length} matching tutor${matches.length === 1 ? "" : "s"} found:`;
+
       card.appendChild(summary);
 
       matches.forEach(tutor => {
@@ -1097,8 +1213,12 @@ function renderMatches() {
           )
         );
 
+        const sharedTimes = commonTimes(tutor, request);
+
         paragraph.textContent =
-          `${tutor.name} (${tutor.grade}) · Courses: ${sharedSubjects.join(", ")} · Shared times: ${formatCommonTimes(commonTimes(tutor, request))}`;
+          `${tutor.name} (${tutor.grade}) · ` +
+          `Courses: ${sharedSubjects.join(", ")} · ` +
+          `Shared slots: ${formatCommonTimes(sharedTimes)}`;
 
         card.appendChild(paragraph);
       });
@@ -1132,12 +1252,15 @@ async function loadRecords() {
     renderMatches();
     renderTutors();
     renderRequests();
+
     clearStatus("adminStatus");
   } catch (error) {
     console.error("Loading records error:", error);
+
     showStatus(
       "adminStatus",
-      `Could not load records: ${error.code || ""} ${error.message || "Verify administrator access and Firestore rules."}`,
+      `Could not load records: ${error.code || ""} ` +
+      `${error.message || "Verify administrator access and Firestore rules."}`,
       "error"
     );
   }
@@ -1148,9 +1271,11 @@ async function checkAdmin(user) {
 
   try {
     const snapshot = await getDoc(doc(db, "admins", user.uid));
+
     if (!snapshot.exists()) return false;
 
     const data = snapshot.data();
+
     const email = typeof data.email === "string"
       ? data.email.trim().toLowerCase()
       : "";
@@ -1166,6 +1291,7 @@ async function checkAdmin(user) {
 /* ADMIN LOGIN */
 byId("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
+
   showStatus("adminStatus", "Signing in…", "info");
 
   try {
@@ -1177,6 +1303,7 @@ byId("loginForm").addEventListener("submit", async event => {
 
     if (!await checkAdmin(credential.user)) {
       await signOut(auth);
+
       isAdmin = false;
       byId("dashboard").classList.add("hidden");
       byId("loginForm").classList.remove("hidden");
@@ -1192,18 +1319,26 @@ byId("loginForm").addEventListener("submit", async event => {
     byId("dashboard").classList.remove("hidden");
     byId("loginForm").classList.add("hidden");
 
-    showStatus("adminStatus", "Administrator access verified.", "success");
+    showStatus(
+      "adminStatus",
+      "Administrator access verified.",
+      "success"
+    );
+
     await loadRecords();
   } catch (error) {
     console.error("Sign-in error:", error);
+
     showStatus(
       "adminStatus",
-      `Sign-in failed: ${error.code || ""} ${error.message || "Check email/password and Email/Password sign-in settings."}`,
+      `Sign-in failed: ${error.code || ""} ` +
+      `${error.message || "Check email/password and Email/Password sign-in settings."}`,
       "error"
     );
   }
 });
 
+/* KEEP ADMIN SESSION IN SYNC */
 onAuthStateChanged(auth, async user => {
   if (!user) {
     isAdmin = false;
@@ -1222,6 +1357,7 @@ onAuthStateChanged(auth, async user => {
   isAdmin = true;
   byId("dashboard").classList.remove("hidden");
   byId("loginForm").classList.add("hidden");
+
   await loadRecords();
 });
 
@@ -1233,7 +1369,12 @@ byId("logoutButton").addEventListener("click", async () => {
     showStatus("adminStatus", "You have signed out.", "info");
   } catch (error) {
     console.error(error);
-    showStatus("adminStatus", "Could not sign out. Please try again.", "error");
+
+    showStatus(
+      "adminStatus",
+      "Could not sign out. Please try again.",
+      "error"
+    );
   }
 });
 
@@ -1245,10 +1386,16 @@ byId("deleteAllConfirm").addEventListener("input", event => {
 
 byId("deleteAllButton").addEventListener("click", async () => {
   if (!isAdmin || byId("deleteAllConfirm").value !== "YES") {
-    return showStatus("deleteStatus", "Type YES exactly to confirm.", "error");
+    return showStatus(
+      "deleteStatus",
+      "Type YES exactly to confirm.",
+      "error"
+    );
   }
 
-  if (!confirm("This permanently deletes ALL tutor registrations and tutoring requests. Continue?")) {
+  if (!confirm(
+    "This permanently deletes ALL tutor registrations and tutoring requests. Continue?"
+  )) {
     return;
   }
 
@@ -1256,26 +1403,38 @@ byId("deleteAllButton").addEventListener("click", async () => {
   showStatus("deleteStatus", "Deleting records…", "info");
 
   try {
-    for (const collectionName of ["peerTutors", "tutoringRequests"]) {
+    for (const collectionName of [
+      "peerTutors",
+      "tutoringRequests"
+    ]) {
       const snapshot = await getDocs(collection(db, collectionName));
       const items = snapshot.docs;
 
       for (let index = 0; index < items.length; index += 400) {
         await Promise.all(
-          items.slice(index, index + 400).map(item => deleteDoc(item.ref))
+          items.slice(index, index + 400).map(item =>
+            deleteDoc(item.ref)
+          )
         );
       }
     }
 
     byId("deleteAllConfirm").value = "";
+
     await loadRecords();
 
-    showStatus("deleteStatus", "All tutor registrations and requests were deleted.", "success");
-  } catch (error) {
-    console.error(error);
     showStatus(
       "deleteStatus",
-      `Deletion may be incomplete: ${error.code || ""} ${error.message || "Refresh records and check again."}`,
+      "All tutor registrations and requests were deleted.",
+      "success"
+    );
+  } catch (error) {
+    console.error(error);
+
+    showStatus(
+      "deleteStatus",
+      `Deletion may be incomplete: ${error.code || ""} ` +
+      `${error.message || "Refresh records and check again."}`,
       "error"
     );
   } finally {
@@ -1292,7 +1451,10 @@ document.querySelectorAll(".tab").forEach(button => {
     });
 
     document.querySelectorAll("main > section").forEach(panel => {
-      panel.classList.toggle("hidden", panel.id !== button.dataset.panel);
+      panel.classList.toggle(
+        "hidden",
+        panel.id !== button.dataset.panel
+      );
     });
   });
 });

@@ -249,37 +249,54 @@
             <label for="tutorName">Full name *</label>
             <input id="tutorName" maxlength="100" required autocomplete="name">
           </div>
+
           <div class="field">
             <label for="tutorGrade">Grade *</label>
             <select id="tutorGrade" required>
               <option value="">Choose grade</option>
-              <option>9th</option><option>10th</option>
-              <option>11th</option><option>12th</option>
+              <option>9th</option>
+              <option>10th</option>
+              <option>11th</option>
+              <option>12th</option>
             </select>
           </div>
+
           <div class="field">
             <label for="tutorGender">Gender (optional)</label>
             <select id="tutorGender">
               <option value="Prefer not to answer">Prefer not to answer</option>
-              <option>Male</option><option>Female</option>
+              <option>Male</option>
+              <option>Female</option>
             </select>
           </div>
+
           <div class="field">
             <label for="tutorSubjects">Subjects you can teach *</label>
-            <input id="tutorSubjects" maxlength="500" required
-              placeholder="e.g. AP Physics 1, Algebra II, Biology">
-            <div class="help">Separate subjects with commas. Use the exact course name.</div>
+            <input
+              id="tutorSubjects"
+              maxlength="500"
+              required
+              placeholder="e.g. Biology H, Physics 1 AP"
+            >
+            <div class="help">
+              Format: Class Level (CP, H, or AP), or Class Number Level
+              for numbered courses. No Roman numerals. Separate multiple
+              subjects with commas.
+            </div>
           </div>
+
           <div class="field full">
             <div class="section-label">When are you available? *</div>
             <div id="tutorAvailability" class="choices"></div>
           </div>
+
           <div class="field full">
             <div class="section-label">Sports, clubs, or other scheduling conflicts</div>
             <div class="help">Select any time slots when your commitments may prevent you from tutoring.</div>
             <div id="tutorConflicts" class="choices"></div>
           </div>
         </div>
+
         <p><button class="primary" type="submit">Submit Tutor Registration</button></p>
         <div id="tutorStatus" aria-live="polite"></div>
       </form>
@@ -295,37 +312,54 @@
             <label for="requestName">Full name *</label>
             <input id="requestName" maxlength="100" required autocomplete="name">
           </div>
+
           <div class="field">
             <label for="requestGrade">Grade *</label>
             <select id="requestGrade" required>
               <option value="">Choose grade</option>
-              <option>9th</option><option>10th</option>
-              <option>11th</option><option>12th</option>
+              <option>9th</option>
+              <option>10th</option>
+              <option>11th</option>
+              <option>12th</option>
             </select>
           </div>
+
           <div class="field full">
             <label for="requestSubjects">Subject(s) you need help with *</label>
-            <input id="requestSubjects" maxlength="500" required
-              placeholder="e.g. AP Physics 1">
-            <div class="help">Enter the exact course name. Separate multiple subjects with commas.</div>
+            <input
+              id="requestSubjects"
+              maxlength="500"
+              required
+              placeholder="e.g. Biology H, Physics 1 AP"
+            >
+            <div class="help">
+              Format: Class Level (CP, H, or AP), or Class Number Level
+              for numbered courses. No Roman numerals. Separate multiple
+              subjects with commas.
+            </div>
           </div>
+
           <div class="field">
             <label for="genderPreference">Tutor gender preference *</label>
             <select id="genderPreference" required>
               <option value="Does not matter">Does not matter</option>
-              <option>Male</option><option>Female</option>
+              <option>Male</option>
+              <option>Female</option>
             </select>
           </div>
+
           <div class="field full">
             <div class="section-label">When are you available? *</div>
             <div id="requestAvailability" class="choices"></div>
           </div>
+
           <div class="field full">
             <div class="section-label">Sports, clubs, or other scheduling conflicts</div>
             <div class="help">Select any time slots when your commitments may prevent you from meeting.</div>
             <div id="requestConflicts" class="choices"></div>
           </div>
         </div>
+
         <p><button class="primary" type="submit">Submit Tutoring Request</button></p>
         <div id="requestStatus" aria-live="polite"></div>
       </form>
@@ -341,11 +375,13 @@
             <label for="adminEmail">Administrator email</label>
             <input id="adminEmail" type="email" required autocomplete="username">
           </div>
+
           <div class="field">
             <label for="adminPassword">Password</label>
             <input id="adminPassword" type="password" required autocomplete="current-password">
           </div>
         </div>
+
         <p><button class="primary" type="submit">Sign In</button></p>
       </form>
 
@@ -370,8 +406,10 @@
         <div class="card danger-zone">
           <h3>Delete All Records</h3>
           <p class="muted">This permanently deletes all tutor registrations and tutoring requests. Individual deletions are available above.</p>
+
           <label for="deleteAllConfirm">Type YES to enable deletion</label>
           <input id="deleteAllConfirm" placeholder="Type YES" autocomplete="off">
+
           <p><button class="danger" id="deleteAllButton" type="button" disabled>Delete All Tutors and Requests</button></p>
           <div id="deleteStatus" aria-live="polite"></div>
         </div>
@@ -383,12 +421,23 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+
     import {
-      getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+
     import {
-      getFirestore, collection, addDoc, getDocs, deleteDoc, doc,
-      getDoc, serverTimestamp
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs,
+      deleteDoc,
+      doc,
+      getDoc,
+      serverTimestamp
     } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
     // Your Firebase web app configuration
@@ -462,28 +511,82 @@
     renderTimeChoices("requestConflicts", "requestConflict");
 
     function selectedSlots(prefix) {
-      return [...document.querySelectorAll('input[name="' + prefix + '"]:checked')]
-        .map(input => input.value);
+      return [
+        ...document.querySelectorAll(
+          'input[name="' + prefix + '"]:checked'
+        )
+      ].map(input => input.value);
     }
 
     function resetSlots(prefix) {
       document.querySelectorAll('input[name="' + prefix + '"]')
-        .forEach(input => { input.checked = false; });
+        .forEach(input => {
+          input.checked = false;
+        });
     }
 
     function normalizeSubject(subject) {
-      return subject.trim().replace(/\s+/g, " ").toLocaleLowerCase();
+      return subject.trim()
+        .replace(/\s+/g, " ")
+        .toLocaleLowerCase();
     }
 
+    // Subjects are separated by commas.
+    // Course names themselves must not contain commas.
     function parseSubjects(value) {
-      return [...new Set(value.split(",").map(s => s.trim()).filter(Boolean))];
+      return [
+        ...new Set(
+          value.split(",")
+            .map(subject => subject.trim())
+            .filter(Boolean)
+        )
+      ];
+    }
+
+    // Allowed formats:
+    // Class Level: Biology H
+    // Class Number Level: Physics 1 AP
+    // Allowed levels: CP, H, AP
+    // Allowed course numbers: 1, 2
+    function validateSubjects(subjects) {
+      const romanNumeralPattern =
+        /\b(?:II|III|IV|VI|VII|VIII|IX|XI|XII|I|V|X)\b/i;
+
+      const validFormat =
+        /^.+\s+(?:CP|H|AP)$/i;
+
+      const validNumberedFormat =
+        /^.+\s+[12]\s+(?:CP|H|AP)$/i;
+
+      for (const subject of subjects) {
+        if (subject.includes(",")) {
+          return `"${subject}" contains a comma. Course names cannot contain commas. Separate different subjects with commas.`;
+        }
+
+        if (romanNumeralPattern.test(subject)) {
+          return `"${subject}" contains a Roman numeral. Roman numerals are not allowed. Use an Arabic number (1 or 2) if applicable.`;
+        }
+
+        if (
+          !validFormat.test(subject) &&
+          !validNumberedFormat.test(subject)
+        ) {
+          return `"${subject}" has an invalid format. Use "Class Level" (e.g. Biology H) or "Class Number Level" (e.g. Physics 1 AP). Allowed levels are CP, H, and AP.`;
+        }
+      }
+
+      return "";
     }
 
     function validateSlots(availability, conflicts) {
-      if (!availability.length) return "Select at least one available time slot.";
+      if (!availability.length) {
+        return "Select at least one available time slot.";
+      }
+
       if (availability.every(slot => conflicts.includes(slot))) {
         return "Your selected conflicts cover every available time. Please review your choices.";
       }
+
       return "";
     }
 
@@ -503,27 +606,53 @@
       const conflicts = selectedSlots("tutorConflict");
 
       if (!validName(name) || !grade || !subjects.length) {
-        return showStatus("tutorStatus", "Please complete all required fields.", "error");
+        return showStatus(
+          "tutorStatus",
+          "Please complete all required fields.",
+          "error"
+        );
+      }
+
+      const subjectError = validateSubjects(subjects);
+
+      if (subjectError) {
+        return showStatus("tutorStatus", subjectError, "error");
       }
 
       const slotError = validateSlots(availability, conflicts);
-      if (slotError) return showStatus("tutorStatus", slotError, "error");
+
+      if (slotError) {
+        return showStatus("tutorStatus", slotError, "error");
+      }
 
       try {
         await addDoc(collection(db, "peerTutors"), {
-          name, grade, gender, subjects, availability, conflicts,
+          name,
+          grade,
+          gender,
+          subjects,
+          availability,
+          conflicts,
           createdAt: serverTimestamp()
         });
 
         byId("tutorForm").reset();
         resetSlots("tutorAvail");
         resetSlots("tutorConflict");
-        showStatus("tutorStatus", "Your tutor registration was submitted successfully.", "success");
+
+        showStatus(
+          "tutorStatus",
+          "Your tutor registration was submitted successfully.",
+          "success"
+        );
       } catch (error) {
         console.error(error);
-        showStatus("tutorStatus",
+
+        showStatus(
+          "tutorStatus",
           "We couldn't submit your registration. Check your Firestore setup and security rules, then try again.",
-          "error");
+          "error"
+        );
       }
     });
 
@@ -538,44 +667,78 @@
       const availability = selectedSlots("requestAvail");
       const conflicts = selectedSlots("requestConflict");
 
-      if (!validName(name) || !grade || !subjects.length || !genderPreference) {
-        return showStatus("requestStatus", "Please complete all required fields.", "error");
+      if (
+        !validName(name) ||
+        !grade ||
+        !subjects.length ||
+        !genderPreference
+      ) {
+        return showStatus(
+          "requestStatus",
+          "Please complete all required fields.",
+          "error"
+        );
+      }
+
+      const subjectError = validateSubjects(subjects);
+
+      if (subjectError) {
+        return showStatus("requestStatus", subjectError, "error");
       }
 
       const slotError = validateSlots(availability, conflicts);
-      if (slotError) return showStatus("requestStatus", slotError, "error");
+
+      if (slotError) {
+        return showStatus("requestStatus", slotError, "error");
+      }
 
       try {
         await addDoc(collection(db, "tutoringRequests"), {
-          name, grade, subjects, genderPreference, availability, conflicts,
+          name,
+          grade,
+          subjects,
+          genderPreference,
+          availability,
+          conflicts,
           createdAt: serverTimestamp()
         });
 
         byId("requestForm").reset();
         resetSlots("requestAvail");
         resetSlots("requestConflict");
-        showStatus("requestStatus",
+
+        showStatus(
+          "requestStatus",
           "Your tutoring request was submitted. An approved administrator can review potential matches.",
-          "success");
+          "success"
+        );
       } catch (error) {
         console.error(error);
-        showStatus("requestStatus",
+
+        showStatus(
+          "requestStatus",
           "We couldn't submit your request. Check your Firestore setup and security rules, then try again.",
-          "error");
+          "error"
+        );
       }
     });
 
     function findMatches(request) {
       return tutors.filter(tutor => {
-        const tutorSubjects = new Set((tutor.subjects || []).map(normalizeSubject));
-        const exactSubjectMatch = (request.subjects || []).some(subject =>
-          tutorSubjects.has(normalizeSubject(subject))
+        const tutorSubjects = new Set(
+          (tutor.subjects || []).map(normalizeSubject)
+        );
+
+        const exactSubjectMatch = (request.subjects || []).some(
+          subject => tutorSubjects.has(normalizeSubject(subject))
         );
 
         if (!exactSubjectMatch) return false;
 
-        if (request.genderPreference !== "Does not matter" &&
-            tutor.gender !== request.genderPreference) {
+        if (
+          request.genderPreference !== "Does not matter" &&
+          tutor.gender !== request.genderPreference
+        ) {
           return false;
         }
 
@@ -617,11 +780,20 @@
     }
 
     function dateText(timestamp) {
-      if (!timestamp || typeof timestamp.toDate !== "function") return "Recently submitted";
+      if (!timestamp || typeof timestamp.toDate !== "function") {
+        return "Recently submitted";
+      }
+
       return timestamp.toDate().toLocaleString();
     }
 
-    function makeRecord({ title, lines, buttonText, onDelete, extraClass = "" }) {
+    function makeRecord({
+      title,
+      lines,
+      buttonText,
+      onDelete,
+      extraClass = ""
+    }) {
       const card = document.createElement("div");
       card.className = "record " + extraClass;
 
@@ -656,14 +828,22 @@
 
     async function deleteOne(collectionName, id, label) {
       if (!isAdmin) return;
-      if (!confirm("Permanently delete this " + label + "?")) return;
+
+      if (!confirm("Permanently delete this " + label + "?")) {
+        return;
+      }
 
       try {
         await deleteDoc(doc(db, collectionName, id));
         await loadRecords();
       } catch (error) {
         console.error(error);
-        showStatus("adminStatus", "Deletion failed. Check your Firestore rules.", "error");
+
+        showStatus(
+          "adminStatus",
+          "Deletion failed. Check your Firestore rules.",
+          "error"
+        );
       }
     }
 
@@ -683,11 +863,13 @@
             "Subjects: " + (tutor.subjects || []).join(", "),
             "Gender: " + (tutor.gender || "Not provided"),
             "Available: " + (tutor.availability || []).join(", "),
-            "Conflicts: " + ((tutor.conflicts || []).join(", ") || "None selected"),
+            "Conflicts: " +
+              ((tutor.conflicts || []).join(", ") || "None selected"),
             "Submitted: " + dateText(tutor.createdAt)
           ],
           buttonText: "Delete Tutor",
-          onDelete: () => deleteOne("peerTutors", tutor.id, "tutor registration")
+          onDelete: () =>
+            deleteOne("peerTutors", tutor.id, "tutor registration")
         }));
       });
     }
@@ -706,13 +888,16 @@
           title: request.name + " · " + request.grade,
           lines: [
             "Subjects requested: " + (request.subjects || []).join(", "),
-            "Gender preference: " + (request.genderPreference || "Not provided"),
+            "Gender preference: " +
+              (request.genderPreference || "Not provided"),
             "Available: " + (request.availability || []).join(", "),
-            "Conflicts: " + ((request.conflicts || []).join(", ") || "None selected"),
+            "Conflicts: " +
+              ((request.conflicts || []).join(", ") || "None selected"),
             "Submitted: " + dateText(request.createdAt)
           ],
           buttonText: "Delete Request",
-          onDelete: () => deleteOne("tutoringRequests", request.id, "tutoring request")
+          onDelete: () =>
+            deleteOne("tutoringRequests", request.id, "tutoring request")
         }));
       });
     }
@@ -728,20 +913,28 @@
 
       requests.forEach(request => {
         const matches = findMatches(request);
+
         const card = document.createElement("div");
-        card.className = "record " + (matches.length ? "match" : "match-none");
+        card.className = "record " +
+          (matches.length ? "match" : "match-none");
 
         const heading = document.createElement("strong");
-        heading.textContent = request.name + " · " + (request.subjects || []).join(", ");
+        heading.textContent =
+          request.name + " · " + (request.subjects || []).join(", ");
+
         card.append(heading);
 
         if (!matches.length) {
           const p = document.createElement("p");
-          p.textContent = "No exact-subject, gender-compatible, schedule-compatible tutor found.";
+
+          p.textContent =
+            "No exact-subject, gender-compatible, schedule-compatible tutor found.";
+
           card.append(p);
         } else {
           matches.forEach(tutor => {
             const p = document.createElement("p");
+
             p.textContent =
               tutor.name + " (" + tutor.grade + ") · " +
               (tutor.subjects || []).filter(subject =>
@@ -749,7 +942,9 @@
                   normalizeSubject(subject) === normalizeSubject(wanted)
                 )
               ).join(", ") +
-              " · Shared times: " + commonTimes(tutor, request).join(", ");
+              " · Shared times: " +
+              commonTimes(tutor, request).join(", ");
+
             card.append(p);
           });
         }
@@ -769,63 +964,73 @@
           getDocs(collection(db, "tutoringRequests"))
         ]);
 
-        tutors = tutorSnapshot.docs.map(item => ({ id: item.id, ...item.data() }));
-        requests = requestSnapshot.docs.map(item => ({ id: item.id, ...item.data() }));
+        tutors = tutorSnapshot.docs.map(item => ({
+          id: item.id,
+          ...item.data()
+        }));
+
+        requests = requestSnapshot.docs.map(item => ({
+          id: item.id,
+          ...item.data()
+        }));
 
         renderMatches();
         renderTutors();
         renderRequests();
+
         clearStatus("adminStatus");
       } catch (error) {
         console.error(error);
-        showStatus("adminStatus",
+
+        showStatus(
+          "adminStatus",
           "Could not load records. Verify that this account is an admin and your Firestore rules are installed.",
-          "error");
+          "error"
+        );
       }
     }
 
+    async function checkAdmin(user) {
+      if (!user || !user.email) return false;
 
-async function checkAdmin(user) {
-  if (!user || !user.email) return false;
+      try {
+        const adminDoc = await getDoc(doc(db, "admins", user.uid));
 
-  try {
-    const adminDoc = await getDoc(doc(db, "admins", user.uid));
+        if (!adminDoc.exists()) {
+          console.error("Admin document not found for UID:", user.uid);
+          return false;
+        }
 
-    if (!adminDoc.exists()) {
-      console.error("Admin document not found for UID:", user.uid);
-      return false;
+        const adminData = adminDoc.data();
+
+        const approvedEmail =
+          typeof adminData.email === "string"
+            ? adminData.email.trim().toLowerCase()
+            : "";
+
+        const signedInEmail = user.email.trim().toLowerCase();
+
+        const approved =
+          adminData.enabled === true &&
+          approvedEmail === signedInEmail;
+
+        console.log("Admin check:", {
+          documentExists: true,
+          enabled: adminData.enabled,
+          emailMatches: approvedEmail === signedInEmail,
+          approved
+        });
+
+        return approved;
+      } catch (error) {
+        console.error("Admin verification failed:", error);
+        return false;
+      }
     }
-
-    const adminData = adminDoc.data();
-
-    const approvedEmail =
-      typeof adminData.email === "string"
-        ? adminData.email.trim().toLowerCase()
-        : "";
-
-    const signedInEmail = user.email.trim().toLowerCase();
-
-    const approved =
-      adminData.enabled === true &&
-      approvedEmail === signedInEmail;
-
-    console.log("Admin check:", {
-      documentExists: true,
-      enabled: adminData.enabled,
-      emailMatches: approvedEmail === signedInEmail,
-      approved
-    });
-
-    return approved;
-  } catch (error) {
-    console.error("Admin verification failed:", error);
-    return false;
-  }
-}
-
 
     byId("loginForm").addEventListener("submit", async event => {
       event.preventDefault();
+
       showStatus("adminStatus", "Signing in…", "info");
 
       try {
@@ -836,27 +1041,43 @@ async function checkAdmin(user) {
         );
 
         const approved = await checkAdmin(credential.user);
+
         if (!approved) {
           await signOut(auth);
+
           isAdmin = false;
           currentAdmin = null;
+
           byId("dashboard").classList.add("hidden");
-          return showStatus("adminStatus",
+
+          return showStatus(
+            "adminStatus",
             "This account is not an approved administrator. Ask the project owner to approve it in Firebase.",
-            "error");
+            "error"
+          );
         }
 
         currentAdmin = credential.user;
         isAdmin = true;
+
         byId("dashboard").classList.remove("hidden");
         byId("loginForm").classList.add("hidden");
-        showStatus("adminStatus", "Administrator access verified.", "success");
+
+        showStatus(
+          "adminStatus",
+          "Administrator access verified.",
+          "success"
+        );
+
         await loadRecords();
       } catch (error) {
         console.error(error);
-        showStatus("adminStatus",
+
+        showStatus(
+          "adminStatus",
           "Sign-in failed. Check the email and password, and confirm that Email/Password sign-in is enabled.",
-          "error");
+          "error"
+        );
       }
     });
 
@@ -864,24 +1085,31 @@ async function checkAdmin(user) {
       if (!user) {
         currentAdmin = null;
         isAdmin = false;
+
         byId("dashboard").classList.add("hidden");
         byId("loginForm").classList.remove("hidden");
+
         return;
       }
 
       const approved = await checkAdmin(user);
+
       if (!approved) {
         currentAdmin = null;
         isAdmin = false;
+
         byId("dashboard").classList.add("hidden");
         byId("loginForm").classList.remove("hidden");
+
         return;
       }
 
       currentAdmin = user;
       isAdmin = true;
+
       byId("dashboard").classList.remove("hidden");
       byId("loginForm").classList.add("hidden");
+
       await loadRecords();
     });
 
@@ -890,10 +1118,20 @@ async function checkAdmin(user) {
     byId("logoutButton").addEventListener("click", async () => {
       try {
         await signOut(auth);
-        showStatus("adminStatus", "You have signed out.", "info");
+
+        showStatus(
+          "adminStatus",
+          "You have signed out.",
+          "info"
+        );
       } catch (error) {
         console.error(error);
-        showStatus("adminStatus", "Could not sign out. Please try again.", "error");
+
+        showStatus(
+          "adminStatus",
+          "Could not sign out. Please try again.",
+          "error"
+        );
       }
     });
 
@@ -903,39 +1141,64 @@ async function checkAdmin(user) {
     });
 
     byId("deleteAllButton").addEventListener("click", async () => {
-      if (!isAdmin || byId("deleteAllConfirm").value !== "YES") {
-        return showStatus("deleteStatus", "Type YES exactly to confirm.", "error");
+      if (
+        !isAdmin ||
+        byId("deleteAllConfirm").value !== "YES"
+      ) {
+        return showStatus(
+          "deleteStatus",
+          "Type YES exactly to confirm.",
+          "error"
+        );
       }
 
       const confirmed = confirm(
         "This permanently deletes ALL tutor registrations and tutoring requests. Continue?"
       );
+
       if (!confirmed) return;
 
       byId("deleteAllButton").disabled = true;
+
       showStatus("deleteStatus", "Deleting records…", "info");
 
       try {
-        // Delete in batches to avoid a single oversized write request.
-        for (const collectionName of ["peerTutors", "tutoringRequests"]) {
-          const snapshot = await getDocs(collection(db, collectionName));
+        for (const collectionName of [
+          "peerTutors",
+          "tutoringRequests"
+        ]) {
+          const snapshot = await getDocs(
+            collection(db, collectionName)
+          );
+
           const items = snapshot.docs;
 
           for (let i = 0; i < items.length; i += 400) {
             await Promise.all(
-              items.slice(i, i + 400).map(item => deleteDoc(item.ref))
+              items.slice(i, i + 400).map(item =>
+                deleteDoc(item.ref)
+              )
             );
           }
         }
 
         byId("deleteAllConfirm").value = "";
+
         await loadRecords();
-        showStatus("deleteStatus", "All tutor registrations and requests were deleted.", "success");
+
+        showStatus(
+          "deleteStatus",
+          "All tutor registrations and requests were deleted.",
+          "success"
+        );
       } catch (error) {
         console.error(error);
-        showStatus("deleteStatus",
+
+        showStatus(
+          "deleteStatus",
           "Some records may remain if deletion was interrupted. Refresh the records and check again.",
-          "error");
+          "error"
+        );
       } finally {
         byId("deleteAllButton").disabled =
           byId("deleteAllConfirm").value !== "YES" || !isAdmin;
@@ -944,13 +1207,16 @@ async function checkAdmin(user) {
 
     document.querySelectorAll(".tab").forEach(button => {
       button.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(tab =>
-          tab.classList.toggle("active", tab === button)
-        );
+        document.querySelectorAll(".tab").forEach(tab => {
+          tab.classList.toggle("active", tab === button);
+        });
 
-        document.querySelectorAll("main > section").forEach(panel =>
-          panel.classList.toggle("hidden", panel.id !== button.dataset.panel)
-        );
+        document.querySelectorAll("main > section").forEach(panel => {
+          panel.classList.toggle(
+            "hidden",
+            panel.id !== button.dataset.panel
+          );
+        });
       });
     });
   </script>

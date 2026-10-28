@@ -1067,11 +1067,25 @@
     }
 
     function formatCommonTimes(slots) {
-      return slots.length
-        ? slots.map(slot =>
-            `${slot.day}: ${formatTime(slot.start)}–${formatTime(slot.end)}`
-          ).join("; ")
-        : "No shared times";
+      if (!slots.length) return "No shared times";
+    
+      return slots.map(slot => {
+        const toMinutes = time => {
+          const [hours, minutes] = time.split(":").map(Number);
+          return hours * 60 + minutes;
+        };
+    
+        const duration = toMinutes(slot.end) - toMinutes(slot.start);
+        const hours = Math.floor(duration / 60);
+        const minutes = duration % 60;
+    
+        const durationText = [
+          hours ? `${hours} hr${hours !== 1 ? "s" : ""}` : "",
+          minutes ? `${minutes} min` : ""
+        ].filter(Boolean).join(" ");
+    
+        return `${slot.day}: ${formatTime(slot.start)}–${formatTime(slot.end)} (${durationText})`;
+      }).join("; ");
     }
 
     function findMatches(request) {

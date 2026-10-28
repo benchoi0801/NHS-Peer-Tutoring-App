@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NHS Peer Tutoring App</title>
+
   <style>
     :root {
       --navy: #16345c;
@@ -137,7 +138,12 @@
     }
 
     textarea { min-height: 80px; resize: vertical; }
-    .help { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+    .help {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
 
     .choices {
       display: grid;
@@ -208,7 +214,13 @@
     .small-button { padding: 8px 10px; font-size: 12px; }
     .admin-actions { display: flex; flex-wrap: wrap; gap: 8px; }
     .danger-zone { border: 1px solid #f0c3c0; background: #fffafa; }
-    footer { text-align: center; padding: 20px; color: var(--muted); font-size: 12px; }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
 
     @media (max-width: 650px) {
       .grid { grid-template-columns: 1fr; }
@@ -219,29 +231,46 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="hero">
       <div class="eyebrow">National Honor Society</div>
       <h1>Peer Tutoring</h1>
-      <p class="subtitle">Connect with classmates, share what you know, and get support in the subjects you are studying.</p>
+      <p class="subtitle">
+        Connect with classmates, share what you know, and get support
+        in the subjects you are studying.
+      </p>
     </div>
   </header>
 
   <main>
     <div class="notice">
-      Please submit accurate availability. Only submit information you are comfortable sharing with the school's approved tutoring administrators.
+      Please submit accurate information. Only submit information you
+      are comfortable sharing with the school's approved administrators.
     </div>
 
     <nav class="tabs" aria-label="Main navigation">
-      <button class="tab active" data-panel="tutorPanel">Become a Tutor</button>
-      <button class="tab" data-panel="requestPanel">Request a Tutor</button>
-      <button class="tab" data-panel="adminPanel">Admin Login</button>
+      <button class="tab active" data-panel="tutorPanel">
+        Become a Tutor
+      </button>
+      <button class="tab" data-panel="requestPanel">
+        Request a Tutor
+      </button>
+      <button class="tab" data-panel="volunteerPanel">
+        Record Volunteer Hours
+      </button>
+      <button class="tab" data-panel="adminPanel">
+        Admin Login
+      </button>
     </nav>
 
+    <!-- TUTOR REGISTRATION -->
     <section id="tutorPanel" class="panel">
       <h2>Become a Peer Tutor</h2>
-      <p class="muted">Tell us which subjects you can help with and when you are available.</p>
+      <p class="muted">
+        Tell us which subjects you can help with and when you are available.
+      </p>
 
       <form id="tutorForm">
         <div class="grid">
@@ -276,11 +305,12 @@
               id="tutorSubjects"
               maxlength="500"
               required
-              placeholder="e.g. Biology H, Physics 1 AP"
+              placeholder="e.g. Algebra 1 H, Calculus BC AP"
             >
             <div class="help">
-              Format: Class Level (CP, H, or AP), or Class Number Level
-              for numbered courses. No Roman numerals. Separate multiple
+              Format: 1. Class (eg. Algebra 1 or Calculus BC)
+              2. Level (CP, H, or AP). Enter the class first, followed
+              by its level. Do not use Roman numerals. Separate multiple
               subjects with commas.
             </div>
           </div>
@@ -291,20 +321,32 @@
           </div>
 
           <div class="field full">
-            <div class="section-label">Sports, clubs, or other scheduling conflicts</div>
-            <div class="help">Select any time slots when your commitments may prevent you from tutoring.</div>
+            <div class="section-label">
+              Sports, clubs, or other scheduling conflicts
+            </div>
+            <div class="help">
+              Select any time slots when your commitments may prevent
+              you from tutoring.
+            </div>
             <div id="tutorConflicts" class="choices"></div>
           </div>
         </div>
 
-        <p><button class="primary" type="submit">Submit Tutor Registration</button></p>
+        <p>
+          <button class="primary" type="submit">
+            Submit Tutor Registration
+          </button>
+        </p>
         <div id="tutorStatus" aria-live="polite"></div>
       </form>
     </section>
 
+    <!-- TUTOR REQUEST -->
     <section id="requestPanel" class="panel hidden">
       <h2>Request a Tutor</h2>
-      <p class="muted">We'll identify tutors with an exact subject match and compatible schedules.</p>
+      <p class="muted">
+        We'll identify tutors with an exact subject match and compatible schedules.
+      </p>
 
       <form id="requestForm">
         <div class="grid">
@@ -325,16 +367,19 @@
           </div>
 
           <div class="field full">
-            <label for="requestSubjects">Subject(s) you need help with *</label>
+            <label for="requestSubjects">
+              Subject(s) you need help with *
+            </label>
             <input
               id="requestSubjects"
               maxlength="500"
               required
-              placeholder="e.g. Biology H, Physics 1 AP"
+              placeholder="e.g. Algebra 1 H, Calculus BC AP"
             >
             <div class="help">
-              Format: Class Level (CP, H, or AP), or Class Number Level
-              for numbered courses. No Roman numerals. Separate multiple
+              Format: 1. Class (eg. Algebra 1 or Calculus BC)
+              2. Level (CP, H, or AP). Enter the class first, followed
+              by its level. Do not use Roman numerals. Separate multiple
               subjects with commas.
             </div>
           </div>
@@ -354,31 +399,124 @@
           </div>
 
           <div class="field full">
-            <div class="section-label">Sports, clubs, or other scheduling conflicts</div>
-            <div class="help">Select any time slots when your commitments may prevent you from meeting.</div>
+            <div class="section-label">
+              Sports, clubs, or other scheduling conflicts
+            </div>
+            <div class="help">
+              Select any time slots when your commitments may prevent you
+              from meeting.
+            </div>
             <div id="requestConflicts" class="choices"></div>
           </div>
         </div>
 
-        <p><button class="primary" type="submit">Submit Tutoring Request</button></p>
+        <p>
+          <button class="primary" type="submit">
+            Submit Tutoring Request
+          </button>
+        </p>
         <div id="requestStatus" aria-live="polite"></div>
       </form>
     </section>
 
+    <!-- VOLUNTEER HOURS -->
+    <section id="volunteerPanel" class="panel hidden">
+      <h2>Record Volunteer Hours</h2>
+      <p class="muted">
+        Record your community service and volunteer hours for NHS.
+      </p>
+
+      <div class="notice">
+        Enter one organization and one service date per submission.
+        Submit another entry if you volunteered on a different date.
+      </div>
+
+      <form id="volunteerForm">
+        <div class="grid">
+          <div class="field">
+            <label for="volunteerName">Name *</label>
+            <input
+              id="volunteerName"
+              maxlength="100"
+              required
+              autocomplete="name"
+              placeholder="Enter your full name"
+            >
+          </div>
+
+          <div class="field">
+            <label for="organizationName">Organization Name *</label>
+            <input
+              id="organizationName"
+              maxlength="150"
+              required
+              placeholder="e.g. Valley Hospital"
+            >
+          </div>
+
+          <div class="field">
+            <label for="volunteerHours">Number of hours *</label>
+            <input
+              id="volunteerHours"
+              type="number"
+              min="0.25"
+              max="1000"
+              step="0.25"
+              required
+              placeholder="e.g. 2.5"
+            >
+            <div class="help">
+              Enter a positive number. Quarter-hour increments are allowed.
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="volunteerDate">Date Done *</label>
+            <input
+              id="volunteerDate"
+              type="date"
+              required
+            >
+          </div>
+        </div>
+
+        <p>
+          <button class="primary" type="submit">
+            Submit Volunteer Hours
+          </button>
+        </p>
+
+        <div id="volunteerStatus" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- ADMIN LOGIN AND DASHBOARD -->
     <section id="adminPanel" class="panel hidden">
       <h2>Administrator Dashboard</h2>
-      <p class="muted">Sign in with an administrator account approved in Firebase.</p>
+      <p class="muted">
+        Sign in with an administrator account approved in Firebase.
+      </p>
 
       <form id="loginForm">
         <div class="grid">
           <div class="field">
             <label for="adminEmail">Administrator email</label>
-            <input id="adminEmail" type="email" required autocomplete="username">
+            <input
+              id="adminEmail"
+              type="email"
+              required
+              autocomplete="username"
+            >
           </div>
 
           <div class="field">
             <label for="adminPassword">Password</label>
-            <input id="adminPassword" type="password" required autocomplete="current-password">
+            <input
+              id="adminPassword"
+              type="password"
+              required
+              autocomplete="current-password"
+            >
           </div>
         </div>
 
@@ -389,12 +527,20 @@
 
       <div id="dashboard" class="hidden">
         <div class="admin-actions">
-          <button class="secondary" id="refreshButton" type="button">Refresh Records</button>
-          <button class="secondary" id="logoutButton" type="button">Sign Out</button>
+          <button class="secondary" id="refreshButton" type="button">
+            Refresh Records
+          </button>
+          <button class="secondary" id="logoutButton" type="button">
+            Sign Out
+          </button>
         </div>
 
         <h3>Matching Results</h3>
-        <p class="muted">A match requires an exact subject, a compatible gender preference, a shared available time, and no selected conflict at that time. Confirm arrangements with students before scheduling.</p>
+        <p class="muted">
+          A match requires an exact subject, a compatible gender preference,
+          a shared available time, and no selected conflict at that time.
+          Confirm arrangements with students before scheduling.
+        </p>
         <div id="matchesList"></div>
 
         <h3>Registered Tutors</h3>
@@ -403,24 +549,52 @@
         <h3>Tutoring Requests</h3>
         <div id="requestsList"></div>
 
+        <h3>Volunteer Hours Records</h3>
+        <p class="muted">
+          Review submitted volunteer hours and delete individual entries
+          if necessary.
+        </p>
+        <div id="volunteerRecordsList"></div>
+
         <div class="card danger-zone">
           <h3>Delete All Records</h3>
-          <p class="muted">This permanently deletes all tutor registrations and tutoring requests. Individual deletions are available above.</p>
+          <p class="muted">
+            This permanently deletes all tutor registrations, tutoring
+            requests, and volunteer hour records.
+          </p>
 
           <label for="deleteAllConfirm">Type YES to enable deletion</label>
-          <input id="deleteAllConfirm" placeholder="Type YES" autocomplete="off">
+          <input
+            id="deleteAllConfirm"
+            placeholder="Type YES"
+            autocomplete="off"
+          >
 
-          <p><button class="danger" id="deleteAllButton" type="button" disabled>Delete All Tutors and Requests</button></p>
+          <p>
+            <button
+              class="danger"
+              id="deleteAllButton"
+              type="button"
+              disabled
+            >
+              Delete All Records
+            </button>
+          </p>
+
           <div id="deleteStatus" aria-live="polite"></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer>NHS Peer Tutoring App · Please confirm all tutoring arrangements directly.</footer>
+  <footer>
+    NHS Peer Tutoring App · Please confirm all tutoring arrangements directly.
+  </footer>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+    import {
+      initializeApp
+    } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
 
     import {
       getAuth,
@@ -440,7 +614,7 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
-    // Your Firebase web app configuration
+    // Firebase web app configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDd7N0_p9BuSuYzni5Dvyygg7BLHTp3Bcc",
       authDomain: "nhs-peer-tutoring-app.firebaseapp.com",
@@ -467,6 +641,7 @@
     let isAdmin = false;
     let tutors = [];
     let requests = [];
+    let volunteerRecords = [];
 
     function byId(id) {
       return document.getElementById(id);
@@ -483,6 +658,7 @@
       byId(id).className = "";
     }
 
+    // Create availability checkboxes.
     function renderTimeChoices(containerId, prefix) {
       const container = byId(containerId);
       container.replaceChildren();
@@ -531,8 +707,8 @@
         .toLocaleLowerCase();
     }
 
-    // Subjects are separated by commas.
-    // Course names themselves must not contain commas.
+    // Subjects are comma-separated.
+    // Each course name must not contain commas.
     function parseSubjects(value) {
       return [
         ...new Set(
@@ -543,11 +719,14 @@
       ];
     }
 
-    // Allowed formats:
-    // Class Level: Biology H
-    // Class Number Level: Physics 1 AP
-    // Allowed levels: CP, H, AP
-    // Allowed course numbers: 1, 2
+    // Accepted examples:
+    // Algebra 1 H
+    // Biology AP
+    // Calculus BC AP
+    // History CP
+    //
+    // The final token must be CP, H, or AP.
+    // Standalone Roman numerals are prohibited.
     function validateSubjects(subjects) {
       const romanNumeralPattern =
         /\b(?:II|III|IV|VI|VII|VIII|IX|XI|XII|I|V|X)\b/i;
@@ -555,23 +734,17 @@
       const validFormat =
         /^.+\s+(?:CP|H|AP)$/i;
 
-      const validNumberedFormat =
-        /^.+\s+[12]\s+(?:CP|H|AP)$/i;
-
       for (const subject of subjects) {
         if (subject.includes(",")) {
-          return `"${subject}" contains a comma. Course names cannot contain commas. Separate different subjects with commas.`;
+          return `"${subject}" contains a comma. Separate different subjects with commas, and do not use commas within course names.`;
         }
 
         if (romanNumeralPattern.test(subject)) {
-          return `"${subject}" contains a Roman numeral. Roman numerals are not allowed. Use an Arabic number (1 or 2) if applicable.`;
+          return `"${subject}" contains a Roman numeral. Roman numerals are not allowed. Use Arabic numbers such as 1 or 2 when applicable.`;
         }
 
-        if (
-          !validFormat.test(subject) &&
-          !validNumberedFormat.test(subject)
-        ) {
-          return `"${subject}" has an invalid format. Use "Class Level" (e.g. Biology H) or "Class Number Level" (e.g. Physics 1 AP). Allowed levels are CP, H, and AP.`;
+        if (!validFormat.test(subject)) {
+          return `"${subject}" has an invalid format. Enter the class followed by its level: CP, H, or AP. Examples: Algebra 1 H, Calculus BC AP, Biology AP.`;
         }
       }
 
@@ -594,6 +767,7 @@
       return typeof name === "string" && name.trim().length >= 2;
     }
 
+    // Submit tutor registration.
     byId("tutorForm").addEventListener("submit", async event => {
       event.preventDefault();
       clearStatus("tutorStatus");
@@ -656,6 +830,7 @@
       }
     });
 
+    // Submit tutoring request.
     byId("requestForm").addEventListener("submit", async event => {
       event.preventDefault();
       clearStatus("requestStatus");
@@ -723,6 +898,86 @@
       }
     });
 
+    // Submit volunteer hours.
+    byId("volunteerForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      clearStatus("volunteerStatus");
+
+      const name = byId("volunteerName").value.trim();
+      const organizationName = byId("organizationName").value.trim();
+      const hours = Number(byId("volunteerHours").value);
+      const dateDone = byId("volunteerDate").value;
+
+      if (
+        !validName(name) ||
+        organizationName.length < 2 ||
+        organizationName.length > 150 ||
+        !Number.isFinite(hours) ||
+        hours <= 0 ||
+        hours > 1000 ||
+        !dateDone
+      ) {
+        return showStatus(
+          "volunteerStatus",
+          "Please complete every field with valid information. Volunteer hours must be greater than zero.",
+          "error"
+        );
+      }
+
+      // Ensure the date exists and is not in the future.
+      const selectedDate = new Date(dateDone + "T00:00:00");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (
+        Number.isNaN(selectedDate.getTime()) ||
+        selectedDate.toISOString().slice(0, 10) !== dateDone ||
+        selectedDate > today
+      ) {
+        return showStatus(
+          "volunteerStatus",
+          "Please enter a valid date that is today or earlier.",
+          "error"
+        );
+      }
+
+      // Restrict hours to quarter-hour increments.
+      if (Math.abs(hours * 4 - Math.round(hours * 4)) > 0.000001) {
+        return showStatus(
+          "volunteerStatus",
+          "Enter hours in quarter-hour increments, such as 1, 1.25, 1.5, or 2.",
+          "error"
+        );
+      }
+
+      try {
+        await addDoc(collection(db, "volunteerHours"), {
+          name,
+          organizationName,
+          hours,
+          dateDone,
+          createdAt: serverTimestamp()
+        });
+
+        byId("volunteerForm").reset();
+
+        showStatus(
+          "volunteerStatus",
+          "Your volunteer hours were submitted successfully.",
+          "success"
+        );
+      } catch (error) {
+        console.error(error);
+
+        showStatus(
+          "volunteerStatus",
+          "We couldn't submit your volunteer hours. Check your Firestore setup and security rules, then try again.",
+          "error"
+        );
+      }
+    });
+
+    // Find compatible tutors.
     function findMatches(request) {
       return tutors.filter(tutor => {
         const tutorSubjects = new Set(
@@ -770,15 +1025,6 @@
       );
     }
 
-    function safeText(value) {
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
     function dateText(timestamp) {
       if (!timestamp || typeof timestamp.toDate !== "function") {
         return "Recently submitted";
@@ -787,6 +1033,7 @@
       return timestamp.toDate().toLocaleString();
     }
 
+    // Create a reusable record card.
     function makeRecord({
       title,
       lines,
@@ -847,6 +1094,7 @@
       }
     }
 
+    // Display registered tutors.
     function renderTutors() {
       const container = byId("tutorsList");
       container.replaceChildren();
@@ -874,6 +1122,7 @@
       });
     }
 
+    // Display tutoring requests.
     function renderRequests() {
       const container = byId("requestsList");
       container.replaceChildren();
@@ -902,6 +1151,38 @@
       });
     }
 
+    // Display volunteer hours submitted by students.
+    function renderVolunteerRecords() {
+      const container = byId("volunteerRecordsList");
+      container.replaceChildren();
+
+      if (!volunteerRecords.length) {
+        container.textContent = "No volunteer hours have been submitted yet.";
+        return;
+      }
+
+      // Most recent service dates appear first.
+      const sortedRecords = [...volunteerRecords].sort((a, b) =>
+        String(b.dateDone || "").localeCompare(String(a.dateDone || ""))
+      );
+
+      sortedRecords.forEach(record => {
+        container.append(makeRecord({
+          title: record.name || "Unnamed student",
+          lines: [
+            "Organization: " + (record.organizationName || "Not provided"),
+            "Number of hours: " + String(record.hours ?? "Not provided"),
+            "Date done: " + (record.dateDone || "Not provided"),
+            "Submitted: " + dateText(record.createdAt)
+          ],
+          buttonText: "Delete Entry",
+          onDelete: () =>
+            deleteOne("volunteerHours", record.id, "volunteer hours entry")
+        }));
+      });
+    }
+
+    // Display tutor matches.
     function renderMatches() {
       const container = byId("matchesList");
       container.replaceChildren();
@@ -953,15 +1234,21 @@
       });
     }
 
+    // Retrieve all records for approved administrators.
     async function loadRecords() {
       if (!isAdmin) return;
 
       showStatus("adminStatus", "Loading records…", "info");
 
       try {
-        const [tutorSnapshot, requestSnapshot] = await Promise.all([
+        const [
+          tutorSnapshot,
+          requestSnapshot,
+          volunteerSnapshot
+        ] = await Promise.all([
           getDocs(collection(db, "peerTutors")),
-          getDocs(collection(db, "tutoringRequests"))
+          getDocs(collection(db, "tutoringRequests")),
+          getDocs(collection(db, "volunteerHours"))
         ]);
 
         tutors = tutorSnapshot.docs.map(item => ({
@@ -974,9 +1261,15 @@
           ...item.data()
         }));
 
+        volunteerRecords = volunteerSnapshot.docs.map(item => ({
+          id: item.id,
+          ...item.data()
+        }));
+
         renderMatches();
         renderTutors();
         renderRequests();
+        renderVolunteerRecords();
 
         clearStatus("adminStatus");
       } catch (error) {
@@ -984,12 +1277,13 @@
 
         showStatus(
           "adminStatus",
-          "Could not load records. Verify that this account is an admin and your Firestore rules are installed.",
+          "Could not load records. Verify that this account is an admin and that your Firestore rules allow access to all three collections: peerTutors, tutoringRequests, and volunteerHours.",
           "error"
         );
       }
     }
 
+    // Verify administrator access using Firebase Auth and Firestore.
     async function checkAdmin(user) {
       if (!user || !user.email) return false;
 
@@ -1028,6 +1322,7 @@
       }
     }
 
+    // Administrator login.
     byId("loginForm").addEventListener("submit", async event => {
       event.preventDefault();
 
@@ -1081,6 +1376,7 @@
       }
     });
 
+    // Restore an existing authenticated session.
     onAuthStateChanged(auth, async user => {
       if (!user) {
         currentAdmin = null;
@@ -1115,6 +1411,7 @@
 
     byId("refreshButton").addEventListener("click", loadRecords);
 
+    // Administrator logout.
     byId("logoutButton").addEventListener("click", async () => {
       try {
         await signOut(auth);
@@ -1135,11 +1432,13 @@
       }
     });
 
+    // Enable the delete-all button only when YES is entered.
     byId("deleteAllConfirm").addEventListener("input", event => {
       byId("deleteAllButton").disabled =
         event.target.value !== "YES" || !isAdmin;
     });
 
+    // Delete all records across all three collections.
     byId("deleteAllButton").addEventListener("click", async () => {
       if (
         !isAdmin ||
@@ -1153,26 +1452,29 @@
       }
 
       const confirmed = confirm(
-        "This permanently deletes ALL tutor registrations and tutoring requests. Continue?"
+        "This permanently deletes ALL tutor registrations, tutoring requests, and volunteer hours. Continue?"
       );
 
       if (!confirmed) return;
 
       byId("deleteAllButton").disabled = true;
-
       showStatus("deleteStatus", "Deleting records…", "info");
 
       try {
-        for (const collectionName of [
+        const collectionNames = [
           "peerTutors",
-          "tutoringRequests"
-        ]) {
+          "tutoringRequests",
+          "volunteerHours"
+        ];
+
+        for (const collectionName of collectionNames) {
           const snapshot = await getDocs(
             collection(db, collectionName)
           );
 
           const items = snapshot.docs;
 
+          // Delete in batches to avoid oversized write requests.
           for (let i = 0; i < items.length; i += 400) {
             await Promise.all(
               items.slice(i, i + 400).map(item =>
@@ -1188,7 +1490,7 @@
 
         showStatus(
           "deleteStatus",
-          "All tutor registrations and requests were deleted.",
+          "All tutor registrations, tutoring requests, and volunteer hours were deleted.",
           "success"
         );
       } catch (error) {
@@ -1196,7 +1498,7 @@
 
         showStatus(
           "deleteStatus",
-          "Some records may remain if deletion was interrupted. Refresh the records and check again.",
+          "Some records may remain if deletion was interrupted or a Firestore rule blocked access. Refresh the records and check again.",
           "error"
         );
       } finally {
@@ -1205,6 +1507,7 @@
       }
     });
 
+    // Switch between the four main tabs.
     document.querySelectorAll(".tab").forEach(button => {
       button.addEventListener("click", () => {
         document.querySelectorAll(".tab").forEach(tab => {

@@ -989,50 +989,61 @@
     });
 
     // Calculate actual schedule overlaps.
+
     function commonTimes(tutor, request) {
-      const overlaps = [];
       const tutorSlots = Array.isArray(tutor.availability)
         ? tutor.availability
         : [];
+    
       const studentSlots = Array.isArray(request.availability)
         ? request.availability
         : [];
-
-      function toMinutes(value) {
-        if (typeof value !== "string" ||
-            !/^([01]\d|2[0-3]):[0-5]\d$/.test(value)) {
+    
+      const overlaps = [];
+    
+      function toMinutes(time) {
+        if (typeof time !== "string" ||
+            !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) {
           return null;
         }
-
-        const [hours, minutes] = value.split(":").map(Number);
+    
+        const [hours, minutes] = time.split(":").map(Number);
         return hours * 60 + minutes;
       }
-
+    
       function toTime(minutes) {
-        return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+    
+        return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
       }
-
+    
+      // Compare every tutor time slot with every student time slot.
       for (const tutorSlot of tutorSlots) {
         if (!tutorSlot || !DAYS.includes(tutorSlot.day)) continue;
-
+    
         const tutorStart = toMinutes(tutorSlot.start);
         const tutorEnd = toMinutes(tutorSlot.end);
-
+    
         if (tutorStart === null || tutorEnd === null ||
             tutorStart >= tutorEnd) continue;
-
+    
         for (const studentSlot of studentSlots) {
           if (!studentSlot || studentSlot.day !== tutorSlot.day) continue;
-
+    
           const studentStart = toMinutes(studentSlot.start);
           const studentEnd = toMinutes(studentSlot.end);
-
+    
           if (studentStart === null || studentEnd === null ||
               studentStart >= studentEnd) continue;
-
+    
+          // The overlap begins at the later start time.
           const start = Math.max(tutorStart, studentStart);
+    
+          // The overlap ends at the earlier end time.
           const end = Math.min(tutorEnd, studentEnd);
-
+    
+          // A match requires a positive amount of shared time.
           if (start < end) {
             overlaps.push({
               day: tutorSlot.day,
@@ -1042,29 +1053,39 @@
           }
         }
       }
-
-      const order = new Map(DAYS.map((day, index) => [day, index]));
-
+    
+      // Sort the overlapping slots by weekday and start time.
+      const dayOrder = new Map(
+        DAYS.map((day, index) => [day, index])
+      );
+    
       overlaps.sort((a, b) =>
-        order.get(a.day) - order.get(b.day) ||
+        dayOrder.get(a.day) - dayOrder.get(b.day) ||
         a.start.localeCompare(b.start)
       );
-
+    
+      // Merge overlapping or adjacent time ranges on the same day.
       const merged = [];
-
+    
       for (const slot of overlaps) {
         const previous = merged[merged.length - 1];
-
-        if (previous && previous.day === slot.day &&
-            slot.start <= previous.end) {
-          if (slot.end > previous.end) previous.end = slot.end;
+    
+        if (
+          previous &&
+          previous.day === slot.day &&
+          slot.start <= previous.end
+        ) {
+          if (slot.end > previous.end) {
+            previous.end = slot.end;
+          }
         } else {
           merged.push({ ...slot });
         }
       }
-
+    
       return merged;
     }
+
 
     function formatCommonTimes(slots) {
       if (!slots.length) return "No shared times";
@@ -1088,18 +1109,21 @@
       }).join("; ");
     }
 
+
     function findMatches(request) {
       return tutors.filter(tutor => {
+        // 1. Require at least one exact course match.
         const tutorSubjects = new Set(
           (tutor.subjects || []).map(normalizeSubject)
         );
-
-        const sharedSubjects = (request.subjects || []).filter(
+    
+        const hasSharedSubject = (request.subjects || []).some(
           subject => tutorSubjects.has(normalizeSubject(subject))
         );
-
-        if (!sharedSubjects.length) return false;
-
+    
+        if (!hasSharedSubject) return false;
+    
+        // 2. Require a compatible gender preference.
         if (
           request.genderPreference &&
           request.genderPreference !== "Does not matter" &&
@@ -1107,8 +1131,14 @@
         ) {
           return false;
         }
-
-        return commonTimes(tutor, request).length > 0;
+    
+        // 3. Require at least one actual overlapping time.
+        const sharedTimes = commonTimes(tutor, request);
+    
+        if (sharedTimes.length === 0) return false;
+    
+        // This tutor satisfies all matching conditions.
+        return true;
       });
     }
 

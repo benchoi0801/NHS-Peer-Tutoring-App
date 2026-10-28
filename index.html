@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NHS Peer Tutoring App</title>
+  <style>
+    :root {
+      --navy: #172554;
+      --blue: #3157c8;
+      --bg: #f4f6fb;
+      --border: #dfe4ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: #172033;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 24px;
+    }
+
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; color: #dce5ff; }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    button, .tab {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    button { background: var(--blue); color: white; }
+    button:hover { filter: brightness(.92); }
+    button:disabled { opacity: .5; cursor: wait; }
+
+    .tab {
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--border);
+    }
+
+    .tab.active { background: var(--navy); color: white; }
+
+    .panel {
+      background: white;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px #1725540a;
+    }
+
+    .hidden { display: none !important; }
+
+    h2 { margin-top: 0; }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .full { grid-column: 1 / -1; }
+
+    label { font-size: 14px; font-weight: 600; }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #cbd3e1;
+      border-radius: 8px;
+      padding: 12px;
+      font: inherit;
+      background: white;
+    }
+
+    textarea { min-height: 85px; resize: vertical; }
+
+    .help { color: #596579; font-size: 13px; line-height: 1.5; }
+    .message { margin-top: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+    .danger { background: #b42318; }
+    .secondary { background: #e9edfa; color: var(--navy); }
+    .record {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 12px 0;
+      overflow-wrap: anywhere;
+    }
+    .record h3 { margin-top: 0; }
+    .record p { line-height: 1.5; }
+    .actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .status { font-size: 13px; color: #596579; }
+
+    @media (max-width: 600px) {
+      .fields { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .panel { padding: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>NHS Peer Tutoring</h1>
+  <p>Connect with peers. Learn together. Succeed together.</p>
+</header>
+
+<main>
+  <div class="tabs">
+    <button class="tab active" data-page="tutor">Become a Tutor</button>
+    <button class="tab" data-page="request">Request a Tutor</button>
+    <button class="tab" data-page="admin">Admin Login</button>
+  </div>
+
+  <section id="tutor" class="panel">
+    <h2>Peer Tutor Registration</h2>
+    <p class="help">Tell us which subjects you can confidently teach.</p>
+
+    <form id="tutorForm">
+      <div class="fields">
+        <div class="field">
+          <label for="tName">Full name</label>
+          <input id="tName" maxlength="100" required>
+        </div>
+        <div class="field">
+          <label for="tGrade">Grade level</label>
+          <select id="tGrade" required>
+            <option value="">Select grade</option>
+            <option>9th</option><option>10th</option>
+            <option>11th</option><option>12th</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="tSubjects">Subjects you can teach</label>
+          <textarea id="tSubjects" maxlength="1000" required
+            placeholder="Example: AP Physics 1, Algebra II, Biology"></textarea>
+          <span class="help">Separate subjects with commas. Use specific course names.</span>
+        </div>
+        <div class="field">
+          <label for="tGender">Gender (optional)</label>
+          <select id="tGender">
+            <option value="">Prefer not to answer</option>
+            <option>Male</option><option>Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="tAvailability">Times available</label>
+          <textarea id="tAvailability" maxlength="1000" required
+            placeholder="Example: Tuesdays after 3 PM"></textarea>
+        </div>
+        <div class="field full">
+          <label for="tConflicts">Sports or club conflicts</label>
+          <textarea id="tConflicts" maxlength="1000"
+            placeholder="List relevant conflicts, or write None"></textarea>
+        </div>
+      </div>
+      <p class="help">Submit only information approved for collection by your school.</p>
+      <button type="submit">Register as a Tutor</button>
+      <div id="tMessage" class="message" role="status"></div>
+    </form>
+  </section>
+
+  <section id="request" class="panel hidden">
+    <h2>Request a Tutor</h2>
+    <p class="help">Tell us what course you need help with and when you are free.</p>
+
+    <form id="requestForm">
+      <div class="fields">
+        <div class="field">
+          <label for="rName">Full name</label>
+          <input id="rName" maxlength="100" required>
+        </div>
+        <div class="field">
+          <label for="rGrade">Grade level</label>
+          <select id="rGrade" required>
+            <option value="">Select grade</option>
+            <option>9th</option><option>10th</option>
+            <option>11th</option><option>12th</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="rSubjects">Subjects you need help with</label>
+          <textarea id="rSubjects" maxlength="1000" required
+            placeholder="Example: AP Physics 1"></textarea>
+          <span class="help">Use the exact course name whenever possible.</span>
+        </div>
+        <div class="field">
+          <label for="rGender">Preferred tutor gender</label>
+          <select id="rGender" required>
+            <option value="Does not matter">Does not matter</option>
+            <option>Male</option><option>Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rAvailability">Times available</label>
+          <textarea id="rAvailability" maxlength="1000" required
+            placeholder="Example: Tuesdays after 3 PM"></textarea>
+        </div>
+        <div class="field full">
+          <label for="rConflicts">Sports or club conflicts</label>
+          <textarea id="rConflicts" maxlength="1000"
+            placeholder="List relevant conflicts, or write None"></textarea>
+        </div>
+      </div>
+      <button type="submit">Submit Tutoring Request</button>
+      <div id="rMessage" class="message" role="status"></div>
+    </form>
+  </section>
+
+  <section id="admin" class="panel hidden">
+    <h2>Administrator Dashboard</h2>
+    <p class="help">
+      Only approved administrators can view student records and manage entries.
+    </p>
+
+    <form id="loginForm">
+      <div class="fields">
+        <div class="field">
+          <label for="adminEmail">Admin email</label>
+          <input id="adminEmail" type="email" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="adminPassword">Password</label>
+          <input id="adminPassword" type="password"
+            autocomplete="current-password" required>
+        </div>
+      </div>
+      <p><button type="submit">Sign In</button></p>
+    </form>
+
+    <div id="adminArea" class="hidden">
+      <p id="adminIdentity" class="help"></p>
+      <div class="actions">
+        <button id="refreshButton" type="button">Refresh Records</button>
+        <button id="logoutButton" type="button" class="secondary">Sign Out</button>
+      </div>
+
+      <h2>Tutors</h2>
+      <div id="tutorRecords"></div>
+      <div class="field">
+        <label for="deleteAllTutors">Type YES to delete all peer tutors</label>
+        <input id="deleteAllTutors" placeholder="Type YES">
+        <button id="deleteTutorsButton" type="button" class="danger">
+          Delete All Peer Tutors
+        </button>
+      </div>
+
+      <h2 style="margin-top:30px">Tutoring Requests</h2>
+      <div id="requestRecords"></div>
+      <div class="field">
+        <label for="deleteAllRequests">Type YES to delete all requests</label>
+        <input id="deleteAllRequests" placeholder="Type YES">
+        <button id="deleteRequestsButton" type="button" class="danger">
+          Delete All Tutoring Requests
+        </button>
+      </div>
+
+      <h2 style="margin-top:30px">Automatic Matches</h2>
+      <p class="help">
+        Matches require an exact subject and compatible gender preference.
+        Review availability and conflicts before arranging a session.
+      </p>
+      <div id="matchRecords"></div>
+    </div>
+    <div id="aMessage" class="message" role="status"></div>
+  </section>
+</main>
+
+<script type="module">
+  import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+  import {
+    getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
+  // Replace every placeholder with the matching value from Firebase.
+  const firebaseConfig = {
+    apiKey: "PASTE_YOUR_API_KEY",
+    authDomain: "PASTE_YOUR_AUTH_DOMAIN",
+    projectId: "PASTE_YOUR_PROJECT_ID",
+    storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
+    messagingSenderId: "PASTE_YOUR_SENDER_ID",
+    appId: "PASTE_YOUR_APP_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const $ = id => document.getElementById(id);
+  let isAdmin = false;
+
+  function message(id, text) {
+    $(id).textContent = text;
+  }
+
+  document.querySelectorAll(".tab").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("main > section").forEach(section =>
+        section.classList.add("hidden")
+      );
+      $(button.dataset.page).classList.remove("hidden");
+      document.querySelectorAll(".tab").forEach(tab =>
+        tab.classList.toggle("active", tab === button)
+      );
+    });
+  });
+
+  function value(id) {
+    return $(id).value.trim();
+  }
+
+  function normalizeSubject(subject) {
+    return subject.trim().toLocaleLowerCase().replace(/\s+/g, " ");
+  }
+
+  function subjects(text) {
+    return text.split(/[,\n;]/).map(normalizeSubject).filter(Boolean);
+  }
+
+  function escapeHtml(text) {
+    return String(text ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#39;"
+    })[char]);
+  }
+
+  async function saveForm(formId, collectionName, fields, messageId) {
+    message(messageId, "");
+    const form = $(formId);
+    if (!form.reportValidity()) return;
+
+    try {
+      const data = {};
+      for (const [key, elementId] of Object.entries(fields)) {
+        data[key] = value(elementId);
+      }
+      data.createdAt = serverTimestamp();
+      await addDoc(collection(db, collectionName), data);
+      form.reset();
+      message(messageId, "Your submission was saved successfully.");
+    } catch (error) {
+      console.error(error);
+      message(messageId,
+        "Submission failed. Check your Firebase configuration and database rules.");
+    }
+  }
+
+  $("tutorForm").addEventListener("submit", event => {
+    event.preventDefault();
+    saveForm("tutorForm", "peerTutors", {
+      name: "tName", grade: "tGrade", subjects: "tSubjects",
+      gender: "tGender", availability: "tAvailability",
+      conflicts: "tConflicts"
+    }, "tMessage");
+  });
+
+  $("requestForm").addEventListener("submit", event => {
+    event.preventDefault();
+    saveForm("requestForm", "tutoringRequests", {
+      name: "rName", grade: "rGrade", subjects: "rSubjects",
+      genderPreference: "rGender", availability: "rAvailability",
+      conflicts: "rConflicts"
+    }, "rMessage");
+  });
+
+  $("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    message("aMessage", "");
+    try {
+      await signInWithEmailAndPassword(
+        auth, value("adminEmail"), $("adminPassword").value
+      );
+    } catch (error) {
+      console.error(error);
+      message("aMessage", "Sign-in failed. Check your email and password.");
+    }
+  });
+
+  onAuthStateChanged(auth, async user => {
+    isAdmin = false;
+    $("adminArea").classList.add("hidden");
+    $("loginForm").classList.remove("hidden");
+
+    if (!user) return;
+
+    try {
+      // The admin status is checked against Firestore security rules too.
+      const response = await getDocs(collection(db, "admins"));
+      isAdmin = response.docs.some(entry => entry.id === user.uid);
+
+      if (!isAdmin) {
+        message("aMessage", "This account is not an approved administrator.");
+        await signOut(auth);
+        return;
+      }
+
+      $("loginForm").classList.add("hidden");
+      $("adminArea").classList.remove("hidden");
+      message("adminIdentity", "Signed in as " + user.email);
+      await loadRecords();
+    } catch (error) {
+      console.error(error);
+      message("aMessage", "Unable to verify administrator access.");
+    }
+  });
+
+  $("logoutButton").addEventListener("click", () => signOut(auth));
+  $("refreshButton").addEventListener("click", loadRecords);
+
+  async function loadRecords() {
+    if (!isAdmin || !auth.currentUser) return;
+
+    try {
+      const [tutorsSnapshot, requestsSnapshot] = await Promise.all([
+        getDocs(collection(db, "peerTutors")),
+        getDocs(collection(db, "tutoringRequests"))
+      ]);
+
+      const tutors = tutorsSnapshot.docs.map(item => ({
+        id: item.id, ...item.data()
+      }));
+      const requests = requestsSnapshot.docs.map(item => ({
+        id: item.id, ...item.data()
+      }));
+
+      renderRecords("tutorRecords", tutors, "peerTutors");
+      renderRecords("requestRecords", requests, "tutoringRequests");
+      renderMatches(tutors, requests);
+      message("aMessage", "Records refreshed.");
+    } catch (error) {
+      console.error(error);
+      message("aMessage", "Could not load records. Check admin permissions.");
+    }
+  }
+
+  function renderRecords(containerId, records, collectionName) {
+    const container = $(containerId);
+    container.replaceChildren();
+
+    if (!records.length) {
+      container.textContent = "No records found.";
+      return;
+    }
+
+    records.forEach(record => {
+      const card = document.createElement("article");
+      card.className = "record";
+
+      const details = collectionName === "peerTutors"
+        ? [
+            ["Grade", record.grade], ["Subjects", record.subjects],
+            ["Gender", record.gender || "Not provided"],
+            ["Availability", record.availability],
+            ["Conflicts", record.conflicts || "None listed"]
+          ]
+        : [
+            ["Grade", record.grade], ["Subjects needed", record.subjects],
+            ["Gender preference", record.genderPreference],
+            ["Availability", record.availability],
+            ["Conflicts", record.conflicts || "None listed"]
+          ];
+
+      card.innerHTML =
+        `<h3>${escapeHtml(record.name)}</h3>` +
+        details.map(([label, text]) =>
+          `<p><strong>${label}:</strong> ${escapeHtml(text)}</p>`
+        ).join("") +
+        `<button class="danger">Delete This Record</button>`;
+
+      card.querySelector("button").addEventListener("click", async () => {
+        if (!isAdmin) return;
+        if (!confirm("Permanently delete this record?")) return;
+
+        try {
+          await deleteDoc(doc(db, collectionName, record.id));
+          await loadRecords();
+        } catch (error) {
+          console.error(error);
+          message("aMessage", "Delete failed. Check admin permissions.");
+        }
+      });
+
+      container.appendChild(card);
+    });
+  }
+
+  function renderMatches(tutors, requests) {
+    const container = $("matchRecords");
+    container.replaceChildren();
+
+    let count = 0;
+
+    requests.forEach(request => {
+      const requestedSubjects = subjects(request.subjects);
+
+      const matches = tutors.filter(tutor => {
+        const tutorSubjects = subjects(tutor.subjects);
+        const exactSubject = requestedSubjects.some(subject =>
+          tutorSubjects.includes(subject)
+        );
+
+        const genderMatches =
+          request.genderPreference === "Does not matter" ||
+          tutor.gender === request.genderPreference;
+
+        return exactSubject && genderMatches;
+      });
+
+      const card = document.createElement("article");
+      card.className = "record";
+
+      let html = `<h3>Request: ${escapeHtml(request.name)}</h3>`;
+
+      if (!matches.length) {
+        html += "<p>No matching tutor found yet.</p>";
+      } else {
+        count += matches.length;
+        html += matches.map(tutor =>
+          `<p><strong>Possible tutor:</strong> ${escapeHtml(tutor.name)}` +
+          `<br><strong>Subjects:</strong> ${escapeHtml(tutor.subjects)}` +
+          `<br><strong>Tutor availability:</strong> ${escapeHtml(tutor.availability)}` +
+          `<br><strong>Student availability:</strong> ${escapeHtml(request.availability)}` +
+          `<br><strong>Tutor conflicts:</strong> ${escapeHtml(tutor.conflicts || "None listed")}` +
+          `<br><strong>Student conflicts:</strong> ${escapeHtml(request.conflicts || "None listed")}` +
+          `<br><em>Confirm schedule compatibility before arranging tutoring.</em></p>`
+        ).join("");
+      }
+
+      card.innerHTML = html;
+      container.appendChild(card);
+    });
+
+    if (!requests.length) {
+      container.textContent = "No tutoring requests to match.";
+    } else {
+      const summary = document.createElement("p");
+      summary.className = "help";
+      summary.textContent = `${count} possible tutor-request pair(s) found.`;
+      container.prepend(summary);
+    }
+  }
+
+  async function deleteAll(collectionName, inputId, label) {
+    if (!isAdmin) return;
+
+    if (value(inputId) !== "YES") {
+      message("aMessage", 'Type YES in capital letters to confirm.');
+      return;
+    }
+
+    if (!confirm(`Permanently delete ALL ${label}? This cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const snapshot = await getDocs(collection(db, collectionName));
+      // Firestore client batch limit is avoided by deleting sequentially.
+      for (const entry of snapshot.docs) {
+        await deleteDoc(doc(db, collectionName, entry.id));
+      }
+      $(inputId).value = "";
+      message("aMessage", `All ${label} were deleted.`);
+      await loadRecords();
+    } catch (error) {
+      console.error(error);
+      message("aMessage", "Bulk deletion failed. Check admin permissions.");
+    }
+  }
+
+  $("deleteTutorsButton").addEventListener("click", () =>
+    deleteAll("peerTutors", "deleteAllTutors", "peer tutors")
+  );
+
+  $("deleteRequestsButton").addEventListener("click", () =>
+    deleteAll("tutoringRequests", "deleteAllRequests", "tutoring requests")
+  );
+</script>
+</body>
+</html>

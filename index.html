@@ -784,23 +784,45 @@
       }
     }
 
+
 async function checkAdmin(user) {
   if (!user || !user.email) return false;
 
   try {
     const adminDoc = await getDoc(doc(db, "admins", user.uid));
 
-    if (!adminDoc.exists()) return false;
+    if (!adminDoc.exists()) {
+      console.error("Admin document not found for UID:", user.uid);
+      return false;
+    }
 
     const adminData = adminDoc.data();
 
-    return adminData.enabled === true &&
-      adminData.email === user.email;
+    const approvedEmail =
+      typeof adminData.email === "string"
+        ? adminData.email.trim().toLowerCase()
+        : "";
+
+    const signedInEmail = user.email.trim().toLowerCase();
+
+    const approved =
+      adminData.enabled === true &&
+      approvedEmail === signedInEmail;
+
+    console.log("Admin check:", {
+      documentExists: true,
+      enabled: adminData.enabled,
+      emailMatches: approvedEmail === signedInEmail,
+      approved
+    });
+
+    return approved;
   } catch (error) {
     console.error("Admin verification failed:", error);
     return false;
   }
 }
+
 
     byId("loginForm").addEventListener("submit", async event => {
       event.preventDefault();

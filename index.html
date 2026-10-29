@@ -52,7 +52,6 @@
     h3 { color: var(--navy); }
     p { margin-top: 6px; }
     .subtitle { max-width: 620px; opacity: .9; }
-
     main { padding: 24px 0 60px; }
 
     .notice {
@@ -197,6 +196,49 @@
       margin-top: 18px;
     }
 
+    .study-period-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 500px;
+    }
+
+    .study-period-option {
+      position: relative;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .study-period-option input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+    }
+
+    .study-period-option span {
+      display: block;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: white;
+      color: var(--navy);
+      font-weight: bold;
+      transition: .15s ease;
+    }
+
+    .study-period-option input:checked + span {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .study-period-option input:focus-visible + span {
+      outline: 2px solid #9bc4f4;
+      outline-offset: 2px;
+    }
+
     .admin-subtabs {
       display: flex;
       flex-wrap: wrap;
@@ -207,10 +249,6 @@
     }
 
     .admin-subpanel { margin-top: 12px; }
-
-    @media (max-width: 650px) {
-      .lunch-grid { grid-template-columns: 1fr; }
-    }
 
     .primary, .danger { padding: 12px 17px; }
     .danger { background: var(--red); color: white; }
@@ -264,6 +302,13 @@
       .panel, .card { padding: 17px; }
       header { padding: 30px 0; }
       .record-top { flex-direction: column; }
+      .lunch-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 400px) {
+      .study-period-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
   </style>
 </head>
@@ -287,16 +332,16 @@
     </div>
 
     <nav class="tabs" aria-label="Main navigation">
-      <button class="tab active" data-panel="tutorPanel">
+      <button class="tab active" data-panel="tutorPanel" type="button">
         Become a Tutor
       </button>
-      <button class="tab" data-panel="requestPanel">
+      <button class="tab" data-panel="requestPanel" type="button">
         Request a Tutor
       </button>
-      <button class="tab" data-panel="volunteerPanel">
+      <button class="tab" data-panel="volunteerPanel" type="button">
         Record Volunteer Hours
       </button>
-      <button class="tab" data-panel="adminPanel">
+      <button class="tab" data-panel="adminPanel" type="button">
         Admin Login
       </button>
     </nav>
@@ -335,10 +380,8 @@
               placeholder="e.g. Algebra 1 H, Calculus BC AP"
             >
             <div class="help">
-              Format: 1. Class (e.g. Algebra 1 or Calculus BC)
-              2. Level (CP, H, or AP). Enter the class first, followed
-              by its level. Do not use Roman numerals. Separate multiple
-              subjects with commas.
+              Enter the class first, followed by its level: CP, H, or AP.
+              Do not use Roman numerals. Separate multiple subjects with commas.
             </div>
           </div>
 
@@ -358,6 +401,7 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+
               <div class="field">
                 <label for="tutorLunchDay2">What lunch do you have on day 2? *</label>
                 <select id="tutorLunchDay2" required>
@@ -366,6 +410,7 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+
               <div class="field">
                 <label for="tutorLunchDay3">What lunch do you have on day 3? *</label>
                 <select id="tutorLunchDay3" required>
@@ -374,6 +419,7 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+
               <div class="field">
                 <label for="tutorLunchDay4">What lunch do you have on day 4? *</label>
                 <select id="tutorLunchDay4" required>
@@ -382,6 +428,16 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+            </div>
+          </div>
+
+          <div class="field full">
+            <div class="section-label">
+              When do you have an assigned study period?
+            </div>
+            <div id="tutorStudyPeriods" class="study-period-options"></div>
+            <div class="help">
+              Select every study period you have. You may select multiple options.
             </div>
           </div>
         </div>
@@ -399,7 +455,7 @@
     <section id="requestPanel" class="panel hidden">
       <h2>Request a Tutor</h2>
       <p class="muted">
-        We'll identify tutors with an exact subject match and compatible schedules.
+        We'll identify tutors with matching subjects and compatible schedules.
       </p>
 
       <form id="requestForm">
@@ -421,9 +477,7 @@
           </div>
 
           <div class="field full">
-            <label for="requestSubjects">
-              Subject(s) you need help with *
-            </label>
+            <label for="requestSubjects">Subject(s) you need help with *</label>
             <input
               id="requestSubjects"
               maxlength="500"
@@ -431,10 +485,8 @@
               placeholder="e.g. Algebra 1 H, Calculus BC AP"
             >
             <div class="help">
-              Format: 1. Class (e.g. Algebra 1 or Calculus BC)
-              2. Level (CP, H, or AP). Enter the class first, followed
-              by its level. Do not use Roman numerals. Separate multiple
-              subjects with commas.
+              Enter the class first, followed by its level: CP, H, or AP.
+              Do not use Roman numerals. Separate multiple subjects with commas.
             </div>
           </div>
 
@@ -454,6 +506,7 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+
               <div class="field">
                 <label for="requestLunchDay2">What lunch do you have on day 2? *</label>
                 <select id="requestLunchDay2" required>
@@ -462,6 +515,7 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+
               <div class="field">
                 <label for="requestLunchDay3">What lunch do you have on day 3? *</label>
                 <select id="requestLunchDay3" required>
@@ -470,6 +524,7 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+
               <div class="field">
                 <label for="requestLunchDay4">What lunch do you have on day 4? *</label>
                 <select id="requestLunchDay4" required>
@@ -478,6 +533,16 @@
                   <option value="2">Lunch 2</option>
                 </select>
               </div>
+            </div>
+          </div>
+
+          <div class="field full">
+            <div class="section-label">
+              When do you have an assigned study period?
+            </div>
+            <div id="requestStudyPeriods" class="study-period-options"></div>
+            <div class="help">
+              Select every study period you have. You may select multiple options.
             </div>
           </div>
         </div>
@@ -544,11 +609,7 @@
 
           <div class="field">
             <label for="volunteerDate">Date Done *</label>
-            <input
-              id="volunteerDate"
-              type="date"
-              required
-            >
+            <input id="volunteerDate" type="date" required>
           </div>
         </div>
 
@@ -562,7 +623,7 @@
       </form>
     </section>
 
-    <!-- ADMIN LOGIN AND DASHBOARD -->
+    <!-- ADMIN DASHBOARD -->
     <section id="adminPanel" class="panel hidden">
       <h2>Administrator Dashboard</h2>
       <p class="muted">
@@ -592,7 +653,9 @@
           </div>
         </div>
 
-        <p><button class="primary" type="submit">Sign In</button></p>
+        <p>
+          <button class="primary" type="submit">Sign In</button>
+        </p>
       </form>
 
       <div id="adminStatus" aria-live="polite"></div>
@@ -608,10 +671,18 @@
         </div>
 
         <nav class="admin-subtabs" aria-label="Administrator sections">
-          <button class="tab active" type="button" data-admin-panel="tutoringAdminPanel">
+          <button
+            class="tab active"
+            type="button"
+            data-admin-panel="tutoringAdminPanel"
+          >
             Tutoring & Matching
           </button>
-          <button class="tab" type="button" data-admin-panel="volunteerAdminPanel">
+          <button
+            class="tab"
+            type="button"
+            data-admin-panel="volunteerAdminPanel"
+          >
             Volunteer Hours
           </button>
         </nav>
@@ -619,8 +690,9 @@
         <section id="tutoringAdminPanel" class="admin-subpanel">
           <h3>Matching Results</h3>
           <p class="muted">
-            A match requires an exact subject and a shared available time.
-            Confirm arrangements with students before scheduling.
+            Matches require an exact subject and at least one shared
+            after-school time, matching lunch, or study period.
+            Confirm arrangements directly with students.
           </p>
           <div id="matchesList"></div>
 
@@ -698,7 +770,7 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
-    // Firebase web app configuration
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDd7N0_p9BuSuYzni5Dvyygg7BLHTp3Bcc",
       authDomain: "nhs-peer-tutoring-app.firebaseapp.com",
@@ -713,7 +785,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // All available tutoring time slots.
     const timeSlots = [
       "Monday 3–4 PM",
       "Monday 4–5 PM",
@@ -772,15 +843,19 @@
       byId(id).className = "";
     }
 
-    // Create availability checkboxes grouped under weekday headings.
+    // Render after-school availability grouped by weekday.
     function renderTimeChoices(containerId, prefix) {
       const container = byId(containerId);
       container.replaceChildren();
 
-      const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+      const weekdays = [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+      ];
 
       weekdays.forEach(day => {
-        const daySlots = timeSlots.filter(slot => slot.startsWith(day + " "));
+        const daySlots = timeSlots.filter(
+          slot => slot.startsWith(day + " ")
+        );
 
         const group = document.createElement("div");
         group.className = "weekday-group";
@@ -794,6 +869,7 @@
 
         daySlots.forEach(slot => {
           const index = timeSlots.indexOf(slot);
+
           const label = document.createElement("label");
           label.className = "choice";
 
@@ -815,8 +891,34 @@
       });
     }
 
+    // Render selectable study periods 1 through 8.
+    function renderStudyPeriodChoices(containerId, prefix) {
+      const container = byId(containerId);
+      container.replaceChildren();
+
+      for (let period = 1; period <= 8; period++) {
+        const label = document.createElement("label");
+        label.className = "study-period-option";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = prefix;
+        checkbox.value = String(period);
+        checkbox.id = prefix + period;
+
+        const text = document.createElement("span");
+        text.textContent = String(period);
+
+        label.append(checkbox, text);
+        container.append(label);
+      }
+    }
+
     renderTimeChoices("tutorAvailability", "tutorAvail");
     renderTimeChoices("requestAvailability", "requestAvail");
+
+    renderStudyPeriodChoices("tutorStudyPeriods", "tutorStudy");
+    renderStudyPeriodChoices("requestStudyPeriods", "requestStudy");
 
     function selectedSlots(prefix) {
       return [
@@ -824,6 +926,14 @@
           'input[name="' + prefix + '"]:checked'
         )
       ].map(input => input.value);
+    }
+
+    function selectedStudyPeriods(prefix) {
+      return [
+        ...document.querySelectorAll(
+          'input[name="' + prefix + '"]:checked'
+        )
+      ].map(input => Number(input.value));
     }
 
     function resetSlots(prefix) {
@@ -839,8 +949,6 @@
         .toLocaleLowerCase();
     }
 
-    // Subjects are comma-separated.
-    // Each course name must not contain commas.
     function parseSubjects(value) {
       return [
         ...new Set(
@@ -851,14 +959,11 @@
       ];
     }
 
-    // The final token must be CP, H, or AP.
-    // Standalone Roman numerals are prohibited.
     function validateSubjects(subjects) {
       const romanNumeralPattern =
         /\b(?:II|III|IV|VI|VII|VIII|IX|XI|XII|I|V|X)\b/i;
 
-      const validFormat =
-        /^.+\s+(?:CP|H|AP)$/i;
+      const validFormat = /^.+\s+(?:CP|H|AP)$/i;
 
       for (const subject of subjects) {
         if (subject.includes(",")) {
@@ -889,7 +994,22 @@
       return typeof name === "string" && name.trim().length >= 2;
     }
 
-    // Submit tutor registration.
+    function getLunchSchedule(prefix) {
+      return {
+        day1: byId(prefix + "LunchDay1").value,
+        day2: byId(prefix + "LunchDay2").value,
+        day3: byId(prefix + "LunchDay3").value,
+        day4: byId(prefix + "LunchDay4").value
+      };
+    }
+
+    function validateLunchSchedule(schedule) {
+      return ["day1", "day2", "day3", "day4"].every(
+        day => ["1", "2"].includes(schedule[day])
+      );
+    }
+
+    // Tutor registration
     byId("tutorForm").addEventListener("submit", async event => {
       event.preventDefault();
       clearStatus("tutorStatus");
@@ -898,12 +1018,8 @@
       const grade = byId("tutorGrade").value;
       const subjects = parseSubjects(byId("tutorSubjects").value);
       const availability = selectedSlots("tutorAvail");
-      const lunchSchedule = {
-        day1: byId("tutorLunchDay1").value,
-        day2: byId("tutorLunchDay2").value,
-        day3: byId("tutorLunchDay3").value,
-        day4: byId("tutorLunchDay4").value
-      };
+      const studyPeriods = selectedStudyPeriods("tutorStudy");
+      const lunchSchedule = getLunchSchedule("tutor");
 
       if (!validName(name) || !grade || !subjects.length) {
         return showStatus(
@@ -914,15 +1030,21 @@
       }
 
       const subjectError = validateSubjects(subjects);
-
       if (subjectError) {
         return showStatus("tutorStatus", subjectError, "error");
       }
 
       const slotError = validateSlots(availability);
-
       if (slotError) {
         return showStatus("tutorStatus", slotError, "error");
+      }
+
+      if (!validateLunchSchedule(lunchSchedule)) {
+        return showStatus(
+          "tutorStatus",
+          "Please select a lunch for all four days.",
+          "error"
+        );
       }
 
       try {
@@ -932,11 +1054,13 @@
           subjects,
           availability,
           lunchSchedule,
+          studyPeriods,
           createdAt: serverTimestamp()
         });
 
         byId("tutorForm").reset();
         resetSlots("tutorAvail");
+        resetSlots("tutorStudy");
 
         showStatus(
           "tutorStatus",
@@ -944,17 +1068,19 @@
           "success"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Tutor registration failed:", error);
 
         showStatus(
           "tutorStatus",
-          "We couldn't submit your registration. Check your Firestore setup and security rules, then try again.",
+          "We couldn't submit your registration. Error: " +
+            (error.code || error.message || "Unknown Firebase error") +
+            ". Check the browser console and your Firestore security rules.",
           "error"
         );
       }
     });
 
-    // Submit tutoring request.
+    // Tutoring request
     byId("requestForm").addEventListener("submit", async event => {
       event.preventDefault();
       clearStatus("requestStatus");
@@ -963,12 +1089,8 @@
       const grade = byId("requestGrade").value;
       const subjects = parseSubjects(byId("requestSubjects").value);
       const availability = selectedSlots("requestAvail");
-      const lunchSchedule = {
-        day1: byId("requestLunchDay1").value,
-        day2: byId("requestLunchDay2").value,
-        day3: byId("requestLunchDay3").value,
-        day4: byId("requestLunchDay4").value
-      };
+      const studyPeriods = selectedStudyPeriods("requestStudy");
+      const lunchSchedule = getLunchSchedule("request");
 
       if (!validName(name) || !grade || !subjects.length) {
         return showStatus(
@@ -979,15 +1101,21 @@
       }
 
       const subjectError = validateSubjects(subjects);
-
       if (subjectError) {
         return showStatus("requestStatus", subjectError, "error");
       }
 
       const slotError = validateSlots(availability);
-
       if (slotError) {
         return showStatus("requestStatus", slotError, "error");
+      }
+
+      if (!validateLunchSchedule(lunchSchedule)) {
+        return showStatus(
+          "requestStatus",
+          "Please select a lunch for all four days.",
+          "error"
+        );
       }
 
       try {
@@ -997,11 +1125,13 @@
           subjects,
           availability,
           lunchSchedule,
+          studyPeriods,
           createdAt: serverTimestamp()
         });
 
         byId("requestForm").reset();
         resetSlots("requestAvail");
+        resetSlots("requestStudy");
 
         showStatus(
           "requestStatus",
@@ -1009,17 +1139,19 @@
           "success"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Tutoring request failed:", error);
 
         showStatus(
           "requestStatus",
-          "We couldn't submit your request. Check your Firestore setup and security rules, then try again.",
+          "We couldn't submit your request. Error: " +
+            (error.code || error.message || "Unknown Firebase error") +
+            ". Check the browser console and your Firestore security rules.",
           "error"
         );
       }
     });
 
-    // Submit volunteer hours.
+    // Volunteer hours submission
     byId("volunteerForm").addEventListener("submit", async event => {
       event.preventDefault();
       clearStatus("volunteerStatus");
@@ -1045,7 +1177,6 @@
         );
       }
 
-      // Ensure the date exists and is not in the future.
       const selectedDate = new Date(dateDone + "T00:00:00");
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -1062,7 +1193,6 @@
         );
       }
 
-      // Restrict hours to quarter-hour increments.
       if (Math.abs(hours * 4 - Math.round(hours * 4)) > 0.000001) {
         return showStatus(
           "volunteerStatus",
@@ -1088,17 +1218,62 @@
           "success"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Volunteer submission failed:", error);
 
         showStatus(
           "volunteerStatus",
-          "We couldn't submit your volunteer hours. Check your Firestore setup and security rules, then try again.",
+          "We couldn't submit your volunteer hours. Error: " +
+            (error.code || error.message || "Unknown Firebase error") +
+            ". Check your Firestore security rules.",
           "error"
         );
       }
     });
 
-    // Find compatible tutors using exact subjects and shared time slots.
+    // Compare lunch schedules on corresponding days.
+    function commonLunchDays(tutor, request) {
+      const tutorLunch = tutor.lunchSchedule || {};
+      const requestLunch = request.lunchSchedule || {};
+
+      return ["day1", "day2", "day3", "day4"]
+        .filter(day =>
+          ["1", "2"].includes(String(tutorLunch[day])) &&
+          tutorLunch[day] === requestLunch[day]
+        )
+        .map(day => {
+          const dayNumber = day.replace("day", "");
+          return "Day " + dayNumber +
+            " (Lunch " + tutorLunch[day] + ")";
+        });
+    }
+
+    // Compare selected study-period numbers.
+    function commonStudyPeriods(tutor, request) {
+      const tutorPeriods = new Set(
+        (tutor.studyPeriods || []).map(Number)
+      );
+
+      return [
+        ...new Set(
+          (request.studyPeriods || [])
+            .map(Number)
+            .filter(period => tutorPeriods.has(period))
+        )
+      ].sort((a, b) => a - b);
+    }
+
+    // Compare after-school availability.
+    function commonTimes(tutor, request) {
+      const tutorAvailable = new Set(tutor.availability || []);
+      const requestAvailable = new Set(request.availability || []);
+
+      return timeSlots.filter(slot =>
+        tutorAvailable.has(slot) &&
+        requestAvailable.has(slot)
+      );
+    }
+
+    // Exact subject match plus at least one shared time.
     function findMatches(request) {
       return tutors.filter(tutor => {
         const tutorSubjects = new Set(
@@ -1111,31 +1286,34 @@
 
         if (!exactSubjectMatch) return false;
 
-        const tutorAvailable = new Set(tutor.availability || []);
-        const requestAvailable = new Set(request.availability || []);
-
-        return timeSlots.some(slot =>
-          tutorAvailable.has(slot) &&
-          requestAvailable.has(slot)
+        return (
+          commonTimes(tutor, request).length > 0 ||
+          commonLunchDays(tutor, request).length > 0 ||
+          commonStudyPeriods(tutor, request).length > 0
         );
       });
     }
 
-    function commonTimes(tutor, request) {
-      const tutorAvailable = new Set(tutor.availability || []);
-      const requestAvailable = new Set(request.availability || []);
-
-      return timeSlots.filter(slot =>
-        tutorAvailable.has(slot) &&
-        requestAvailable.has(slot)
-      );
-    }
-
     function formatLunchSchedule(schedule) {
       if (!schedule) return "Not provided";
+
       return ["day1", "day2", "day3", "day4"]
-        .map((day, index) => "Day " + (index + 1) + ": Lunch " + (schedule[day] || "Not provided"))
+        .map((day, index) =>
+          "Day " + (index + 1) +
+          ": Lunch " + (schedule[day] || "Not provided")
+        )
         .join(", ");
+    }
+
+    function formatStudyPeriods(periods) {
+      if (!Array.isArray(periods) || periods.length === 0) {
+        return "None selected";
+      }
+
+      return [...new Set(periods.map(Number))]
+        .filter(period => Number.isInteger(period) && period >= 1 && period <= 8)
+        .sort((a, b) => a - b)
+        .join(", ") || "None selected";
     }
 
     function dateText(timestamp) {
@@ -1146,7 +1324,7 @@
       return timestamp.toDate().toLocaleString();
     }
 
-    // Create a reusable record card.
+    // Reusable administrator record card.
     function makeRecord({
       title,
       lines,
@@ -1197,11 +1375,11 @@
         await deleteDoc(doc(db, collectionName, id));
         await loadRecords();
       } catch (error) {
-        console.error(error);
+        console.error("Record deletion failed:", error);
 
         showStatus(
           "adminStatus",
-          "Deletion failed. Check your Firestore rules.",
+          "Deletion failed. Check your Firestore security rules.",
           "error"
         );
       }
@@ -1224,6 +1402,7 @@
             "Subjects: " + (tutor.subjects || []).join(", "),
             "Available: " + (tutor.availability || []).join(", "),
             "Lunch schedule: " + formatLunchSchedule(tutor.lunchSchedule),
+            "Study periods: " + formatStudyPeriods(tutor.studyPeriods),
             "Submitted: " + dateText(tutor.createdAt)
           ],
           buttonText: "Delete Tutor",
@@ -1250,6 +1429,7 @@
             "Subjects requested: " + (request.subjects || []).join(", "),
             "Available: " + (request.availability || []).join(", "),
             "Lunch schedule: " + formatLunchSchedule(request.lunchSchedule),
+            "Study periods: " + formatStudyPeriods(request.studyPeriods),
             "Submitted: " + dateText(request.createdAt)
           ],
           buttonText: "Delete Request",
@@ -1259,7 +1439,7 @@
       });
     }
 
-    // Display volunteer hours submitted by students.
+    // Display submitted volunteer hours.
     function renderVolunteerRecords() {
       const container = byId("volunteerRecordsList");
       container.replaceChildren();
@@ -1269,7 +1449,6 @@
         return;
       }
 
-      // Most recent service dates appear first.
       const sortedRecords = [...volunteerRecords].sort((a, b) =>
         String(b.dateDone || "").localeCompare(String(a.dateDone || ""))
       );
@@ -1290,7 +1469,7 @@
       });
     }
 
-    // Display tutor matches.
+    // Display matching results.
     function renderMatches() {
       const container = byId("matchesList");
       container.replaceChildren();
@@ -1315,24 +1494,33 @@
 
         if (!matches.length) {
           const p = document.createElement("p");
-
           p.textContent =
             "No tutor with an exact subject match and shared available time was found.";
-
           card.append(p);
         } else {
           matches.forEach(tutor => {
+            const sharedSubjects = (tutor.subjects || []).filter(subject =>
+              (request.subjects || []).some(
+                wanted =>
+                  normalizeSubject(subject) === normalizeSubject(wanted)
+              )
+            );
+
+            const afterSchool = commonTimes(tutor, request);
+            const lunchDays = commonLunchDays(tutor, request);
+            const studyPeriods = commonStudyPeriods(tutor, request);
+
             const p = document.createElement("p");
 
             p.textContent =
-              tutor.name + " (" + tutor.grade + ") · " +
-              (tutor.subjects || []).filter(subject =>
-                (request.subjects || []).some(wanted =>
-                  normalizeSubject(subject) === normalizeSubject(wanted)
-                )
-              ).join(", ") +
-              " · Shared times: " +
-              commonTimes(tutor, request).join(", ");
+              "\nTutor: " + tutor.name + " (" + tutor.grade + ")" +
+              "\nMatching subjects: " + sharedSubjects.join(", ") +
+              "\nShared after-school times: " +
+                (afterSchool.join(", ") || "None") +
+              "\nShared lunch times: " +
+                (lunchDays.join(", ") || "None") +
+              "\nShared study periods: " +
+                (studyPeriods.join(", ") || "None");
 
             card.append(p);
           });
@@ -1342,7 +1530,7 @@
       });
     }
 
-    // Retrieve all records for approved administrators.
+    // Load records for approved administrators.
     async function loadRecords() {
       if (!isAdmin) return;
 
@@ -1381,17 +1569,17 @@
 
         clearStatus("adminStatus");
       } catch (error) {
-        console.error(error);
+        console.error("Loading records failed:", error);
 
         showStatus(
           "adminStatus",
-          "Could not load records. Verify that this account is an admin and that your Firestore rules allow access to all three collections: peerTutors, tutoringRequests, and volunteerHours.",
+          "Could not load records. Verify administrator approval and Firestore rules for peerTutors, tutoringRequests, and volunteerHours.",
           "error"
         );
       }
     }
 
-    // Verify administrator access using Firebase Auth and Firestore.
+    // Verify administrator access.
     async function checkAdmin(user) {
       if (!user || !user.email) return false;
 
@@ -1412,18 +1600,10 @@
 
         const signedInEmail = user.email.trim().toLowerCase();
 
-        const approved =
+        return (
           adminData.enabled === true &&
-          approvedEmail === signedInEmail;
-
-        console.log("Admin check:", {
-          documentExists: true,
-          enabled: adminData.enabled,
-          emailMatches: approvedEmail === signedInEmail,
-          approved
-        });
-
-        return approved;
+          approvedEmail === signedInEmail
+        );
       } catch (error) {
         console.error("Admin verification failed:", error);
         return false;
@@ -1474,7 +1654,7 @@
 
         await loadRecords();
       } catch (error) {
-        console.error(error);
+        console.error("Administrator sign-in failed:", error);
 
         showStatus(
           "adminStatus",
@@ -1484,7 +1664,7 @@
       }
     });
 
-    // Restore an existing authenticated session.
+    // Restore an authenticated session.
     onAuthStateChanged(auth, async user => {
       if (!user) {
         currentAdmin = null;
@@ -1530,7 +1710,7 @@
           "info"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Sign-out failed:", error);
 
         showStatus(
           "adminStatus",
@@ -1540,13 +1720,13 @@
       }
     });
 
-    // Enable the delete-all button only when YES is entered.
+    // Enable delete-all only when YES is entered.
     byId("deleteAllConfirm").addEventListener("input", event => {
       byId("deleteAllButton").disabled =
         event.target.value !== "YES" || !isAdmin;
     });
 
-    // Delete all records across all three collections.
+    // Delete records from all three collections.
     byId("deleteAllButton").addEventListener("click", async () => {
       if (
         !isAdmin ||
@@ -1582,7 +1762,6 @@
 
           const items = snapshot.docs;
 
-          // Delete in batches to avoid oversized write requests.
           for (let i = 0; i < items.length; i += 400) {
             await Promise.all(
               items.slice(i, i + 400).map(item =>
@@ -1602,7 +1781,7 @@
           "success"
         );
       } catch (error) {
-        console.error(error);
+        console.error("Delete-all operation failed:", error);
 
         showStatus(
           "deleteStatus",
@@ -1615,7 +1794,7 @@
       }
     });
 
-    // Switch between administrator subtabs.
+    // Switch administrator subtabs.
     document.querySelectorAll("[data-admin-panel]").forEach(button => {
       button.addEventListener("click", () => {
         document.querySelectorAll("[data-admin-panel]").forEach(tab => {
@@ -1631,7 +1810,7 @@
       });
     });
 
-    // Switch between the four main tabs.
+    // Switch the four main tabs.
     document.querySelectorAll("main > .tabs .tab").forEach(button => {
       button.addEventListener("click", () => {
         document.querySelectorAll("main > .tabs .tab").forEach(tab => {

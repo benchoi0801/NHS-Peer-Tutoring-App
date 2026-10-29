@@ -176,6 +176,42 @@
       margin: 18px 0 9px;
     }
 
+    .weekday-group {
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 13px;
+      margin-bottom: 12px;
+      background: #fbfdff;
+    }
+
+    .weekday-group h4 {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 15px;
+    }
+
+    .lunch-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+      margin-top: 18px;
+    }
+
+    .admin-subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-subpanel { margin-top: 12px; }
+
+    @media (max-width: 650px) {
+      .lunch-grid { grid-template-columns: 1fr; }
+    }
+
     .primary, .danger { padding: 12px 17px; }
     .danger { background: var(--red); color: white; }
     .secondary { background: #eaf0f7; color: var(--navy); }
@@ -310,6 +346,44 @@
             <div class="section-label">When are you available? *</div>
             <div id="tutorAvailability" class="choices"></div>
           </div>
+
+          <div class="field full">
+            <div class="section-label">Lunch Schedule</div>
+            <div class="lunch-grid">
+              <div class="field">
+                <label for="tutorLunchDay1">What lunch do you have on day 1? *</label>
+                <select id="tutorLunchDay1" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="tutorLunchDay2">What lunch do you have on day 2? *</label>
+                <select id="tutorLunchDay2" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="tutorLunchDay3">What lunch do you have on day 3? *</label>
+                <select id="tutorLunchDay3" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="tutorLunchDay4">What lunch do you have on day 4? *</label>
+                <select id="tutorLunchDay4" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
 
         <p>
@@ -367,6 +441,44 @@
           <div class="field full">
             <div class="section-label">When are you available? *</div>
             <div id="requestAvailability" class="choices"></div>
+          </div>
+
+          <div class="field full">
+            <div class="section-label">Lunch Schedule</div>
+            <div class="lunch-grid">
+              <div class="field">
+                <label for="requestLunchDay1">What lunch do you have on day 1? *</label>
+                <select id="requestLunchDay1" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="requestLunchDay2">What lunch do you have on day 2? *</label>
+                <select id="requestLunchDay2" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="requestLunchDay3">What lunch do you have on day 3? *</label>
+                <select id="requestLunchDay3" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="requestLunchDay4">What lunch do you have on day 4? *</label>
+                <select id="requestLunchDay4" required>
+                  <option value="">Choose lunch</option>
+                  <option value="1">Lunch 1</option>
+                  <option value="2">Lunch 2</option>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -495,25 +607,38 @@
           </button>
         </div>
 
-        <h3>Matching Results</h3>
-        <p class="muted">
-          A match requires an exact subject and a shared available time.
-          Confirm arrangements with students before scheduling.
-        </p>
-        <div id="matchesList"></div>
+        <nav class="admin-subtabs" aria-label="Administrator sections">
+          <button class="tab active" type="button" data-admin-panel="tutoringAdminPanel">
+            Tutoring & Matching
+          </button>
+          <button class="tab" type="button" data-admin-panel="volunteerAdminPanel">
+            Volunteer Hours
+          </button>
+        </nav>
 
-        <h3>Registered Tutors</h3>
-        <div id="tutorsList"></div>
+        <section id="tutoringAdminPanel" class="admin-subpanel">
+          <h3>Matching Results</h3>
+          <p class="muted">
+            A match requires an exact subject and a shared available time.
+            Confirm arrangements with students before scheduling.
+          </p>
+          <div id="matchesList"></div>
 
-        <h3>Tutoring Requests</h3>
-        <div id="requestsList"></div>
+          <h3>Registered Tutors</h3>
+          <div id="tutorsList"></div>
 
-        <h3>Volunteer Hours Records</h3>
-        <p class="muted">
-          Review submitted volunteer hours and delete individual entries
-          if necessary.
-        </p>
-        <div id="volunteerRecordsList"></div>
+          <h3>Tutoring Requests</h3>
+          <div id="requestsList"></div>
+        </section>
+
+        <section id="volunteerAdminPanel" class="admin-subpanel hidden">
+          <h3>Volunteer Hours Records</h3>
+          <p class="muted">
+            Review submitted volunteer hours and delete individual entries
+            if necessary.
+          </p>
+          <div id="volunteerRecordsList"></div>
+        </section>
 
         <div class="card danger-zone">
           <h3>Delete All Records</h3>
@@ -647,26 +772,46 @@
       byId(id).className = "";
     }
 
-    // Create availability checkboxes.
+    // Create availability checkboxes grouped under weekday headings.
     function renderTimeChoices(containerId, prefix) {
       const container = byId(containerId);
       container.replaceChildren();
 
-      timeSlots.forEach((slot, index) => {
-        const label = document.createElement("label");
-        label.className = "choice";
+      const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.value = slot;
-        checkbox.name = prefix;
-        checkbox.id = prefix + index;
+      weekdays.forEach(day => {
+        const daySlots = timeSlots.filter(slot => slot.startsWith(day + " "));
 
-        const text = document.createElement("span");
-        text.textContent = slot;
+        const group = document.createElement("div");
+        group.className = "weekday-group";
 
-        label.append(checkbox, text);
-        container.append(label);
+        const heading = document.createElement("h4");
+        heading.textContent = day;
+        group.append(heading);
+
+        const choices = document.createElement("div");
+        choices.className = "choices";
+
+        daySlots.forEach(slot => {
+          const index = timeSlots.indexOf(slot);
+          const label = document.createElement("label");
+          label.className = "choice";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.value = slot;
+          checkbox.name = prefix;
+          checkbox.id = prefix + index;
+
+          const text = document.createElement("span");
+          text.textContent = slot.replace(day + " ", "");
+
+          label.append(checkbox, text);
+          choices.append(label);
+        });
+
+        group.append(choices);
+        container.append(group);
       });
     }
 
@@ -753,6 +898,12 @@
       const grade = byId("tutorGrade").value;
       const subjects = parseSubjects(byId("tutorSubjects").value);
       const availability = selectedSlots("tutorAvail");
+      const lunchSchedule = {
+        day1: byId("tutorLunchDay1").value,
+        day2: byId("tutorLunchDay2").value,
+        day3: byId("tutorLunchDay3").value,
+        day4: byId("tutorLunchDay4").value
+      };
 
       if (!validName(name) || !grade || !subjects.length) {
         return showStatus(
@@ -780,6 +931,7 @@
           grade,
           subjects,
           availability,
+          lunchSchedule,
           createdAt: serverTimestamp()
         });
 
@@ -811,6 +963,12 @@
       const grade = byId("requestGrade").value;
       const subjects = parseSubjects(byId("requestSubjects").value);
       const availability = selectedSlots("requestAvail");
+      const lunchSchedule = {
+        day1: byId("requestLunchDay1").value,
+        day2: byId("requestLunchDay2").value,
+        day3: byId("requestLunchDay3").value,
+        day4: byId("requestLunchDay4").value
+      };
 
       if (!validName(name) || !grade || !subjects.length) {
         return showStatus(
@@ -838,6 +996,7 @@
           grade,
           subjects,
           availability,
+          lunchSchedule,
           createdAt: serverTimestamp()
         });
 
@@ -972,6 +1131,13 @@
       );
     }
 
+    function formatLunchSchedule(schedule) {
+      if (!schedule) return "Not provided";
+      return ["day1", "day2", "day3", "day4"]
+        .map((day, index) => "Day " + (index + 1) + ": Lunch " + (schedule[day] || "Not provided"))
+        .join(", ");
+    }
+
     function dateText(timestamp) {
       if (!timestamp || typeof timestamp.toDate !== "function") {
         return "Recently submitted";
@@ -1057,6 +1223,7 @@
           lines: [
             "Subjects: " + (tutor.subjects || []).join(", "),
             "Available: " + (tutor.availability || []).join(", "),
+            "Lunch schedule: " + formatLunchSchedule(tutor.lunchSchedule),
             "Submitted: " + dateText(tutor.createdAt)
           ],
           buttonText: "Delete Tutor",
@@ -1082,6 +1249,7 @@
           lines: [
             "Subjects requested: " + (request.subjects || []).join(", "),
             "Available: " + (request.availability || []).join(", "),
+            "Lunch schedule: " + formatLunchSchedule(request.lunchSchedule),
             "Submitted: " + dateText(request.createdAt)
           ],
           buttonText: "Delete Request",
@@ -1447,10 +1615,26 @@
       }
     });
 
-    // Switch between the four main tabs.
-    document.querySelectorAll(".tab").forEach(button => {
+    // Switch between administrator subtabs.
+    document.querySelectorAll("[data-admin-panel]").forEach(button => {
       button.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(tab => {
+        document.querySelectorAll("[data-admin-panel]").forEach(tab => {
+          tab.classList.toggle("active", tab === button);
+        });
+
+        document.querySelectorAll(".admin-subpanel").forEach(panel => {
+          panel.classList.toggle(
+            "hidden",
+            panel.id !== button.dataset.adminPanel
+          );
+        });
+      });
+    });
+
+    // Switch between the four main tabs.
+    document.querySelectorAll("main > .tabs .tab").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("main > .tabs .tab").forEach(tab => {
           tab.classList.toggle("active", tab === button);
         });
 
